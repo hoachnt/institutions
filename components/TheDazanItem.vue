@@ -2,13 +2,17 @@
   <div>
     <div>{{dazan.title}}</div>
     <div>{{dazan.address}}</div>
-    <nuxt-link to="/schedule">Schedule</nuxt-link>
+    <UIButton @click="$router.push(`/schedule/${this.dazan.id}`)">Schedule</UIButton>
   </div>
 </template>
-<script setup>
-const props = defineProps({
-  dazan: Object,
-});
+<script>
+export default {
+  props: {
+    dazan: {
+      type: Object
+    }
+  },
+}
 </script>
 <style lang="">
 </style>

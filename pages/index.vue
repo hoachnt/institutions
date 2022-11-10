@@ -14,11 +14,15 @@ const dazan = {
   title: "",
   address: "",
 };
-const { data: dazans } = await useAsyncData("dazan", () =>
-  $fetch(`${url}/dazan`)
-);
+let dazans = ref();
 
-dazans.value = dazans.value.data;
+const fetchDazan = async () => {
+  let response = await $fetch(`${url}/dazan`);
+
+  dazans.value = response.data;
+};
+
+onMounted(fetchDazan);
 
 const createDazan = () => {
   try {
@@ -27,7 +31,7 @@ const createDazan = () => {
       body: dazan,
     })
       .then(() => dazans.value.push(dazan))
-      .then(() => console.log(dazan))
+      .then(() => console.log(dazan));
   } catch (error) {
     console.log(error);
   }
