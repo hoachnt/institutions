@@ -2,14 +2,13 @@
   <div>
     <div>{{dazan.title}}</div>
     <div>{{dazan.address}}</div>
-    <UIButton>Schedule</UIButton>
+    <nuxt-link to="/schedule">Schedule</nuxt-link>
   </div>
 </template>
 <script setup>
 const props = defineProps({
-  dazan: Object
-})
+  dazan: Object,
+});
 </script>
 <style lang="">
-  
 </style>
