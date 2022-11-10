@@ -5,10 +5,15 @@
       <UIInput placeholder="Dazan address" v-model:value="dazan.address" />
       <UIButton @click="createDazan">Create Dazan</UIButton>
     </form>
-    <TheDazanList :dazans="dazans" />
+    <TheDazanList :dazans="dazans" v-if="dazans != ''" />
+    <div v-else>Dazans Empty</div>
   </div>
 </template>
 <script setup>
+useHead({
+  title: "Dazan",
+});
+
 const url = `https://b876ad7f-dd71-4ed3-829a-b2488d40b627.selcdn.net/items`;
 const dazan = {
   title: "",
@@ -31,7 +36,7 @@ const createDazan = () => {
       body: dazan,
     })
       .then(() => dazans.value.push(dazan))
-      .then(() => console.log(dazan));
+      .then(() => document.location.reload(true));
   } catch (error) {
     console.log(error);
   }
