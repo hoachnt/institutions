@@ -1,40 +1,40 @@
 <template>
   <div>
-    <h1 v-if="showInputTitle == false">{{ scheduleTitle.title }}</h1>
-    <input
+    <h1>All schedules</h1>
+    <div v-for="title in scheduleTitle" :key="title.id">
+      <UIButton @click="$router.push(`/schedule/schedule_list/${title.id}`)">{{
+        title.title
+      }}</UIButton>
+    </div>
+    <UIInput
       type="text"
       placeholder="Change title..."
-      v-else
-      v-model="scheduleTitle.title"
+      v-if="addTitle == true"
+      v-model="title"
     />
-    <UIButton
-      @click="changeTitle"
-      v-if="showInputTitle == false && schedules != ''"
-      >Change Title</UIButton
+    <UIButton @click="addTitle = true" v-if="addTitle == false"
+      >Add new title</UIButton
     >
-    <UIButton
-      @click="updateTitle"
-      v-else-if="showInputTitle != false && schedules != ''"
-      >Update Title</UIButton
+    <UIButton @click="addNewTitle" v-else-if="addTitle == true"
+      >Add title</UIButton
     >
-    <TheScheduleList :schedules="schedules" v-if="schedules != ''" />
-    <div v-else>Schedules Empty</div>
   </div>
 </template>
 <script setup>
 useHead({
-  title: "Dasan's schedule",
+  title: "Dazan's schedule",
 });
 
 const url = `https://b876ad7f-dd71-4ed3-829a-b2488d40b627.selcdn.net/items`;
 const dazanId = useRoute().params.id;
 const schedules = ref([]);
 const scheduleTitle = ref("");
-const showInputTitle = ref(false);
+const addTitle = ref(false);
+const title = ref("");
 const fetchSchedule = async () => {
   let response = await $fetch(`${url}/schedule?filter={ "dazanId":${dazanId}}`);
 
-  schedules.value = response.data;
+  schedules.value = await response.data;
 };
 const fetchScheduleTitle = async () => {
   try {
@@ -42,24 +42,26 @@ const fetchScheduleTitle = async () => {
       `${url}/schedule_title?filter={ "dazanId":${dazanId}}`
     );
 
-    scheduleTitle.value = response.data[0];
+    scheduleTitle.value = response.data;
   } catch (error) {
     console.log(error);
   }
 };
-const changeTitle = () => (showInputTitle.value = true);
-const updateTitle = async () => {
-  return await $fetch(`${url}/schedule_title/${scheduleTitle.value.id}`, {
-    method: "PATCH",
+const addNewTitle = async () => {
+  return await $fetch(`${url}/schedule_title`, {
+    method: "POST",
     body: {
-      title: scheduleTitle.value.title,
+      title: title.value,
+      dazanId: dazanId,
     },
   }).then(() => document.location.reload(true));
 };
+const setLocalStorage = () => localStorage.setItem("dazanId", dazanId);
 
 onMounted(() => {
   fetchScheduleTitle();
   fetchSchedule();
+  setLocalStorage();
 });
 </script>
 <style lang="">
