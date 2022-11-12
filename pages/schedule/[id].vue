@@ -20,7 +20,7 @@
     <UIButton @click="addNewTitle" v-else-if="addTitle == true"
       >Add title</UIButton
     >
-    <qrcode-vue :value="value" :size="size" level="H" v-if="store.authenticated"/>
+    <qrcode-vue :value="value" :size="size" level="H" v-if="store.authenticated && showQrCode"/>
     <UIButton @click="generateQrCode" v-if="store.authenticated">Generate QR Code</UIButton>
   </div>
 </template>
@@ -47,6 +47,7 @@ const schedules = ref([]);
 const scheduleTitle = ref("");
 const addTitle = ref(false);
 const title = ref("");
+const showQrCode = ref(false)
 const fetchSchedule = async () => {
   let response = await $fetch(`${url}/schedule?filter={ "dazanId":${dazanId}}`);
 
@@ -76,7 +77,10 @@ const addNewTitle = async () => {
   }).then(() => document.location.reload(true));
 };
 const setLocalStorage = () => localStorage.setItem("dazanId", dazanId);
-const generateQrCode = () => value.value = `${webSiteUrl}/schedule/${useRoute().params.id}`
+const generateQrCode = () => {
+  value.value = `${webSiteUrl}/schedule/${useRoute().params.id}`
+  showQrCode.value = true
+}
 
 onMounted(() => {
   fetchScheduleTitle();
