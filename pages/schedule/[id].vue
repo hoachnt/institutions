@@ -12,7 +12,7 @@
       v-if="addTitle == true"
       v-model="title"
     />
-    <UIButton @click="addTitle = true" v-if="addTitle == false"
+    <UIButton @click="addTitle = true" v-if="addTitle == false && store.authenticated"
       >Add new title</UIButton
     >
     <UIButton @click="addNewTitle" v-else-if="addTitle == true"
@@ -21,9 +21,10 @@
   </div>
 </template>
 <script setup>
-definePageMeta({
-  middleware: ["auth"]
-})
+import { usePiniaStore } from "@/stores/PiniaStore";
+
+const store = usePiniaStore();
+
 useHead({
   title: "Dazan's schedule",
 });

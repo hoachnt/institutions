@@ -49,7 +49,6 @@ const submit = async () => {
       }
     );
     store.authenticated = true
-    console.log(store.authenticated)
     await router.push("/");
   } catch (error) {
     console.log(error);

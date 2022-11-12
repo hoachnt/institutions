@@ -23,7 +23,7 @@ const data = reactive({
 });
 const submit = async () => {
   try {
-    await $fetch(
+    const response = await $fetch(
       "https://b876ad7f-dd71-4ed3-829a-b2488d40b627.selcdn.net/auth/login",
       {
         method: "POST",
@@ -33,7 +33,10 @@ const submit = async () => {
         },
       }
     );
-    store.authenticated = true
+    // store.authenticated = true
+    store.userCreated = response
+    console.log(userCreated.value)
+
     await router.push("/");
   } catch (error) {}
 };

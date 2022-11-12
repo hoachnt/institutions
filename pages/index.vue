@@ -21,6 +21,7 @@ const url = `https://b876ad7f-dd71-4ed3-829a-b2488d40b627.selcdn.net/items`;
 const dazan = {
   title: "",
   address: "",
+  userCreated: ""
 };
 let dazans = ref();
 

@@ -9,7 +9,7 @@
     />
     <UIButton
       @click="changeTitle"
-      v-if="showInputTitle == false"
+      v-if="showInputTitle == false && store.authenticated"
       >Change Title</UIButton
     >
     <UIButton
@@ -22,7 +22,7 @@
     v-if="schedules != ''"
     />
     <div v-else>Schedules Empty</div>
-    <form @submit.prevent>
+    <form @submit.prevent v-if="store.authenticated">
       <h1>Create a new event</h1>
       <UIInput placeholder="Date..." type="text" v-model:value="newEvent.date"/>
       <UIInput placeholder="Time..." type="text" v-model:value="newEvent.time"/>
@@ -32,6 +32,9 @@
   </div>
 </template>
 <script setup>
+import { usePiniaStore } from "@/stores/PiniaStore";
+
+const store = usePiniaStore();
 const url = `https://b876ad7f-dd71-4ed3-829a-b2488d40b627.selcdn.net/items`;
 const schedules = ref([]);
 const showInputTitle = ref(false);
