@@ -10,6 +10,10 @@
   </div>
 </template>
 <script setup>
+import { usePiniaStore } from "@/stores/PiniaStore";
+
+const store = usePiniaStore();
+
 definePageMeta({
   middleware: ["auth"],
 });
@@ -17,26 +21,51 @@ useHead({
   title: "Dazan",
 });
 
-const url = `https://b876ad7f-dd71-4ed3-829a-b2488d40b627.selcdn.net/items`;
+const url = `https://b876ad7f-dd71-4ed3-829a-b2488d40b627.selcdn.net`;
 const dazan = {
   title: "",
   address: "",
-  userCreated: ""
 };
 let dazans = ref();
+const userCreated = ref("");
 
+const fetchUserData = async () => {
+  let response = await $fetch(
+    `${url}/users?filter={"email":"${store.userCreated}"}`,
+    {
+      headers: {
+        Authorization: `Bearer ${store.token}`,
+      },
+    }
+  );
+  userCreated.value = response.data[0].id;
+
+  fetchDazan();
+};
 const fetchDazan = async () => {
-  let response = await $fetch(`${url}/dazan`);
+  let response = await $fetch(
+    `${url}/items/dazan?filter={"user_created":"${userCreated.value}"}`,
+    {
+      headers: {
+        Authorization: `Bearer ${store.token}`,
+      },
+    }
+  );
 
   dazans.value = response.data;
 };
 
-onMounted(fetchDazan);
+onMounted(() => {
+  fetchUserData();
+});
 
 const createDazan = () => {
   try {
-    return $fetch(`${url}/dazan`, {
+    return $fetch(`${url}/items/dazan`, {
       method: "POST",
+      headers: {
+        Authorization: `Bearer ${store.token}`,
+      },
       body: dazan,
     })
       .then(() => dazans.value.push(dazan))

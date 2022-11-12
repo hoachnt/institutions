@@ -16,6 +16,7 @@
     "@nuxtjs/proxy": "^2.1.0",
     "@pinia/nuxt": "^0.4.3",
     "nuxt-directus": "^3.2.1",
-    "pinia": "^2.0.23"
+    "pinia": "^2.0.23",
+    "qrcode.vue": "^3.3.3"
   }
 }

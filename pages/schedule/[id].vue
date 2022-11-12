@@ -10,26 +10,38 @@
       type="text"
       placeholder="Change title..."
       v-if="addTitle == true"
-      v-model="title"
+      v-model:value="title"
     />
-    <UIButton @click="addTitle = true" v-if="addTitle == false && store.authenticated"
+    <UIButton
+      @click="addTitle = true"
+      v-if="addTitle == false && store.authenticated"
       >Add new title</UIButton
     >
     <UIButton @click="addNewTitle" v-else-if="addTitle == true"
       >Add title</UIButton
     >
+    <qrcode-vue :value="value" :size="size" level="H" v-if="store.authenticated"/>
+    <UIButton @click="generateQrCode" v-if="store.authenticated">Generate QR Code</UIButton>
   </div>
 </template>
 <script setup>
 import { usePiniaStore } from "@/stores/PiniaStore";
+import QrcodeVue from "qrcode.vue";
 
 const store = usePiniaStore();
+
+defineComponent({
+  QrcodeVue
+})
 
 useHead({
   title: "Dazan's schedule",
 });
 
+const value = ref('')
+const size = ref(300)
 const url = `https://b876ad7f-dd71-4ed3-829a-b2488d40b627.selcdn.net/items`;
+const webSiteUrl = 'https://statuesque-custard-f1dc78.netlify.app/items'
 const dazanId = useRoute().params.id;
 const schedules = ref([]);
 const scheduleTitle = ref("");
@@ -54,6 +66,9 @@ const fetchScheduleTitle = async () => {
 const addNewTitle = async () => {
   return await $fetch(`${url}/schedule_title`, {
     method: "POST",
+    headers: {
+      Authorization: `Bearer ${store.token}`,
+    },
     body: {
       title: title.value,
       dazanId: dazanId,
@@ -61,6 +76,7 @@ const addNewTitle = async () => {
   }).then(() => document.location.reload(true));
 };
 const setLocalStorage = () => localStorage.setItem("dazanId", dazanId);
+const generateQrCode = () => value.value = `${webSiteUrl}/schedule/${useRoute().params.id}`
 
 onMounted(() => {
   fetchScheduleTitle();

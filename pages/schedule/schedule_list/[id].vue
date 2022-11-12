@@ -52,6 +52,9 @@ const changeTitle = () => (showInputTitle.value = true);
 const updateTitle = async () => {
   return await $fetch(`${url}/schedule_title/${scheduleTitle.value.id}`, {
     method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${store.token}`,
+    },
     body: {
       title: scheduleTitle.value.title,
     },
@@ -60,6 +63,9 @@ const updateTitle = async () => {
 const createEvent = async () => {
   return await $fetch(`${url}/schedule`, {
     method: "POST",
+    headers: {
+      Authorization: `Bearer ${store.token}`,
+    },
     body: {
       date: newEvent.value.date,
       time: newEvent.value.time,
