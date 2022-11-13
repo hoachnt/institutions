@@ -29,14 +29,18 @@
       <UIInput placeholder="Description..." type="text" v-model:value="newEvent.description"/>
       <UIButton @click="createEvent">Create</UIButton>
     </form>
+    <UIButton @click="generatePdf">Generate Pdf</UIButton>
   </div>
 </template>
 <script setup>
 import { usePiniaStore } from "@/stores/PiniaStore";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
 
 const store = usePiniaStore();
 const url = `https://b876ad7f-dd71-4ed3-829a-b2488d40b627.selcdn.net/items`;
 const schedules = ref([]);
+const schedulesForPdf = ref([]);
 const showInputTitle = ref(false);
 const dazanId = ref("");
 const scheduleTitleId = useRoute().params.id;
@@ -96,7 +100,30 @@ const fetchScheduleTitle = async () => {
 const getLocalStorage = () => {
   dazanId.value = localStorage.getItem("dazanId");
 };
+const generatePdf = async () => {
+  let response = await $fetch(
+    `${url}/schedule?filter={ "ScheduleTitleId":"${scheduleTitleId}"}`
+  );
 
+  response.data.map((item) => {
+    delete item.id;
+    delete item.dazanId;
+    delete item.ScheduleTitleId;
+  });
+
+  const doc = new jsPDF({
+    orientation: "portrait",
+    unit: "in",
+    format: "letter",
+  });
+  doc.setFontSize(16).text(scheduleTitle.value.title, 0.5, 1.0);
+  doc.setLineWidth(0.01).line(0.5, 1.1, 8.0, 1.1);
+  doc.autoTable({
+    body: response.data,
+    margin: { left: 0.5, top: 1.5 },
+  });
+  doc.save("generatePDF.pdf");
+};
 onMounted(() => {
   getLocalStorage();
   fetchScheduleTitle();
