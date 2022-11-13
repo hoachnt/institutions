@@ -25,7 +25,7 @@ const data = reactive({
 });
 const submit = async () => {
   try {
-    let response = await $fetch(
+    await $fetch(
       "https://b876ad7f-dd71-4ed3-829a-b2488d40b627.selcdn.net/users",
       {
         method: "POST",
@@ -38,7 +38,7 @@ const submit = async () => {
         },
       }
     );
-    await $fetch(
+    let response = await $fetch(
       "https://b876ad7f-dd71-4ed3-829a-b2488d40b627.selcdn.net/auth/login",
       {
         method: "POST",
@@ -51,6 +51,7 @@ const submit = async () => {
     store.authenticated = true;
     store.userCreated = data.email;
     store.token = response.data.access_token
+    console.log(response.data.access_token)
 
     await router.push("/");
   } catch (error) {
