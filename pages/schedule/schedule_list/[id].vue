@@ -24,7 +24,7 @@
     <div v-else>Schedules Empty</div>
     <form @submit.prevent v-if="token">
       <h1>Create a new event</h1>
-      <UIInput placeholder="Date..." type="text" v-model:value="newEvent.date"/>
+      <UIInput type="date" v-model:input="newEvent.date" />
       <UIInput placeholder="Time..." type="text" v-model:value="newEvent.time"/>
       <UIInput placeholder="Description..." type="text" v-model:value="newEvent.description"/>
       <UIButton @click="createEvent">Create</UIButton>
@@ -36,6 +36,10 @@
 import { usePiniaStore } from "@/stores/PiniaStore";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
+
+useHead({
+  title: "Schedule's",
+});
 
 const token = useDirectusToken();
 const store = usePiniaStore();
@@ -107,6 +111,8 @@ const generatePdf = async () => {
   );
 
   response.data.map((item) => {
+    item.date = `${new Date(item.date).getDate()}/${new Date(item.date).getMonth()}/${new Date(item.date).getFullYear()}`
+
     delete item.id;
     delete item.dazanId;
     delete item.ScheduleTitleId;
@@ -118,6 +124,8 @@ const generatePdf = async () => {
     unit: "in",
     format: "letter",
   });
+  doc.addFont("test/reference/PTSans.ttf", "PTSans", "normal");
+  doc.setFont('PTSans');
   doc.setFontSize(16).text(scheduleTitle.value.title, 0.5, 1.0);
   doc.setLineWidth(0.01).line(0.5, 1.1, 8.0, 1.1);
   doc.autoTable({
