@@ -36,6 +36,7 @@
 import { usePiniaStore } from "@/stores/PiniaStore";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
+import "assets/fonts/PTSans-normal.js";
 
 useHead({
   title: "Schedule's",
@@ -111,7 +112,9 @@ const generatePdf = async () => {
   );
 
   response.data.map((item) => {
-    item.date = `${new Date(item.date).getDate()}/${new Date(item.date).getMonth()}/${new Date(item.date).getFullYear()}`
+    item.date = `${new Date(item.date).getDate()}/${new Date(
+      item.date
+    ).getMonth()}/${new Date(item.date).getFullYear()}`;
 
     delete item.id;
     delete item.dazanId;
@@ -124,11 +127,13 @@ const generatePdf = async () => {
     unit: "in",
     format: "letter",
   });
-  doc.addFont("test/reference/PTSans.ttf", "PTSans", "normal");
-  doc.setFont('PTSans');
+  doc.setFont("PTSans");
   doc.setFontSize(16).text(scheduleTitle.value.title, 0.5, 1.0);
   doc.setLineWidth(0.01).line(0.5, 1.1, 8.0, 1.1);
   doc.autoTable({
+    styles: {
+      font: "PTSans",
+    },
     body: response.data,
     margin: { left: 0.5, top: 1.5 },
   });
