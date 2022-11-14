@@ -15,5 +15,7 @@ export default defineNuxtConfig({
       ],
     },
   ],],
-  directus: {}
+  directus: {
+    url: "http://91.105.198.56"
+  }
 })

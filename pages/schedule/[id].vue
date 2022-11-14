@@ -43,16 +43,10 @@ const size = ref(300)
 const url = `https://b876ad7f-dd71-4ed3-829a-b2488d40b627.selcdn.net/items`;
 const webSiteUrl = 'https://statuesque-custard-f1dc78.netlify.app'
 const dazanId = useRoute().params.id;
-const schedules = ref([]);
 const scheduleTitle = ref("");
 const addTitle = ref(false);
 const title = ref("");
 const showQrCode = ref(false)
-const fetchSchedule = async () => {
-  let response = await $fetch(`${url}/schedule?filter={ "dazanId":${dazanId}}`);
-
-  schedules.value = await response.data;
-};
 const fetchScheduleTitle = async () => {
   try {
     let response = await $fetch(
@@ -84,7 +78,6 @@ const generateQrCode = () => {
 
 onMounted(() => {
   fetchScheduleTitle();
-  fetchSchedule();
   setLocalStorage();
 });
 </script>

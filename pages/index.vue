@@ -11,6 +11,7 @@
 </template>
 <script setup>
 import { usePiniaStore } from "@/stores/PiniaStore";
+const { getItems } = useDirectusItems();
 
 const store = usePiniaStore();
 
@@ -21,7 +22,7 @@ useHead({
   title: "Dazan",
 });
 
-const url = `https://b876ad7f-dd71-4ed3-829a-b2488d40b627.selcdn.net`;
+const url = "https://b876ad7f-dd71-4ed3-829a-b2488d40b627.selcdn.net";
 const dazan = {
   title: "",
   address: "",
@@ -57,7 +58,20 @@ const fetchDazan = async () => {
 
 onMounted(() => {
   fetchUserData();
+  testFetch();
 });
+
+const testCollection = ref([]);
+const testFetch = async () => {
+  try {
+    const items = await getItems({
+      collection: "dazan",
+      Authorization: `Bearer ${store.token}`,
+    });
+    testCollection.value = items;
+    console.log(testCollection.value);
+  } catch (error) {}
+};
 
 const createDazan = () => {
   try {

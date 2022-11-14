@@ -19,7 +19,7 @@ const router = useRouter();
 const data = reactive({
   firstName: "",
   lastName: "",
-  adminRole: "45facacc-afc6-4e96-9801-610a56153cde",
+  adminRole: "0f2eda19-b1bf-4e1a-824e-d8f329d896aa",
   email: "",
   password: "",
 });
@@ -38,6 +38,7 @@ const submit = async () => {
         },
       }
     );
+
     let response = await $fetch(
       "https://b876ad7f-dd71-4ed3-829a-b2488d40b627.selcdn.net/auth/login",
       {
@@ -50,9 +51,8 @@ const submit = async () => {
     );
     store.authenticated = true;
     store.userCreated = data.email;
-    store.token = response.data.access_token
-    console.log(response.data.access_token)
-
+    store.token = response.data.access_token;
+    
     await router.push("/");
   } catch (error) {
     console.log(error);

@@ -33,9 +33,9 @@ const submit = async () => {
         },
       }
     );
-    store.authenticated = true
-    store.userCreated = data.email
-    store.token = response.data.access_token
+    store.authenticated = true;
+    store.userCreated = data.email;
+    store.token = response.data.access_token;
 
     await router.push("/");
   } catch (error) {}
