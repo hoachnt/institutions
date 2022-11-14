@@ -109,6 +109,7 @@ const generatePdf = async () => {
     delete item.id;
     delete item.dazanId;
     delete item.ScheduleTitleId;
+    delete item.user_created
   });
 
   const doc = new jsPDF({
