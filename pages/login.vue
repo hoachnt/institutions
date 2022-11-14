@@ -14,6 +14,7 @@
 </template>
 <script setup>
 import { usePiniaStore } from "@/stores/PiniaStore";
+const { login } = useDirectusAuth();
 
 const url = "https://se6o31if.directus.app"
 const store = usePiniaStore();
@@ -24,22 +25,20 @@ const data = reactive({
 });
 const submit = async () => {
   try {
-    const response = await $fetch(
-      `${url}/auth/login`,
-      {
-        method: "POST",
-        body: {
-          email: data.email,
-          password: data.password,
-        },
-      }
-    );
+    let response = await login({
+      email: data.email,
+      password: data.password,
+    });
+
     store.authenticated = true;
     store.userCreated = data.email;
-    store.token = response.data.access_token;
-
+    
+    const token = useDirectusToken();
+    
     await router.push("/");
-  } catch (error) {}
+  } catch (e) {
+    console.log(e)
+  }
 };
 </script>
 <style lang="">

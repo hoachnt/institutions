@@ -9,7 +9,7 @@
     />
     <UIButton
       @click="changeTitle"
-      v-if="showInputTitle == false && store.authenticated"
+      v-if="showInputTitle == false && token"
       >Change Title</UIButton
     >
     <UIButton
@@ -22,7 +22,7 @@
     v-if="schedules != ''"
     />
     <div v-else>Schedules Empty</div>
-    <form @submit.prevent v-if="store.authenticated">
+    <form @submit.prevent v-if="token">
       <h1>Create a new event</h1>
       <UIInput placeholder="Date..." type="text" v-model:value="newEvent.date"/>
       <UIInput placeholder="Time..." type="text" v-model:value="newEvent.time"/>
@@ -37,6 +37,7 @@ import { usePiniaStore } from "@/stores/PiniaStore";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 
+const token = useDirectusToken();
 const store = usePiniaStore();
 const url = `https://se6o31if.directus.app/items`;
 const schedules = ref([]);
@@ -109,7 +110,7 @@ const generatePdf = async () => {
     delete item.id;
     delete item.dazanId;
     delete item.ScheduleTitleId;
-    delete item.user_created
+    delete item.user_created;
   });
 
   const doc = new jsPDF({

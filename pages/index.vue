@@ -11,8 +11,10 @@
 </template>
 <script setup>
 import { usePiniaStore } from "@/stores/PiniaStore";
-const { getItems } = useDirectusItems();
+const user = useDirectusUser();
+const token = useDirectusToken();
 
+const email = user.value.email;
 const store = usePiniaStore();
 
 definePageMeta({
@@ -32,10 +34,10 @@ const userCreated = ref("");
 
 const fetchUserData = async () => {
   let response = await $fetch(
-    `${url}/users?filter={"email":"${store.userCreated}"}`,
+    `${url}/users?filter={"email":"${email}"}`,
     {
       headers: {
-        Authorization: `Bearer ${store.token}`,
+        Authorization: `Bearer ${token.value}`,
       },
     }
   );
@@ -48,7 +50,7 @@ const fetchDazan = async () => {
     `${url}/items/dazan?filter={"user_created":"${userCreated.value}"}`,
     {
       headers: {
-        Authorization: `Bearer ${store.token}`,
+        Authorization: `Bearer ${token.value}`,
       },
     }
   );
@@ -58,27 +60,14 @@ const fetchDazan = async () => {
 
 onMounted(() => {
   fetchUserData();
-  testFetch();
 });
-
-const testCollection = ref([]);
-const testFetch = async () => {
-  try {
-    const items = await getItems({
-      collection: "dazan",
-      Authorization: `Bearer ${store.token}`,
-    });
-    testCollection.value = items;
-    console.log(testCollection.value);
-  } catch (error) {}
-};
 
 const createDazan = () => {
   try {
     return $fetch(`${url}/items/dazan`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${store.token}`,
+        Authorization: `Bearer ${token.value}`,
       },
       body: dazan,
     })

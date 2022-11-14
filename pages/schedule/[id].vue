@@ -14,14 +14,13 @@
     />
     <UIButton
       @click="addTitle = true"
-      v-if="addTitle == false && store.authenticated"
+      v-if="addTitle == false && token"
       >Add new title</UIButton
     >
     <UIButton @click="addNewTitle" v-else-if="addTitle == true"
       >Add title</UIButton
     >
-    <qrcode-vue :value="value" :size="size" level="H" v-if="store.authenticated && showQrCode"/>
-    <UIButton @click="generateQrCode" v-if="store.authenticated">Generate QR Code</UIButton>
+    <qrcode-vue :value="value" :size="size" level="H"/>
   </div>
 </template>
 <script setup>
@@ -37,6 +36,7 @@ defineComponent({
 useHead({
   title: "Dazan's schedule",
 });
+const token = useDirectusToken();
 
 const value = ref('')
 const size = ref(300)
@@ -46,7 +46,6 @@ const dazanId = useRoute().params.id;
 const scheduleTitle = ref("");
 const addTitle = ref(false);
 const title = ref("");
-const showQrCode = ref(false)
 const fetchScheduleTitle = async () => {
   try {
     let response = await $fetch(
@@ -62,7 +61,7 @@ const addNewTitle = async () => {
   return await $fetch(`${url}/schedule_title`, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${store.token}`,
+      Authorization: `Bearer ${token.value}`,
     },
     body: {
       title: title.value,
@@ -73,12 +72,12 @@ const addNewTitle = async () => {
 const setLocalStorage = () => localStorage.setItem("dazanId", dazanId);
 const generateQrCode = () => {
   value.value = `${webSiteUrl}/schedule/${useRoute().params.id}`
-  showQrCode.value = true
 }
 
 onMounted(() => {
   fetchScheduleTitle();
   setLocalStorage();
+  generateQrCode()
 });
 </script>
 <style lang="">

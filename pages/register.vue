@@ -12,9 +12,11 @@
 </template>
 <script setup>
 import { usePiniaStore } from "@/stores/PiniaStore";
+const { createUser } = useDirectusAuth();
+const { login } = useDirectusAuth();
 
 const store = usePiniaStore();
-const url = "https://se6o31if.directus.app"
+const url = "https://se6o31if.directus.app";
 
 const router = useRouter();
 const data = reactive({
@@ -26,34 +28,24 @@ const data = reactive({
 });
 const submit = async () => {
   try {
-    await $fetch(
-      `${url}/users`,
-      {
-        method: "POST",
-        body: {
-          first_name: data.firstName,
-          last_name: data.lastName,
-          email: data.email,
-          password: data.password,
-          role: data.adminRole,
-        },
-      }
-    );
+    let newUser = await createUser({
+      first_name: data.firstName,
+      last_name: data.lastName,
+      email: data.email,
+      password: data.password,
+      role: data.adminRole,
+    });
 
-    let response = await $fetch(
-      `${url}/auth/login`,
-      {
-        method: "POST",
-        body: {
-          email: data.email,
-          password: data.password,
-        },
-      }
-    );
+    let response = await login({
+      email: data.email,
+      password: data.password,
+    });
+
     store.authenticated = true;
     store.userCreated = data.email;
-    store.token = response.data.access_token;
-    
+
+    const token = useDirectusToken();
+
     await router.push("/");
   } catch (error) {
     console.log(error);

@@ -16,6 +16,7 @@ export default defineNuxtConfig({
     },
   ],],
   directus: {
-    url: "http://91.105.198.56"
+    url: "https://se6o31if.directus.app",
+    token: ''
   }
 })
