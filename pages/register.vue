@@ -14,19 +14,20 @@
 import { usePiniaStore } from "@/stores/PiniaStore";
 
 const store = usePiniaStore();
+const url = "https://se6o31if.directus.app"
 
 const router = useRouter();
 const data = reactive({
   firstName: "",
   lastName: "",
-  adminRole: "0f2eda19-b1bf-4e1a-824e-d8f329d896aa",
+  adminRole: "78a7b5a4-8ee0-4fc8-81c0-2f22a2301a0a",
   email: "",
   password: "",
 });
 const submit = async () => {
   try {
     await $fetch(
-      "https://b876ad7f-dd71-4ed3-829a-b2488d40b627.selcdn.net/users",
+      `${url}/users`,
       {
         method: "POST",
         body: {
@@ -40,7 +41,7 @@ const submit = async () => {
     );
 
     let response = await $fetch(
-      "https://b876ad7f-dd71-4ed3-829a-b2488d40b627.selcdn.net/auth/login",
+      `${url}/auth/login`,
       {
         method: "POST",
         body: {

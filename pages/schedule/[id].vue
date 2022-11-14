@@ -40,7 +40,7 @@ useHead({
 
 const value = ref('')
 const size = ref(300)
-const url = `https://b876ad7f-dd71-4ed3-829a-b2488d40b627.selcdn.net/items`;
+const url = `https://se6o31if.directus.app/items`;
 const webSiteUrl = 'https://statuesque-custard-f1dc78.netlify.app'
 const dazanId = useRoute().params.id;
 const scheduleTitle = ref("");

@@ -15,6 +15,7 @@
 <script setup>
 import { usePiniaStore } from "@/stores/PiniaStore";
 
+const url = "https://se6o31if.directus.app"
 const store = usePiniaStore();
 const router = useRouter();
 const data = reactive({
@@ -24,7 +25,7 @@ const data = reactive({
 const submit = async () => {
   try {
     const response = await $fetch(
-      "https://b876ad7f-dd71-4ed3-829a-b2488d40b627.selcdn.net/auth/login",
+      `${url}/auth/login`,
       {
         method: "POST",
         body: {

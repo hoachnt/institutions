@@ -38,7 +38,7 @@ import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 
 const store = usePiniaStore();
-const url = `https://b876ad7f-dd71-4ed3-829a-b2488d40b627.selcdn.net/items`;
+const url = `https://se6o31if.directus.app/items`;
 const schedules = ref([]);
 const schedulesForPdf = ref([]);
 const showInputTitle = ref(false);

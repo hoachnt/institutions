@@ -22,7 +22,7 @@ useHead({
   title: "Dazan",
 });
 
-const url = "https://b876ad7f-dd71-4ed3-829a-b2488d40b627.selcdn.net";
+const url = "https://se6o31if.directus.app";
 const dazan = {
   title: "",
   address: "",
