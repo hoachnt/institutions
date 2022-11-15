@@ -1,6 +1,6 @@
 <template lang="">
   <div>
-    <div>{{datzan.title}}</div>
+    <div>{{datzan.name}}</div>
     <div>{{datzan.address}}</div>
     <UIButton @click="$router.push(`/schedule/${this.datzan.id}`)">Schedule</UIButton>
   </div>

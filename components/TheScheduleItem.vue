@@ -1,6 +1,6 @@
 <template lang="">
   <div>
-    <div>{{ new Date(schedule.date).getDate() }}/{{ new Date(schedule.date).getMonth() }}/{{ new Date(schedule.date).getFullYear() }}</div>
+    <div>{{ new Date(schedule.datetime).getDate() }}/{{ new Date(schedule.datetime).getMonth() }}/{{ new Date(schedule.datetime).getFullYear() }}</div>
     <div>{{schedule.time}}</div>
     <div>{{schedule.description}}</div>
   </div>

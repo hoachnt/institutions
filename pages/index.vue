@@ -1,7 +1,7 @@
 <template>
   <div>
     <form @submit.prevent>
-      <UIInput placeholder="Datzan name" v-model:value="datzan.title" />
+      <UIInput placeholder="Datzan name" v-model:value="datzan.name" />
       <UIInput placeholder="Datzan address" v-model:value="datzan.address" />
       <UIButton @click="createDatzan">Create Datzan</UIButton>
     </form>
@@ -27,7 +27,7 @@ useHead({
 
 const url = config.public.url;
 const datzan = {
-  title: "",
+  name: "",
   address: "",
 };
 let datzans = ref();

@@ -28,6 +28,7 @@ import { usePiniaStore } from "@/stores/PiniaStore";
 import QrcodeVue from "qrcode.vue";
 
 const store = usePiniaStore();
+const config = useRuntimeConfig()
 
 defineComponent({
   QrcodeVue
@@ -40,16 +41,16 @@ const token = useDirectusToken();
 
 const value = ref('')
 const size = ref(300)
-const url = process.env.VITE_ENDPOINT;
+const url = config.public.url;
 const webSiteUrl = 'https://statuesque-custard-f1dc78.netlify.app'
-const dazanId = useRoute().params.id;
+const datzanId = useRoute().params.id;
 const scheduleTitle = ref("");
 const addTitle = ref(false);
 const title = ref("");
 const fetchScheduleTitle = async () => {
   try {
     let response = await $fetch(
-      `${url}/schedule_title?filter={ "dazanId":${dazanId}}`
+      `${url}/items/schedule_title?filter={ "datzanId":"${datzanId}"}`
     );
 
     scheduleTitle.value = response.data;
@@ -58,20 +59,20 @@ const fetchScheduleTitle = async () => {
   }
 };
 const addNewTitle = async () => {
-  return await $fetch(`${url}/schedule_title`, {
+  return await $fetch(`${url}/items/schedule_title`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token.value}`,
     },
     body: {
       title: title.value,
-      dazanId: dazanId,
+      datzanId: datzanId,
     },
   }).then(() => document.location.reload(true));
 };
-const setLocalStorage = () => localStorage.setItem("dazanId", dazanId);
+const setLocalStorage = () => localStorage.setItem("datzanId", datzanId);
 const generateQrCode = () => {
-  value.value = `${webSiteUrl}/schedule/${useRoute().params.id}`
+  value.value = `${webSiteUrl}/items/schedule/${useRoute().params.id}`
 }
 
 onMounted(() => {

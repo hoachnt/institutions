@@ -24,7 +24,7 @@
     <div v-else>Schedules Empty</div>
     <form @submit.prevent v-if="token">
       <h1>Create a new event</h1>
-      <UIInput type="date" v-model:input="newEvent.date" />
+      <UIInput type="date" v-model:value="newEvent.datetime" />
       <UIInput placeholder="Time..." type="text" v-model:value="newEvent.time"/>
       <UIInput placeholder="Description..." type="text" v-model:value="newEvent.description"/>
       <UIButton @click="createEvent">Create</UIButton>
@@ -44,7 +44,9 @@ useHead({
 
 const token = useDirectusToken();
 const store = usePiniaStore();
-const url = `https://se6o31if.directus.app/items`;
+const config = useRuntimeConfig();
+
+const url = config.public.url;
 const schedules = ref([]);
 const schedulesForPdf = ref([]);
 const showInputTitle = ref(false);
@@ -52,18 +54,18 @@ const dazanId = ref("");
 const scheduleTitleId = useRoute().params.id;
 const scheduleTitle = ref("");
 const newEvent = ref({
-  date: "",
+  datetime: "",
   time: "",
   description: "",
-  dazanId: "",
+  datzanId: "",
   scheduleTitleId: "",
 });
 const changeTitle = () => (showInputTitle.value = true);
 const updateTitle = async () => {
-  return await $fetch(`${url}/schedule_title/${scheduleTitle.value.id}`, {
+  return await $fetch(`${url}/items/schedule_title/${scheduleTitle.value.id}`, {
     method: "PATCH",
     headers: {
-      Authorization: `Bearer ${store.token}`,
+      Authorization: `Bearer ${token.value}`,
     },
     body: {
       title: scheduleTitle.value.title,
@@ -71,23 +73,24 @@ const updateTitle = async () => {
   }).then(() => document.location.reload(true));
 };
 const createEvent = async () => {
-  return await $fetch(`${url}/schedule`, {
+  console.log(newEvent.value.datetime);
+  return await $fetch(`${url}/items/events`, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${store.token}`,
+      Authorization: `Bearer ${token.value}`,
     },
     body: {
-      date: newEvent.value.date,
+      datetime: newEvent.value.datetime,
       time: newEvent.value.time,
       description: newEvent.value.description,
-      dazanId: dazanId.value,
+      datzanId: dazanId.value,
       ScheduleTitleId: scheduleTitleId,
     },
   }).then(() => document.location.reload(true));
 };
 const fetchSchedule = async () => {
   let response = await $fetch(
-    `${url}/schedule?filter={ "ScheduleTitleId":"${scheduleTitleId}"}`
+    `${url}/items/events?filter={ "ScheduleTitleId":"${scheduleTitleId}"}`
   );
 
   schedules.value = await response.data;
@@ -95,7 +98,7 @@ const fetchSchedule = async () => {
 const fetchScheduleTitle = async () => {
   try {
     let response = await $fetch(
-      `${url}/schedule_title?filter={ "id":${scheduleTitleId}}`
+      `${url}/items/schedule_title?filter={ "id":${scheduleTitleId}}`
     );
 
     scheduleTitle.value = response.data[0];
@@ -110,26 +113,31 @@ const generatePdf = async () => {
   let itemPdf = {
     time: "",
     description: "",
-    date: "",
+    datetime: "",
   };
   let response = await $fetch(
-    `${url}/schedule?filter={ "ScheduleTitleId":"${scheduleTitleId}"}`
+    `${url}/items/events?filter={ "ScheduleTitleId":"${scheduleTitleId}"}`
   );
 
   response.data.map((item) => {
-    item.date = `${new Date(item.date).getDate()}/${new Date(
-      item.date
-    ).getMonth()}/${new Date(item.date).getFullYear()}`;
+    item.datetime = `${new Date(item.datetime).getDate()}/${new Date(
+      item.datetime
+    ).getMonth()}/${new Date(item.datetime).getFullYear()}`;
 
     delete item.id;
-    delete item.dazanId;
+    delete item.datzan_id;
     delete item.ScheduleTitleId;
     delete item.user_created;
+    delete item.sort;
+    delete item.status;
+    delete item.user_updated;
+    delete item.date_created;
+    delete item.date_updated;
 
     itemPdf = {
       description: item.description,
-      date: item.date,
-      time: item.time
+      datetime: item.datetime,
+      time: item.time,
     };
   });
 
@@ -151,8 +159,9 @@ const generatePdf = async () => {
     columns: [
       { header: "Time", dataKey: itemPdf.time },
       { header: "Description", dataKey: itemPdf.description },
-      { header: "Date", dataKey: itemPdf.date },
+      { header: "Date", dataKey: itemPdf.datetime },
     ],
+
     margin: { left: 0.5, top: 1.5 },
   });
   console.log(itemPdf, response.data);
