@@ -1,14 +1,14 @@
 <template lang="">
   <div>
-    <div>{{dazan.title}}</div>
-    <div>{{dazan.address}}</div>
-    <UIButton @click="$router.push(`/schedule/${this.dazan.id}`)">Schedule</UIButton>
+    <div>{{datzan.title}}</div>
+    <div>{{datzan.address}}</div>
+    <UIButton @click="$router.push(`/schedule/${this.datzan.id}`)">Schedule</UIButton>
   </div>
 </template>
 <script>
 export default {
   props: {
-    dazan: {
+    datzan: {
       type: Object
     }
   },

@@ -40,7 +40,7 @@ const token = useDirectusToken();
 
 const value = ref('')
 const size = ref(300)
-const url = `https://se6o31if.directus.app/items`;
+const url = process.env.VITE_ENDPOINT;
 const webSiteUrl = 'https://statuesque-custard-f1dc78.netlify.app'
 const dazanId = useRoute().params.id;
 const scheduleTitle = ref("");

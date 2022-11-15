@@ -107,6 +107,11 @@ const getLocalStorage = () => {
   dazanId.value = localStorage.getItem("dazanId");
 };
 const generatePdf = async () => {
+  let itemPdf = {
+    time: "",
+    description: "",
+    date: "",
+  };
   let response = await $fetch(
     `${url}/schedule?filter={ "ScheduleTitleId":"${scheduleTitleId}"}`
   );
@@ -120,6 +125,12 @@ const generatePdf = async () => {
     delete item.dazanId;
     delete item.ScheduleTitleId;
     delete item.user_created;
+
+    itemPdf = {
+      description: item.description,
+      date: item.date,
+      time: item.time
+    };
   });
 
   const doc = new jsPDF({
@@ -133,10 +144,18 @@ const generatePdf = async () => {
   doc.autoTable({
     styles: {
       font: "PTSans",
+      lineWidth: 0.02,
     },
+    theme: "grid",
     body: response.data,
+    columns: [
+      { header: "Time", dataKey: itemPdf.time },
+      { header: "Description", dataKey: itemPdf.description },
+      { header: "Date", dataKey: itemPdf.date },
+    ],
     margin: { left: 0.5, top: 1.5 },
   });
+  console.log(itemPdf, response.data);
   doc.save("generatePDF.pdf");
 };
 onMounted(() => {

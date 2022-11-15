@@ -16,7 +16,6 @@
 import { usePiniaStore } from "@/stores/PiniaStore";
 const { login } = useDirectusAuth();
 
-const url = "https://se6o31if.directus.app"
 const store = usePiniaStore();
 const router = useRouter();
 const data = reactive({

@@ -1,6 +1,9 @@
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 
 export default defineNuxtConfig({
+  publicRuntimeConfig: {
+    url: process.env.VITE_ENDPOINT
+  },
   imports: {
     dirs: ['stores'],
   },
@@ -16,7 +19,7 @@ export default defineNuxtConfig({
     },
   ],],
   directus: {
-    url: "https://se6o31if.directus.app",
+    url: process.env.VITE_ENDPOINT,
     token: ''
   }
 })

@@ -16,13 +16,12 @@ const { createUser } = useDirectusAuth();
 const { login } = useDirectusAuth();
 
 const store = usePiniaStore();
-const url = "https://se6o31if.directus.app";
 
 const router = useRouter();
 const data = reactive({
   firstName: "",
   lastName: "",
-  adminRole: "78a7b5a4-8ee0-4fc8-81c0-2f22a2301a0a",
+  adminRole: "d9f8b306-3cfd-400b-926d-a8af29f45736",
   email: "",
   password: "",
 });

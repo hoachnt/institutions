@@ -1,18 +1,19 @@
 <template>
   <div>
     <form @submit.prevent>
-      <UIInput placeholder="Dazan name" v-model:value="dazan.title" />
-      <UIInput placeholder="Dazan address" v-model:value="dazan.address" />
-      <UIButton @click="createDazan">Create Dazan</UIButton>
+      <UIInput placeholder="Datzan name" v-model:value="datzan.title" />
+      <UIInput placeholder="Datzan address" v-model:value="datzan.address" />
+      <UIButton @click="createDatzan">Create Datzan</UIButton>
     </form>
-    <TheDazanList :dazans="dazans" v-if="dazans != ''" />
-    <div v-else>Dazans Empty</div>
+    <TheDatzanList :datzans="datzans" v-if="datzan != ''" />
+    <div v-else>datzan Empty</div>
   </div>
 </template>
 <script setup>
 import { usePiniaStore } from "@/stores/PiniaStore";
 const user = useDirectusUser();
 const token = useDirectusToken();
+const config = useRuntimeConfig()
 
 const email = user.value.email;
 const store = usePiniaStore();
@@ -21,15 +22,15 @@ definePageMeta({
   middleware: ["auth"],
 });
 useHead({
-  title: "Dazan",
+  title: "Datzan",
 });
 
-const url = "https://se6o31if.directus.app";
-const dazan = {
+const url = config.public.url;
+const datzan = {
   title: "",
   address: "",
 };
-let dazans = ref();
+let datzans = ref();
 const userCreated = ref("");
 
 const fetchUserData = async () => {
@@ -43,11 +44,11 @@ const fetchUserData = async () => {
   );
   userCreated.value = response.data[0].id;
 
-  fetchDazan();
+  fetchDatzan();
 };
-const fetchDazan = async () => {
+const fetchDatzan = async () => {
   let response = await $fetch(
-    `${url}/items/dazan?filter={"user_created":"${userCreated.value}"}`,
+    `${url}/items/datzans?filter={"user_created":"${userCreated.value}"}`,
     {
       headers: {
         Authorization: `Bearer ${token.value}`,
@@ -55,23 +56,23 @@ const fetchDazan = async () => {
     }
   );
 
-  dazans.value = response.data;
+  datzans.value = response.data;
 };
 
 onMounted(() => {
   fetchUserData();
 });
 
-const createDazan = () => {
+const createDatzan = () => {
   try {
-    return $fetch(`${url}/items/dazan`, {
+    return $fetch(`${url}/items/datzans`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token.value}`,
       },
-      body: dazan,
+      body: datzan,
     })
-      .then(() => dazans.value.push(dazan))
+      .then(() => datzans.value.push(datzan))
       .then(() => document.location.reload(true));
   } catch (error) {
     console.log(error);

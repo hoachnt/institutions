@@ -1,11 +1,11 @@
 <template lang="">
-  <div v-for="dazan in dazans" :key="dazan.id">
-    <TheDazanItem :dazan="dazan"/>
+  <div v-for="datzan in datzans" :key="datzan.id">
+    <TheDazanItem :datzan="datzan"/>
   </div>
 </template>
 <script setup>
 const props = defineProps({
-  dazans: Array
+  datzans: Array
 })
 </script>
 <style lang="">
