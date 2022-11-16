@@ -78,7 +78,6 @@ const qrCode = ref(false);
 const value = ref("");
 const size = ref(300);
 const url = config.public.url;
-const webSiteUrl = "https://statuesque-custard-f1dc78.netlify.app";
 const datzanId = useRoute().params.id;
 const scheduleTitle = ref("");
 const addTitle = ref(false);
@@ -108,7 +107,7 @@ const addNewTitle = async () => {
 };
 const setLocalStorage = () => localStorage.setItem("datzanId", datzanId);
 const generateQrCode = () => {
-  value.value = `${webSiteUrl}/items/schedule/${useRoute().params.id}`;
+  value.value = `${url}/items/schedule/${useRoute().params.id}`;
 };
 const showQrCode = () => (qrCode.value = !qrCode.value);
 
