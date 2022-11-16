@@ -34,7 +34,7 @@
             uppercase
             text-white
           "
-          href=""
+          @click="$router.push('/')"
         >
           indigo Color
         </a>
