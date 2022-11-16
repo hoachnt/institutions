@@ -24,7 +24,7 @@ export default defineNuxtConfig({
   },
   css: [
     '~/assets/css/main.css',
-    '@fortawesome/fontawesome-svg-core/styles.css'
+    '@fortawesome/fontawesome-svg-core/styles.css',
   ],
   postcss: {
     plugins: {
@@ -32,4 +32,12 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  build: {
+    transpile: [
+      '@fortawesome/fontawesome-svg-core',
+      "@fortawesome/free-solid-svg-icons",
+      '@fortawesome/free-regular-svg-icons',
+      '@fortawesome/free-brands-svg-icons'
+    ]
+  }
 })

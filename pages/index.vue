@@ -3,7 +3,9 @@
     <form @submit.prevent class="">
       <UIInput placeholder="Datzan name" v-model:value="datzan.name" />
       <UIInput placeholder="Datzan address" v-model:value="datzan.address" />
-      <UIButton @click="createDatzan" class="min-w-full">Create Datzan</UIButton>
+      <UIButton @click="createDatzan" class="min-w-full"
+        >Create Datzan</UIButton
+      >
     </form>
     <h1 class="mb-1 text-4xl mt-8">Datzans</h1>
     <TheDatzanList :datzans="datzans" v-if="datzan != ''" />
@@ -14,7 +16,7 @@
 import { usePiniaStore } from "@/stores/PiniaStore";
 const user = useDirectusUser();
 const token = useDirectusToken();
-const config = useRuntimeConfig()
+const config = useRuntimeConfig();
 
 const email = user.value.email;
 const store = usePiniaStore();
@@ -35,14 +37,11 @@ let datzans = ref();
 const userCreated = ref("");
 
 const fetchUserData = async () => {
-  let response = await $fetch(
-    `${url}/users?filter={"email":"${email}"}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token.value}`,
-      },
-    }
-  );
+  let response = await $fetch(`${url}/users?filter={"email":"${email}"}`, {
+    headers: {
+      Authorization: `Bearer ${token.value}`,
+    },
+  });
   userCreated.value = response.data[0].id;
 
   fetchDatzan();
