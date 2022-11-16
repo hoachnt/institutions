@@ -3,7 +3,20 @@
     <div class="schedule-header mb-3 flex justify-between items-center">
       <h1 class="text-4xl">All schedules</h1>
       <UIButton @click="showQrCode">QR code</UIButton>
-      <div class="qr-code-wrapper fixed min-w-full min-h-screen top-0 left-0 flex justify-center items-center" v-if="qrCode == true" @click="qrCode = false">
+      <div
+        class="
+          qr-code-wrapper
+          fixed
+          min-w-full min-h-screen
+          top-0
+          left-0
+          flex
+          justify-center
+          items-center
+        "
+        v-if="qrCode == true"
+        @click="qrCode = false"
+      >
         <qrcode-vue :value="value" :size="size" level="H" class="rounded-xl" />
       </div>
     </div>
@@ -34,8 +47,9 @@
       @click="addTitle = true"
       v-if="addTitle == false && token"
       class="min-w-full"
-      >+</UIButton
     >
+      <font-awesome-icon icon="fa-solid fa-plus" />
+    </UIButton>
     <UIButton
       @click="addNewTitle"
       v-else-if="addTitle == true"
@@ -60,7 +74,7 @@ useHead({
 });
 const token = useDirectusToken();
 
-const qrCode = ref(false)
+const qrCode = ref(false);
 const value = ref("");
 const size = ref(300);
 const url = config.public.url;
@@ -96,7 +110,7 @@ const setLocalStorage = () => localStorage.setItem("datzanId", datzanId);
 const generateQrCode = () => {
   value.value = `${webSiteUrl}/items/schedule/${useRoute().params.id}`;
 };
-const showQrCode = () => qrCode.value = !qrCode.value
+const showQrCode = () => (qrCode.value = !qrCode.value);
 
 onMounted(() => {
   fetchScheduleTitle();
@@ -106,6 +120,6 @@ onMounted(() => {
 </script>
 <style>
 .qr-code-wrapper {
-  background: rgba(0, 0, 0, .6);
+  background: rgba(0, 0, 0, 0.6);
 }
 </style>
