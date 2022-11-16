@@ -115,6 +115,8 @@ const generatePdf = async () => {
     description: "",
     datetime: "",
   };
+  let newArray = [];
+  let arr = [];
   let response = await $fetch(
     `${url}/items/events?filter={ "ScheduleTitleId":"${scheduleTitleId}"}`
   );
@@ -134,13 +136,16 @@ const generatePdf = async () => {
     delete item.date_created;
     delete item.date_updated;
 
+    arr = [item.datetime, item.time, item.description];
+
+    newArray.push(arr);
+
     itemPdf = {
       description: item.description,
       datetime: item.datetime,
       time: item.time,
     };
   });
-
   const doc = new jsPDF({
     orientation: "portrait",
     unit: "in",
@@ -153,13 +158,16 @@ const generatePdf = async () => {
     styles: {
       font: "PTSans",
       lineWidth: 0.02,
+      fillColor: [253, 218, 13],
+      textColor: [0, 0, 0],
     },
+    columnStyles: {  fillColor: [0, 255, 0] },
     theme: "grid",
-    body: response.data,
+    body: newArray,
     columns: [
+      { header: "Date", dataKey: itemPdf.datetime },
       { header: "Time", dataKey: itemPdf.time },
       { header: "Description", dataKey: itemPdf.description },
-      { header: "Date", dataKey: itemPdf.datetime },
     ],
 
     margin: { left: 0.5, top: 1.5 },
