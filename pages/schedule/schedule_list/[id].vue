@@ -1,33 +1,35 @@
 <template lang="">
-  <div>
-    <h1 v-if="showInputTitle == false">{{scheduleTitle.title}}</h1>
-    <input
-      type="text"
-      placeholder="Change title..."
-      v-else
-      v-model="scheduleTitle.title"
-    />
-    <UIButton
-      @click="changeTitle"
-      v-if="showInputTitle == false && token"
-      >Change Title</UIButton
-    >
-    <UIButton
-      @click="updateTitle"
-      v-else-if="showInputTitle != false"
-      >Update Title</UIButton
-    >
-    <TheScheduleList
-    :schedules="schedules"
-    v-if="schedules != ''"
-    />
+  <div class="container px-4 m-auto">
+    <div class="schedule-item-header flex justify-between flex-wrap items-center">
+      <h1 v-if="showInputTitle == false" class="text-4xl">
+        {{ scheduleTitle.title }}
+      </h1>
+      <UIInput
+        type="text"
+        placeholder="Change title..."
+        v-else
+        v-model:value="scheduleTitle.title"
+      />
+      <UIButton @click="changeTitle" v-if="showInputTitle == false && token"
+        >Change Title</UIButton
+      >
+
+      <UIButton @click="updateTitle" v-else-if="showInputTitle != false"
+        >Update Title</UIButton
+      >
+    </div>
+    <TheScheduleList :schedules="schedules" v-if="schedules != ''" />
     <div v-else>Schedules Empty</div>
     <form @submit.prevent v-if="token">
-      <h1>Create a new event</h1>
+      <h1 class="text-4xl mt-8 mb-2">Create a new event</h1>
       <UIInput type="date" v-model:value="newEvent.datetime" />
-      <UIInput placeholder="Time..." type="text" v-model:value="newEvent.time"/>
-      <UIInput placeholder="Description..." type="text" v-model:value="newEvent.description"/>
-      <UIButton @click="createEvent">Create</UIButton>
+      <UIInput placeholder="Time" type="text" v-model:value="newEvent.time" />
+      <UIInput
+        placeholder="Description"
+        type="text"
+        v-model:value="newEvent.description"
+      />
+      <UIButton @click="createEvent" class="min-w-full bg-indigo-500 dark:text-white">Create</UIButton>
     </form>
     <UIButton @click="generatePdf">Generate Pdf</UIButton>
   </div>
@@ -161,7 +163,7 @@ const generatePdf = async () => {
       fillColor: [253, 218, 13],
       textColor: [0, 0, 0],
     },
-    columnStyles: {  fillColor: [0, 255, 0] },
+    columnStyles: { fillColor: [0, 255, 0] },
     theme: "grid",
     body: newArray,
     columns: [
@@ -180,5 +182,4 @@ onMounted(() => {
   fetchSchedule();
 });
 </script>
-<style lang="">
-</style>
+<style lang=""></style>
