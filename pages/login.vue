@@ -9,6 +9,12 @@
         v-model:value="data.password"
       />
       <UIButton class="min-w-full">Log in</UIButton>
+      <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+        Not registered?
+        <a @click="$router.push('/register')" class="text-indigo-700 hover:underline dark:indigo-500"
+          >Create account</a
+        >
+      </div>
     </form>
   </div>
 </template>

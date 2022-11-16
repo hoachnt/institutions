@@ -2,11 +2,31 @@
   <div class="container m-auto max-w-lg">
     <form @submit.prevent="submit" class="px-4">
       <h1 class="text-2xl mb-1">Sign up</h1>
-      <UIInput type="text" placeholder="First name" v-model:value="data.firstName"/>
-      <UIInput type="text" placeholder="Last name" v-model:value="data.lastName"/>
-      <UIInput type="email" placeholder="Email" v-model:value="data.email"/>
-      <UIInput type="password" placeholder="Password" v-model:value="data.password"/>
+      <UIInput
+        type="text"
+        placeholder="First name"
+        v-model:value="data.firstName"
+      />
+      <UIInput
+        type="text"
+        placeholder="Last name"
+        v-model:value="data.lastName"
+      />
+      <UIInput type="email" placeholder="Email" v-model:value="data.email" />
+      <UIInput
+        type="password"
+        placeholder="Password"
+        v-model:value="data.password"
+      />
       <UIButton class="min-w-full">Sign up</UIButton>
+      <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+        Have account?
+        <a
+          @click="$router.push('/login')"
+          class="text-indigo-700 hover:underline dark:indigo-500"
+          >Login</a
+        >
+      </div>
     </form>
   </div>
 </template>

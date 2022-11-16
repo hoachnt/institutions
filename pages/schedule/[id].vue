@@ -1,26 +1,47 @@
 <template>
-  <div>
-    <h1>All schedules</h1>
+  <div class="container m-auto px-4">
+    <div class="schedule-header mb-3 flex justify-between items-center">
+      <h1 class="text-4xl">All schedules</h1>
+      <UIButton @click="showQrCode">QR code</UIButton>
+      <div class="qr-code-wrapper fixed min-w-full min-h-screen top-0 left-0 flex justify-center items-center" v-if="qrCode == true" @click="qrCode = false">
+        <qrcode-vue :value="value" :size="size" level="H" class="rounded-xl" />
+      </div>
+    </div>
     <div v-for="title in scheduleTitle" :key="title.id">
-      <UIButton @click="$router.push(`/schedule/schedule_list/${title.id}`)">{{
-        title.title
-      }}</UIButton>
+      <UIButton
+        @click="$router.push(`/schedule/schedule_list/${title.id}`)"
+        class="
+          block
+          py-2
+          px-4
+          dark:text-white
+          rounded-md
+          cursor-pointer
+          dark:bg-indigo-500
+          min-w-full
+        "
+      >
+        {{ title.title }}
+      </UIButton>
     </div>
     <UIInput
       type="text"
-      placeholder="Change title..."
+      placeholder="New Schedule..."
       v-if="addTitle == true"
       v-model:value="title"
     />
     <UIButton
       @click="addTitle = true"
       v-if="addTitle == false && token"
-      >Add new title</UIButton
+      class="min-w-full"
+      >+</UIButton
     >
-    <UIButton @click="addNewTitle" v-else-if="addTitle == true"
-      >Add title</UIButton
+    <UIButton
+      @click="addNewTitle"
+      v-else-if="addTitle == true"
+      class="min-w-full"
+      >Add schedule</UIButton
     >
-    <qrcode-vue :value="value" :size="size" level="H"/>
   </div>
 </template>
 <script setup>
@@ -28,21 +49,22 @@ import { usePiniaStore } from "@/stores/PiniaStore";
 import QrcodeVue from "qrcode.vue";
 
 const store = usePiniaStore();
-const config = useRuntimeConfig()
+const config = useRuntimeConfig();
 
 defineComponent({
-  QrcodeVue
-})
+  QrcodeVue,
+});
 
 useHead({
   title: "Dazan's schedule",
 });
 const token = useDirectusToken();
 
-const value = ref('')
-const size = ref(300)
+const qrCode = ref(false)
+const value = ref("");
+const size = ref(300);
 const url = config.public.url;
-const webSiteUrl = 'https://statuesque-custard-f1dc78.netlify.app'
+const webSiteUrl = "https://statuesque-custard-f1dc78.netlify.app";
 const datzanId = useRoute().params.id;
 const scheduleTitle = ref("");
 const addTitle = ref(false);
@@ -72,14 +94,18 @@ const addNewTitle = async () => {
 };
 const setLocalStorage = () => localStorage.setItem("datzanId", datzanId);
 const generateQrCode = () => {
-  value.value = `${webSiteUrl}/items/schedule/${useRoute().params.id}`
-}
+  value.value = `${webSiteUrl}/items/schedule/${useRoute().params.id}`;
+};
+const showQrCode = () => qrCode.value = !qrCode.value
 
 onMounted(() => {
   fetchScheduleTitle();
   setLocalStorage();
-  generateQrCode()
+  generateQrCode();
 });
 </script>
-<style lang="">
+<style>
+.qr-code-wrapper {
+  background: rgba(0, 0, 0, .6);
+}
 </style>
