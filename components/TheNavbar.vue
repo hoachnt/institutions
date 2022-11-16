@@ -17,7 +17,7 @@ const router = useRouter();
 const logOut = async () => {
   logout();
 
-  router.push('login')
+  router.push('/login')
 };
 </script>
 <style lang="">

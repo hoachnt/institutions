@@ -172,7 +172,6 @@ const generatePdf = async () => {
 
     margin: { left: 0.5, top: 1.5 },
   });
-  console.log(itemPdf, response.data);
   doc.save("generatePDF.pdf");
 };
 onMounted(() => {
