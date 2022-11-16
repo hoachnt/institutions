@@ -37,17 +37,21 @@ let datzans = ref();
 const userCreated = ref("");
 
 const fetchUserData = async () => {
-  let response = await $fetch(
-    `${url}/users?filter={"email":"${email.value}"}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token.value}`,
-      },
-    }
-  );
-  userCreated.value = response.data[0].id;
+  try {
+    let response = await $fetch(
+      `${url}/users?filter={"email":"${email.value}"}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+        },
+      }
+    );
+    userCreated.value = response.data[0].id;
 
-  fetchDatzan();
+    fetchDatzan();
+  } catch (error) {
+    useRouter().push('/login')
+  }
 };
 const fetchDatzan = async () => {
   let response = await $fetch(
