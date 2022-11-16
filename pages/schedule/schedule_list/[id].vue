@@ -29,7 +29,7 @@
         type="text"
         v-model:value="newEvent.description"
       />
-      <UIButton @click="createEvent" class="min-w-full bg-indigo-500 dark:text-white">Create</UIButton>
+      <UIButton @click="createEvent" class="min-w-full dark:bg-indigo-500 dark:text-white">Create</UIButton>
     </form>
     <UIButton @click="generatePdf">Generate Pdf</UIButton>
   </div>
