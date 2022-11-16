@@ -1,12 +1,12 @@
-<template lang="">
-  <div>
-    <form @submit.prevent="submit">
-      <h1>Sign up</h1>
-      <UIInput type="text" placeholder="first name" v-model:value="data.firstName"/>
-      <UIInput type="text" placeholder="last name" v-model:value="data.lastName"/>
-      <UIInput type="email" placeholder="email" v-model:value="data.email"/>
-      <UIInput type="password" placeholder="password" v-model:value="data.password"/>
-      <UIButton>Sign up</UIButton>
+<template>
+  <div class="container m-auto max-w-lg">
+    <form @submit.prevent="submit" class="px-4">
+      <h1 class="text-2xl mb-1">Sign up</h1>
+      <UIInput type="text" placeholder="First name" v-model:value="data.firstName"/>
+      <UIInput type="text" placeholder="Last name" v-model:value="data.lastName"/>
+      <UIInput type="email" placeholder="Email" v-model:value="data.email"/>
+      <UIInput type="password" placeholder="Password" v-model:value="data.password"/>
+      <UIButton class="min-w-full">Sign up</UIButton>
     </form>
   </div>
 </template>

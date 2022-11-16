@@ -21,5 +21,12 @@ export default defineNuxtConfig({
   directus: {
     url: process.env.VITE_ENDPOINT,
     token: ''
-  }
+  },
+  css: ['~/assets/css/main.css'],
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
+  },
 })

@@ -1,14 +1,14 @@
 <template>
-  <div>
-    <form @submit.prevent="submit">
-      <h1>Login</h1>
-      <UIInput type="email" placeholder="email" v-model:value="data.email" />
+  <div class="container m-auto max-w-lg">
+    <form @submit.prevent="submit" class="px-4">
+      <h1 class="text-2xl mb-1">Login</h1>
+      <UIInput type="email" placeholder="Email" v-model:value="data.email" />
       <UIInput
         type="password"
-        placeholder="password"
+        placeholder="Password"
         v-model:value="data.password"
       />
-      <UIButton>Log in</UIButton>
+      <UIButton class="min-w-full">Log in</UIButton>
     </form>
   </div>
 </template>
@@ -31,12 +31,12 @@ const submit = async () => {
 
     store.authenticated = true;
     store.userCreated = data.email;
-    
+
     const token = useDirectusToken();
-    
+
     await router.push("/");
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 };
 </script>

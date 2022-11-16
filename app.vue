@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-neutral-900 min-h-screen">
     <TheNavbar />
     <NuxtPage />
   </div>
