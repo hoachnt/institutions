@@ -19,7 +19,7 @@ export default defineNuxtConfig({
     },
   ],],
   directus: {
-    url: process.env.VITE_ENDPOINT,
+    url: 'https://directus.hoach.skryonline.com',
     token: ''
   },
   css: [
