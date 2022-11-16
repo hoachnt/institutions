@@ -5,15 +5,12 @@
       flex flex-wrap
       items-center
       justify-between
-      px-2
       py-3
       bg-indigo-500
       mb-3
     "
   >
-    <div
-      class="container px-4 mx-auto flex flex-wrap items-center justify-between"
-    >
+    <div class="container mx-auto flex flex-wrap items-center justify-between">
       <div
         class="
           w-full
@@ -65,7 +62,13 @@
       </div>
       <div
         v-bind:class="{ hidden: !showMenu, flex: showMenu }"
-        class="lg:flex lg:flex-grow-0 items-center"
+        class="
+          lg:flex lg:flex-grow-0
+          items-center
+          ease-linear
+          transition-all
+          duration-150
+        "
       >
         <ul class="flex flex-col lg:flex-row list-none ml-auto">
           <li class="nav-item" @click="$router.push('/')">
