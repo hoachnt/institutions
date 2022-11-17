@@ -1,6 +1,48 @@
 <template lang="">
   <div class="container px-4 m-auto">
-    <div class="schedule-item-header flex flex-wrap items-center">
+    <form @submit.prevent v-if="token">
+      <h1 class="text-4xl mb-2">Create a new event</h1>
+      <div>
+        <label
+          for="date"
+          class="block mb-1 mt-3 text-lg font-medium text-gray-900 dark:text-white"
+        >
+          Date
+        </label>
+        <UIInput
+          type="date"
+          v-model:value="newEvent.datetime"
+          id="date"
+          required
+        />
+      </div>
+      <div>
+        <label
+          for="time"
+          class="block mb-1 mt-3 text-lg font-medium text-gray-900 dark:text-white"
+        >
+          Time
+        </label>
+        <UIInput
+          placeholder="Time"
+          type="time"
+          v-model:value="newEvent.time"
+          id="time"
+          required
+        />
+      </div>
+      <UIInput
+        placeholder="Description"
+        type="text"
+        v-model:value="newEvent.description"
+      />
+      <UIButton
+        @click="createEvent"
+        class="min-w-full dark:bg-indigo-500 dark:text-white"
+        >Create</UIButton
+      >
+    </form>
+    <div class="schedule-item-header flex flex-wrap items-center mt-8">
       <h1 v-if="showInputTitle == false" class="text-4xl">
         {{ scheduleTitle.title }}
       </h1>
@@ -23,22 +65,12 @@
     </div>
     <TheScheduleList :schedules="schedules" v-if="schedules != ''" />
     <div v-else>Schedules Empty</div>
-    <form @submit.prevent v-if="token">
-      <h1 class="text-4xl mt-8 mb-2">Create a new event</h1>
-      <UIInput type="date" v-model:value="newEvent.datetime" />
-      <UIInput placeholder="Time" type="text" v-model:value="newEvent.time" />
-      <UIInput
-        placeholder="Description"
-        type="text"
-        v-model:value="newEvent.description"
-      />
-      <UIButton
-        @click="createEvent"
-        class="min-w-full dark:bg-indigo-500 dark:text-white"
-        >Create</UIButton
-      >
-    </form>
-    <UIButton @click="generatePdf">Generate Pdf</UIButton>
+    <UIButton @click="generatePdf" class="flex items-center">
+      <div>
+        <font-awesome-icon icon="fa-solid fa-file-pdf" class="text-3xl mx-2" />
+      </div>
+      <p>Generate Pdf</p>
+    </UIButton>
   </div>
 </template>
 <script setup>
@@ -62,40 +94,41 @@ const showInputTitle = ref(false);
 const dazanId = ref("");
 const scheduleTitleId = useRoute().params.id;
 const scheduleTitle = ref("");
-const newEvent = ref({
+let newEvent = reactive({
   datetime: "",
   time: "",
   description: "",
-  datzanId: "",
-  scheduleTitleId: "",
+  datzanId: dazanId.value,
+  ScheduleTitleId: scheduleTitleId,
 });
 const changeTitle = () => (showInputTitle.value = true);
 const updateTitle = async () => {
-  return await $fetch(`${url}/items/schedule_title/${scheduleTitle.value.id}`, {
-    method: "PATCH",
-    headers: {
-      Authorization: `Bearer ${token.value}`,
-    },
-    body: {
-      title: scheduleTitle.value.title,
-    },
-  }).then(() => document.location.reload(true));
+  let response = await $fetch(
+    `${url}/items/schedule_title/${scheduleTitle.value.id}`,
+    {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+      body: {
+        title: scheduleTitle.value.title,
+      },
+    }
+  );
+  showInputTitle.value = false;
 };
 const createEvent = async () => {
-  console.log(newEvent.value.datetime);
-  return await $fetch(`${url}/items/events`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token.value}`,
-    },
-    body: {
-      datetime: newEvent.value.datetime,
-      time: newEvent.value.time,
-      description: newEvent.value.description,
-      datzanId: dazanId.value,
-      ScheduleTitleId: scheduleTitleId,
-    },
-  }).then(() => document.location.reload(true));
+  try {
+    await $fetch(`${url}/items/events`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+      body: newEvent,
+    }).then(() => schedules.value.push(newEvent));
+  } catch (error) {
+    console.log(error);
+  }
 };
 const fetchSchedule = async () => {
   let response = await $fetch(

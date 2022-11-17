@@ -50,7 +50,7 @@ const fetchUserData = async () => {
 
     fetchDatzan();
   } catch (error) {
-    useRouter().push('/login')
+    useRouter().push("/login");
   }
 };
 const fetchDatzan = async () => {
@@ -78,9 +78,7 @@ const createDatzan = () => {
         Authorization: `Bearer ${token.value}`,
       },
       body: datzan,
-    })
-      .then(() => datzans.value.push(datzan))
-      .then(() => document.location.reload(true));
+    }).then(() => datzans.value.push(datzan));
   } catch (error) {
     console.log(error);
   }

@@ -110,7 +110,7 @@ const addNewTitle = async () => {
 };
 const setLocalStorage = () => localStorage.setItem("datzanId", datzanId);
 const generateQrCode = () => {
-  value.value = `${url}/items/schedule/${useRoute().params.id}`;
+  value.value = `${websiteUrl}/schedule/${useRoute().params.id}`;
 };
 const showQrCode = () => (qrCode.value = !qrCode.value);
 
