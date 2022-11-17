@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
   fas,
   faPlus,
+  faMinus,
   faQrcode,
   faPenToSquare,
   faFilePdf,
@@ -13,7 +14,7 @@ config.autoAddCss = false;
 
 // You can add your icons directly in this plugin. See other examples for how you
 // can add other styles or just individual icons.
-library.add(fas, faPlus, faPenToSquare, faQrcode, faFilePdf);
+library.add(fas, faPlus, faPenToSquare, faQrcode, faFilePdf, faMinus);
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("font-awesome-icon", FontAwesomeIcon, {});

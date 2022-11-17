@@ -71,7 +71,7 @@
         "
       >
         <ul class="flex flex-col lg:flex-row list-none ml-auto">
-          <li class="nav-item" @click="$router.push('/')">
+          <NuxtLink to="/" class="nav-item">
             <a
               class="
                 px-3
@@ -97,7 +97,7 @@
                 "
               /><span class="ml-2">Home</span>
             </a>
-          </li>
+          </NuxtLink>
           <li class="nav-item" @click="$router.push('/register')" v-if="!token">
             <a
               class="
@@ -118,7 +118,7 @@
               /><span class="ml-2">Register</span>
             </a>
           </li>
-          <li class="nav-item" @click="$router.push('/login')" v-if="!token">
+          <NuxtLink to="/login" class="nav-item" v-if="!token">
             <a
               class="
                 px-3
@@ -137,7 +137,7 @@
                 class="fab fa-twitter text-lg leading-lg text-white opacity-75"
               /><span class="ml-2">Login</span>
             </a>
-          </li>
+          </NuxtLink>
           <li class="nav-item" @click="logOut" v-if="token">
             <a
               class="
@@ -171,6 +171,7 @@
   </nav>
 </template>
 <script setup>
+definePageMeta({ pageTransition: { name: "rotate" } });
 const { logout } = useDirectusAuth();
 
 const token = useDirectusToken();

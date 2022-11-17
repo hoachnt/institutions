@@ -1,64 +1,71 @@
 <template>
-  <div class="container m-auto px-4">
-    <div class="schedule-header mb-3 flex justify-between items-center">
-      <h1 class="text-4xl">All schedules</h1>
-      <UIButton @click="showQrCode">
-        <font-awesome-icon :icon="['fa', 'fa-qrcode']" class="text-xl"/>
-      </UIButton>
-      <div
-        class="
-          qr-code-wrapper
-          fixed
-          min-w-full min-h-screen
-          top-0
-          left-0
-          flex
-          justify-center
-          items-center
-        "
-        v-if="qrCode == true"
-        @click="qrCode = false"
-      >
-        <qrcode-vue :value="value" :size="size" level="H" class="rounded-xl" />
+  <main>
+    <div class="container m-auto px-4">
+      <div class="schedule-header mb-3 flex justify-between items-center">
+        <h1 class="text-4xl">All schedules</h1>
+        <UIButton @click="showQrCode">
+          <font-awesome-icon :icon="['fa', 'fa-qrcode']" class="text-xl" />
+        </UIButton>
+        <div
+          class="
+            qr-code-wrapper
+            fixed
+            min-w-full min-h-screen
+            top-0
+            left-0
+            flex
+            justify-center
+            items-center
+          "
+          v-if="qrCode == true"
+          @click="qrCode = false"
+        >
+          <qrcode-vue
+            :value="value"
+            :size="size"
+            level="H"
+            class="rounded-xl"
+          />
+        </div>
       </div>
-    </div>
-    <div v-for="title in scheduleTitle" :key="title.id">
+      <div v-for="title in scheduleTitle" :key="title.id">
+        <UIButton
+          @click="$router.push(`/schedule/schedule_list/${title.id}`)"
+          class="
+            block
+            py-2
+            px-4
+            dark:text-white
+            rounded-md
+            cursor-pointer
+            dark:bg-indigo-500
+            min-w-full
+          "
+        >
+          {{ title.title }}
+        </UIButton>
+      </div>
+      <UIInput
+        type="text"
+        placeholder="New Schedule..."
+        v-if="addTitle == true"
+        v-model:value="title"
+      />
       <UIButton
-        @click="$router.push(`/schedule/schedule_list/${title.id}`)"
-        class="
-          block
-          py-2
-          px-4
-          dark:text-white
-          rounded-md
-          cursor-pointer
-          dark:bg-indigo-500
-          min-w-full
-        "
+        @click="addTitle = true"
+        v-if="addTitle == false && token"
+        class="min-w-full"
       >
-        {{ title.title }}
+        <font-awesome-icon icon="fa-solid fa-plus" />
       </UIButton>
+      <UIButton
+        @click="addNewTitle"
+        v-else-if="addTitle == true"
+        class="min-w-full"
+        >Add schedule</UIButton
+      >
     </div>
-    <UIInput
-      type="text"
-      placeholder="New Schedule..."
-      v-if="addTitle == true"
-      v-model:value="title"
-    />
-    <UIButton
-      @click="addTitle = true"
-      v-if="addTitle == false && token"
-      class="min-w-full"
-    >
-      <font-awesome-icon icon="fa-solid fa-plus" />
-    </UIButton>
-    <UIButton
-      @click="addNewTitle"
-      v-else-if="addTitle == true"
-      class="min-w-full"
-      >Add schedule</UIButton
-    >
-  </div>
+  </main>
 </template>
 <script setup>
 import { usePiniaStore } from "@/stores/PiniaStore";
@@ -80,7 +87,7 @@ const qrCode = ref(false);
 const value = ref("");
 const size = ref(300);
 const url = config.public.url;
-const websiteUrl = "datsan.surge.sh"
+const websiteUrl = "datsan.surge.sh";
 const datzanId = useRoute().params.id;
 const scheduleTitle = ref("");
 const addTitle = ref(false);

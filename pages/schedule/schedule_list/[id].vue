@@ -1,86 +1,95 @@
 <template lang="">
-  <div class="container px-4 m-auto">
-    <form @submit.prevent v-if="token && showFormCreateItem == true">
-      <h1 class="text-4xl mb-2">Create a new event</h1>
-      <div>
-        <label
-          for="date"
-          class="block mb-1 mt-3 text-lg font-medium text-gray-900 dark:text-white"
-        >
-          Date
-        </label>
-        <UIInput
-          type="date"
-          v-model:value="newEvent.datetime"
-          id="date"
-          required
-        />
-      </div>
-      <div>
-        <label
-          for="time"
-          class="block mb-1 mt-3 text-lg font-medium text-gray-900 dark:text-white"
-        >
-          Time
-        </label>
-        <UIInput
-          placeholder="Time"
-          type="time"
-          v-model:value="newEvent.time"
-          id="time"
-          required
-        />
-      </div>
-      <UIInput
-        placeholder="Description"
-        type="text"
-        v-model:value="newEvent.description"
-      />
-      <UIButton
-        @click="createEvent"
-        class="min-w-full dark:bg-indigo-500 dark:text-white"
-        >Create</UIButton
-      >
-    </form>
-    <div class="schedule-item-header mt-8 flex flex-wrap justify-between">
-      <div class="flex flex-wrap items-center flex-1">
-        <h1 v-if="showInputTitle == false" class="text-4xl">
-          {{ scheduleTitle.title }}
-        </h1>
-        <UIInput
-          type="text"
-          placeholder="Change title..."
-          v-else
-          v-model:value="scheduleTitle.title"
-          class="text-4xl"
-        />
-        <div
-          @click="changeTitle"
-          v-if="showInputTitle == false && token"
-          class="text-2xl cursor-pointer text-indigo-500 hover:text-white active:bg-indigo-600 ease-linear transition-all duration-150"
-        >
-          <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+  <main>
+    <div class="container px-4 m-auto">
+      <form @submit.prevent v-if="token && showFormCreateItem == true">
+        <h1 class="text-4xl mb-2">Create a new event</h1>
+        <div>
+          <label
+            for="date"
+            class="block mb-1 mt-3 text-lg font-medium text-gray-900 dark:text-white"
+          >
+            Date
+          </label>
+          <UIInput
+            type="date"
+            v-model:value="newEvent.datetime"
+            id="date"
+            required
+          />
         </div>
-        <UIButton @click="updateTitle" v-else-if="showInputTitle != false">
-          Update Title
+        <div>
+          <label
+            for="time"
+            class="block mb-1 mt-3 text-lg font-medium text-gray-900 dark:text-white"
+          >
+            Time
+          </label>
+          <UIInput
+            placeholder="Time"
+            type="time"
+            v-model:value="newEvent.time"
+            id="time"
+            required
+          />
+        </div>
+        <UIInput
+          placeholder="Description"
+          type="text"
+          v-model:value="newEvent.description"
+        />
+        <UIButton
+          @click="createEvent"
+          class="min-w-full dark:bg-indigo-500 dark:text-white"
+          >Create</UIButton
+        >
+      </form>
+      <div class="schedule-item-header mt-8 flex flex-wrap justify-between">
+        <div class="flex flex-wrap items-center mr-2 flex-1">
+          <h1 v-if="showInputTitle == false" class="text-4xl">
+            {{ scheduleTitle.title }}
+          </h1>
+          <UIInput
+            type="text"
+            placeholder="Change title..."
+            v-else
+            v-model:value="scheduleTitle.title"
+            class="text-4xl"
+          />
+          <div
+            @click="changeTitle"
+            v-if="showInputTitle == false && token"
+            class="text-2xl cursor-pointer text-indigo-500 hover:text-white active:bg-indigo-600 ease-linear transition-all duration-150"
+          >
+            <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+          </div>
+          <UIButton @click="updateTitle" v-else-if="showInputTitle != false">
+            Update Title
+          </UIButton>
+        </div>
+        <UIButton
+          @click="showForm"
+          class="create-btn flex items-center justify-center min-w-full"
+          v-if="token"
+        >
+          <div>
+            <font-awesome-icon icon="fa-solid fa-plus" class="mx-1" />
+          </div>
+          <p>Create</p>
         </UIButton>
       </div>
-      <UIButton class="flex-2 flex" @click="showForm" v-if="token">
+      <TheScheduleList :schedules="schedules" v-if="schedules != ''" />
+      <div v-else>Schedules Empty</div>
+      <UIButton @click="generatePdf" class="flex items-center">
         <div>
-          <font-awesome-icon icon="fa-solid fa-plus" class="mx-1" />
+          <font-awesome-icon
+            icon="fa-solid fa-file-pdf"
+            class="text-3xl mx-2"
+          />
         </div>
-        Create
+        <p>Generate Pdf</p>
       </UIButton>
     </div>
-    <TheScheduleList :schedules="schedules" v-if="schedules != ''" />
-    <div v-else>Schedules Empty</div>
-    <UIButton @click="generatePdf" class="flex items-center">
-      <div>
-        <font-awesome-icon icon="fa-solid fa-file-pdf" class="text-3xl mx-2" />
-      </div>
-      <p>Generate Pdf</p>
-    </UIButton>
-  </div>
+  </main>
 </template>
 <script setup>
 import { usePiniaStore } from "@/stores/PiniaStore";
@@ -233,4 +242,10 @@ onMounted(() => {
   fetchSchedule();
 });
 </script>
-<style lang=""></style>
+<style>
+@media (min-width: 768px) {
+  .create-btn {
+    min-width: 0px !important;
+  }
+}
+</style>
