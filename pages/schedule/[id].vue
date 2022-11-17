@@ -2,7 +2,9 @@
   <div class="container m-auto px-4">
     <div class="schedule-header mb-3 flex justify-between items-center">
       <h1 class="text-4xl">All schedules</h1>
-      <UIButton @click="showQrCode">QR code</UIButton>
+      <UIButton @click="showQrCode">
+        <font-awesome-icon :icon="['fa', 'fa-qrcode']" class="text-xl"/>
+      </UIButton>
       <div
         class="
           qr-code-wrapper
@@ -78,6 +80,7 @@ const qrCode = ref(false);
 const value = ref("");
 const size = ref(300);
 const url = config.public.url;
+const websiteUrl = "datsan.surge.sh"
 const datzanId = useRoute().params.id;
 const scheduleTitle = ref("");
 const addTitle = ref(false);
