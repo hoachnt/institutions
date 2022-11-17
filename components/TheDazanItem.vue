@@ -1,7 +1,43 @@
 <template lang="">
-  <h5
-    class="mb-2 text-2xl font-bold tracking-tight text-white"
-  >
+  <div class="flex justify-end relative">
+    <button
+      id="dropdownButton"
+      data-dropdown-toggle="dropdown"
+      class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"
+      type="button"
+      @click="toggleNavbar"
+    >
+      <span class="sr-only">Open dropdown</span>
+      <svg
+        class="w-6 h-6"
+        aria-hidden="true"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
+        ></path>
+      </svg>
+    </button>
+    <!-- Dropdown menu -->
+    <div
+      id="dropdown"
+      class="z-10 text-base list-none bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700 absolute top-10"
+      v-if="showMenu"
+    >
+      <ul class="py-1" aria-labelledby="dropdownButton">
+        <li>
+          <a
+            @click="removeDazan"
+            class="block px-4 py-2 text-md text-red-600 hover:bg-gray-600"
+            >Delete</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+  <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">
     {{ datzan.name }}
   </h5>
   <p class="mb-3 font-normal text-gray-400">
@@ -27,13 +63,11 @@
     </svg>
   </a>
 </template>
-<script>
-export default {
-  props: {
-    datzan: {
-      type: Object,
-    },
-  },
-};
+<script setup>
+const showMenu = ref(false);
+const toggleNavbar = () => (showMenu.value = !showMenu.value);
+const props = defineProps({
+  datzan: Object,
+});
 </script>
 <style lang=""></style>
