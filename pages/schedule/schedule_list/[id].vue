@@ -1,6 +1,6 @@
 <template lang="">
   <div class="container px-4 m-auto">
-    <div class="schedule-item-header flex justify-between flex-wrap items-center">
+    <div class="schedule-item-header flex flex-wrap items-center">
       <h1 v-if="showInputTitle == false" class="text-4xl">
         {{ scheduleTitle.title }}
       </h1>
@@ -10,10 +10,13 @@
         v-else
         v-model:value="scheduleTitle.title"
       />
-      <UIButton @click="changeTitle" v-if="showInputTitle == false && token"
-        >Change Title</UIButton
+      <div
+        @click="changeTitle"
+        v-if="showInputTitle == false && token"
+        class="text-2xl cursor-pointer text-indigo-500 hover:text-white active:bg-indigo-600 ease-linear transition-all duration-150"
       >
-
+        <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+      </div>
       <UIButton @click="updateTitle" v-else-if="showInputTitle != false"
         >Update Title</UIButton
       >
@@ -29,7 +32,11 @@
         type="text"
         v-model:value="newEvent.description"
       />
-      <UIButton @click="createEvent" class="min-w-full dark:bg-indigo-500 dark:text-white">Create</UIButton>
+      <UIButton
+        @click="createEvent"
+        class="min-w-full dark:bg-indigo-500 dark:text-white"
+        >Create</UIButton
+      >
     </form>
     <UIButton @click="generatePdf">Generate Pdf</UIButton>
   </div>
