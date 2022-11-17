@@ -1,6 +1,6 @@
 <template lang="">
   <div class="container px-4 m-auto">
-    <form @submit.prevent v-if="token">
+    <form @submit.prevent v-if="token && showFormCreateItem == true">
       <h1 class="text-4xl mb-2">Create a new event</h1>
       <div>
         <label
@@ -42,26 +42,35 @@
         >Create</UIButton
       >
     </form>
-    <div class="schedule-item-header flex flex-wrap items-center mt-8">
-      <h1 v-if="showInputTitle == false" class="text-4xl">
-        {{ scheduleTitle.title }}
-      </h1>
-      <UIInput
-        type="text"
-        placeholder="Change title..."
-        v-else
-        v-model:value="scheduleTitle.title"
-      />
-      <div
-        @click="changeTitle"
-        v-if="showInputTitle == false && token"
-        class="text-2xl cursor-pointer text-indigo-500 hover:text-white active:bg-indigo-600 ease-linear transition-all duration-150"
-      >
-        <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+    <div class="schedule-item-header mt-8 flex flex-wrap justify-between">
+      <div class="flex flex-wrap items-center flex-1">
+        <h1 v-if="showInputTitle == false" class="text-4xl">
+          {{ scheduleTitle.title }}
+        </h1>
+        <UIInput
+          type="text"
+          placeholder="Change title..."
+          v-else
+          v-model:value="scheduleTitle.title"
+          class="text-4xl"
+        />
+        <div
+          @click="changeTitle"
+          v-if="showInputTitle == false && token"
+          class="text-2xl cursor-pointer text-indigo-500 hover:text-white active:bg-indigo-600 ease-linear transition-all duration-150"
+        >
+          <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+        </div>
+        <UIButton @click="updateTitle" v-else-if="showInputTitle != false">
+          Update Title
+        </UIButton>
       </div>
-      <UIButton @click="updateTitle" v-else-if="showInputTitle != false"
-        >Update Title</UIButton
-      >
+      <UIButton class="flex-2 flex" @click="showForm" v-if="token">
+        <div>
+          <font-awesome-icon icon="fa-solid fa-plus" class="mx-1" />
+        </div>
+        Create
+      </UIButton>
     </div>
     <TheScheduleList :schedules="schedules" v-if="schedules != ''" />
     <div v-else>Schedules Empty</div>
@@ -91,6 +100,7 @@ const url = config.public.url;
 const schedules = ref([]);
 const schedulesForPdf = ref([]);
 const showInputTitle = ref(false);
+const showFormCreateItem = ref(false);
 const dazanId = ref("");
 const scheduleTitleId = useRoute().params.id;
 const scheduleTitle = ref("");
@@ -117,6 +127,7 @@ const updateTitle = async () => {
   );
   showInputTitle.value = false;
 };
+const showForm = () => (showFormCreateItem.value = !showFormCreateItem.value);
 const createEvent = async () => {
   try {
     await $fetch(`${url}/items/events`, {
