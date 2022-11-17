@@ -7,6 +7,9 @@ import {
   faQrcode,
   faPenToSquare,
   faFilePdf,
+  faHouse,
+  faRightFromBracket,
+  faRightToBracket,
 } from "@fortawesome/free-solid-svg-icons";
 
 // This is important, we are going to let Nuxt worry about the CSS
@@ -14,7 +17,17 @@ config.autoAddCss = false;
 
 // You can add your icons directly in this plugin. See other examples for how you
 // can add other styles or just individual icons.
-library.add(fas, faPlus, faPenToSquare, faQrcode, faFilePdf, faMinus);
+library.add(
+  fas,
+  faPlus,
+  faPenToSquare,
+  faQrcode,
+  faFilePdf,
+  faMinus,
+  faHouse,
+  faRightFromBracket,
+  faRightToBracket
+);
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("font-awesome-icon", FontAwesomeIcon, {});
