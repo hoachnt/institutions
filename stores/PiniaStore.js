@@ -6,6 +6,7 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
   const user = useDirectusUser();
   const userCreated = ref(user.value.id);
   const token = useDirectusToken();
+  const schedules = ref([]);
 
   const fetchDatzan = async () => {
     try {
@@ -26,17 +27,30 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
     }
   };
   const removeDatzan = async (id) => {
-    try {      
-      datzans.value = datzans.value.filter(items => items.id != id)
+    try {
+      datzans.value = datzans.value.filter((items) => items.id != id);
 
       let response = await $fetch(`${url}/items/datzans/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token.value}`,
         },
-      })
+      });
     } catch (error) {}
   };
+  const removeEvent = async (id) => {
+    try {
+      schedules.value = schedules.value.filter((items) => items.id != id);
+
+      let response = await $fetch(`${url}/items/events/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+        },
+      });
+    } catch (error) {}
+  };
+
   onMounted(() => {
     fetchDatzan();
   });
@@ -49,5 +63,7 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
     datzans,
     url,
     removeDatzan,
+    schedules,
+    removeEvent
   };
 });

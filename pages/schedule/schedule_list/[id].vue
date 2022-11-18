@@ -77,7 +77,7 @@
           <p>Create</p>
         </UIButton>
       </div>
-      <TheScheduleList :schedules="schedules" v-if="schedules != ''" />
+      <TheScheduleList :schedules="store.schedules" v-if="schedules != ''" />
       <div v-else>Schedules Empty</div>
       <UIButton @click="generatePdf" class="flex items-center">
         <div>
@@ -106,7 +106,6 @@ const store = usePiniaStore();
 const config = useRuntimeConfig();
 
 const url = config.public.url;
-const schedules = ref([]);
 const schedulesForPdf = ref([]);
 const showInputTitle = ref(false);
 const showFormCreateItem = ref(false);
@@ -147,15 +146,23 @@ const createEvent = async () => {
       body: newEvent,
     }).then(() => fetchSchedule());
   } catch (error) {
-    console.log(error);
+    alert(error);
+
+    useRouter().push("/login");
   }
 };
 const fetchSchedule = async () => {
-  let response = await $fetch(
-    `${url}/items/events?filter={ "ScheduleTitleId":"${scheduleTitleId}"}`
-  );
+  try {
+    let response = await $fetch(
+      `${url}/items/events?filter={ "ScheduleTitleId":"${scheduleTitleId}"}`
+    );
 
-  schedules.value = await response.data;
+    store.schedules = await response.data;
+  } catch (error) {
+    alert(error)
+
+    useRouter().push('/login')
+  }
 };
 const fetchScheduleTitle = async () => {
   try {

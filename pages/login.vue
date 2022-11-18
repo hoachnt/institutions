@@ -19,7 +19,6 @@
   </div>
 </template>
 <script setup>
-import { usePiniaStore } from "@/stores/PiniaStore";
 const { login } = useDirectusAuth();
 
 const router = useRouter();
