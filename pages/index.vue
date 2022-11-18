@@ -32,7 +32,9 @@ const datzan = {
   address: "",
 };
 
-onMounted(() => {});
+onMounted(() => {
+  store.fetchDatzan()
+});
 
 const createDatzan = () => {
   try {

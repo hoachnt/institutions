@@ -1,6 +1,6 @@
 <template lang="">
   <div class="block min-w-full p-6 pb-10 rounded-lg shadow-md bg-neutral-800 my-3">
-    <div class="flex justify-end relative">
+    <div class="flex justify-end relative" v-if="token">
       <button
         id="dropdownButton"
         data-dropdown-toggle="dropdown"

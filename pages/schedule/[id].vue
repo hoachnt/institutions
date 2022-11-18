@@ -71,6 +71,7 @@
 import { usePiniaStore } from "@/stores/PiniaStore";
 import QrcodeVue from "qrcode.vue";
 
+const user = useDirectusUser();
 const store = usePiniaStore();
 const config = useRuntimeConfig();
 
