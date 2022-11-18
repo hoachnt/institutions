@@ -45,7 +45,7 @@
   </p>
   <a
     class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-indigo-600 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 ease-linear transition-all duration-150"
-    @click="$router.push(`/schedule/${this.datzan.id}`)"
+    @click="$router.push(`/schedule/${datzan.id}`)"
   >
     Schedule
     <svg
