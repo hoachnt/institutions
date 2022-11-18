@@ -24,7 +24,7 @@
       <!-- Dropdown menu -->
       <div
         id="dropdown"
-        class="z-10 text-base list-none bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700 absolute -right-10 top-12"
+        class="z-10 text-base list-none divide-y divide-gray-100 rounded shadow w-44 bg-gray-700 absolute -right-10 top-12"
         v-if="showMenu"
       >
         <ul class="py-1" aria-labelledby="dropdownButton">

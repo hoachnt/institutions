@@ -159,9 +159,9 @@ const fetchSchedule = async () => {
 
     store.schedules = await response.data;
   } catch (error) {
-    alert(error)
+    alert(error);
 
-    useRouter().push('/login')
+    useRouter().push("/login");
   }
 };
 const fetchScheduleTitle = async () => {
@@ -220,18 +220,24 @@ const generatePdf = async () => {
     unit: "in",
     format: "letter",
   });
+  doc.setTextColor(90, 8, 26);
   doc.setFont("PTSans");
-  doc.setFontSize(16).text(scheduleTitle.value.title, 0.5, 1.0);
+  doc.setFontSize(22).text(scheduleTitle.value.title, 0.5, 1.0);
   doc.setLineWidth(0.01).line(0.5, 1.1, 8.0, 1.1);
   doc.autoTable({
     styles: {
       font: "PTSans",
-      lineWidth: 0.02,
-      fillColor: [253, 218, 13],
+      lineWidth: {
+        bottom: 0.08,
+      },
       textColor: [0, 0, 0],
+      fillColor: [255, 255, 255],
+      cellPadding: 0.2,
     },
-    columnStyles: { fillColor: [0, 255, 0] },
-    theme: "grid",
+    columnStyles: { 
+      fillColor: [253, 218, 13]
+    },
+    theme: "plain",
     body: newArray,
     columns: [
       { header: "Date", dataKey: itemPdf.datetime },
@@ -239,9 +245,9 @@ const generatePdf = async () => {
       { header: "Description", dataKey: itemPdf.description },
     ],
 
-    margin: { left: 0.5, top: 1.5 },
+    margin: { top: 1.5 },
   });
-  doc.save("generatePDF.pdf");
+  doc.save(`${scheduleTitle.value.title}.pdf`);
 };
 onMounted(() => {
   getLocalStorage();
