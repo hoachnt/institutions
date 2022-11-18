@@ -53,7 +53,7 @@
       {{ schedule.time }}
     </div>
     <div class="font-normal text-gray-400">{{ schedule.description }}</div>
-    <div v-if="showUpdate">
+    <div v-if="showUpdate" class="p-2 bg-neutral-900 rounded-md mt-10">
       <UIInput type="date" v-model:value="schedule.datetime"/>
       <UIInput type="time" v-model:value="schedule.time"/>
       <UIInput type="text" v-model:value="schedule.description"/>
