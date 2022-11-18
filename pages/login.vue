@@ -22,7 +22,6 @@
 import { usePiniaStore } from "@/stores/PiniaStore";
 const { login } = useDirectusAuth();
 
-const store = usePiniaStore();
 const router = useRouter();
 const data = reactive({
   email: "",
@@ -34,9 +33,6 @@ const submit = async () => {
       email: data.email,
       password: data.password,
     });
-
-    store.authenticated = true;
-    store.userCreated = data.email;
 
     const token = useDirectusToken();
 

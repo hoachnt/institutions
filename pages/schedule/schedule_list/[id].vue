@@ -145,7 +145,7 @@ const createEvent = async () => {
         Authorization: `Bearer ${token.value}`,
       },
       body: newEvent,
-    }).then(() => schedules.value.push(newEvent));
+    }).then(() => fetchSchedule());
   } catch (error) {
     console.log(error);
   }

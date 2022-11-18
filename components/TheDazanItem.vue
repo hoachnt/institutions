@@ -23,13 +23,13 @@
     <!-- Dropdown menu -->
     <div
       id="dropdown"
-      class="z-10 text-base list-none bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700 absolute top-10"
+      class="z-10 text-base list-none bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700 absolute -right-16 top-12"
       v-if="showMenu"
     >
       <ul class="py-1" aria-labelledby="dropdownButton">
         <li>
           <a
-            @click="removeDazan"
+            @click="store.removeDatzan(datzan.id)"
             class="block px-4 py-2 text-md text-red-600 hover:bg-gray-600"
             >Delete</a
           >
@@ -64,6 +64,8 @@
   </a>
 </template>
 <script setup>
+const store = usePiniaStore();
+
 const showMenu = ref(false);
 const toggleNavbar = () => (showMenu.value = !showMenu.value);
 const props = defineProps({
