@@ -9,8 +9,10 @@
         >
       </form>
       <h1 class="mb-1 text-4xl mt-8">Datzans</h1>
-      <TheDatzanList :datzans="store.datzans" v-if="datzan != ''" />
-      <div v-else>datzan Empty</div>
+      <transition name="fade">
+        <TheDatzanList :datzans="store.datzans" v-if="datzan != ''" />
+        <div v-else>datzan Empty</div>
+      </transition>
     </div>
   </main>
 </template>
@@ -33,7 +35,7 @@ const datzan = {
 };
 
 onMounted(() => {
-  store.fetchDatzan()
+  store.fetchDatzan();
 });
 
 const createDatzan = () => {
@@ -50,3 +52,14 @@ const createDatzan = () => {
   }
 };
 </script>
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

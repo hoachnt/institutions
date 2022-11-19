@@ -46,19 +46,19 @@
     </div>
     <div class="mb-2 text-2xl font-bold tracking-tight text-white">
       {{ new Date(schedule.datetime).getDate() }}/{{
-        new Date(schedule.datetime).getMonth()
+        new Date(schedule.datetime).getMonth() + 1
       }}/{{ new Date(schedule.datetime).getFullYear() }}
     </div>
     <div class="mb-2 text-2xl font-bold tracking-tight text-white">
       {{ schedule.time }}
     </div>
     <div class="font-normal text-gray-400">{{ schedule.description }}</div>
-    <div v-if="showUpdate" class="p-2 bg-neutral-900 rounded-md mt-10">
+    <form @submit.prevent v-if="showUpdate" class="p-2 bg-neutral-900 rounded-md mt-10">
       <UIInput type="date" v-model:value="schedule.datetime"/>
       <UIInput type="time" v-model:value="schedule.time"/>
       <UIInput type="text" v-model:value="schedule.description"/>
       <UIButton @click="updateEvent">Update</UIButton>
-    </div>
+    </form>
   </div>
 </template>
 <script setup>
@@ -75,8 +75,8 @@ const showMenu = ref(false);
 const showUpdate = ref(false);
 const toggleNavbar = () => (showMenu.value = !showMenu.value);
 const toggleUpdate = () => {
-  showUpdate.value = !showUpdate.value
-  showMenu.value = false
+  showUpdate.value = !showUpdate.value;
+  showMenu.value = false;
 };
 const updateEvent = async () => {
   let response = await $fetch(

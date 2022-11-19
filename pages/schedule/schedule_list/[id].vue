@@ -106,7 +106,6 @@ const store = usePiniaStore();
 const config = useRuntimeConfig();
 
 const url = config.public.url;
-const schedulesForPdf = ref([]);
 const showInputTitle = ref(false);
 const showFormCreateItem = ref(false);
 const dazanId = ref("");
