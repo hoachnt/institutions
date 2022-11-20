@@ -28,7 +28,7 @@
           />
         </div>
       </div>
-      <div v-for="title in scheduleTitle" :key="title.id">
+      <div v-for="title in scheduleTitle" :key="title.id" class="flex">
         <UIButton
           @click="$router.push(`/schedule/schedule_list/${title.id}`)"
           class="
@@ -39,11 +39,18 @@
             rounded-md
             cursor-pointer
             dark:bg-indigo-500
-            min-w-full
+            flex-1
           "
         >
           {{ title.title }}
         </UIButton>
+        <UIRemoveButton
+          @click="removeSchedule(title.id)"
+          class="ml-2"
+          v-if="token"
+        >
+          <font-awesome-icon icon="fa-solid fa-trash" />
+        </UIRemoveButton>
       </div>
       <UIInput
         type="text"
@@ -88,7 +95,7 @@ const qrCode = ref(false);
 const value = ref("");
 const size = ref(300);
 const url = config.public.url;
-const websiteUrl = "datsan.surge.sh";
+const websiteUrl = getWebUrl();
 const datzanId = useRoute().params.id;
 const scheduleTitle = ref("");
 const addTitle = ref(false);
@@ -114,18 +121,38 @@ const addNewTitle = async () => {
       title: title.value,
       datzanId: datzanId,
     },
-  }).then(() => document.location.reload(true));
+  }).then(() => fetchScheduleTitle());
 };
 const setLocalStorage = () => localStorage.setItem("datzanId", datzanId);
 const generateQrCode = () => {
-  value.value = `${websiteUrl}/schedule/${useRoute().params.id}`;
+  value.value = `${websiteUrl}`;
 };
 const showQrCode = () => (qrCode.value = !qrCode.value);
+const removeSchedule = async (id) => {
+  try {
+    scheduleTitle.value = scheduleTitle.value.filter((items) => items.id != id);
+
+    let response = await $fetch(`${url}/items/schedule_title/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+    });
+  } catch (error) {}
+};
+function getWebUrl() {
+  if (typeof window !== 'undefined') {
+    return window.location.href;
+  } else {
+    console.log("it is server side");
+  }
+}
 
 onMounted(() => {
   fetchScheduleTitle();
   setLocalStorage();
   generateQrCode();
+  getWebUrl();
 });
 </script>
 <style>
