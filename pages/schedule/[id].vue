@@ -1,7 +1,7 @@
 <template>
   <main>
     <div class="container m-auto px-4">
-      <div class="schedule-header mb-3 flex">
+      <div class="schedule-header mb-3">
         <h1 class="text-4xl">All schedules</h1>
       </div>
       <div v-for="title in scheduleTitle" :key="title.id" class="flex">
@@ -57,7 +57,7 @@ import QrcodeVue from "qrcode.vue";
 const user = useDirectusUser();
 const store = usePiniaStore();
 const config = useRuntimeConfig();
-const route = useRoute();
+const route = useRoute()
 
 defineComponent({
   QrcodeVue,
@@ -110,7 +110,7 @@ const removeSchedule = async (id) => {
   } catch (error) {}
 };
 function getWebUrl() {
-  if (typeof window !== "undefined") {
+  if (typeof window !== 'undefined') {
     return window.location.href;
   } else {
     console.log("it is server side");
@@ -123,7 +123,4 @@ onMounted(() => {
 });
 </script>
 <style>
-.qr-code-wrapper {
-  background: rgba(0, 0, 0, 0.6);
-}
 </style>

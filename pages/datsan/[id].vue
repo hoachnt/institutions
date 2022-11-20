@@ -157,4 +157,7 @@ onMounted(() => {
 });
 </script>
 <style>
+.qr-code-wrapper {
+  background: rgba(0, 0, 0, 0.6);
+}
 </style>
