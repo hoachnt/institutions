@@ -1,7 +1,5 @@
 <template lang="">
-  <div
-    class="block min-w-full p-6 pb-10 rounded-lg shadow-md bg-neutral-800 my-3"
-  >
+  <div class="block min-w-full p-6 pb-10 rounded-lg shadow-md bg-neutral my-3">
     <div class="flex justify-end relative" v-if="token">
       <button
         id="dropdownButton"
@@ -40,11 +38,33 @@
             >
           </li>
           <li>
-            <a
-              @click="store.removeEvent(schedule.id)"
-              class="block px-4 py-2 text-md text-red-600 hover:bg-gray-600"
-              >Delete</a
+            <label
+              for="my-modal"
+              class="block px-4 py-2 text-md text-red-600 hover:bg-gray-600 cursor-pointer"
+              >Delete</label
             >
+            <input type="checkbox" id="my-modal" class="modal-toggle" />
+            <div class="modal">
+              <div class="modal-box relative">
+                <label
+                  for="my-modal"
+                  class="btn btn-sm btn-circle absolute right-2 top-2"
+                  >✕</label
+                >
+                <h3 class="font-bold text-lg">
+                  Are you sure you want to delete this object?
+                </h3>
+                <p class="py-4">This action cannot be undone</p>
+                <div
+                  class="modal-action"
+                  @click="store.removeEvent(schedule.id)"
+                >
+                  <label for="my-modal" class="btn border-error text-error"
+                    >Delete!</label
+                  >
+                </div>
+              </div>
+            </div>
           </li>
         </ul>
       </div>
@@ -61,7 +81,7 @@
     <form
       @submit.prevent
       v-if="showUpdate"
-      class="p-2 bg-neutral-900 rounded-md mt-10"
+      class="p-2 bg-base-100 rounded-md mt-10"
     >
       <UIInput type="date" v-model:value="schedule.datetime" />
       <UIInput type="time" v-model:value="schedule.time" />

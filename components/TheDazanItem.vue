@@ -1,5 +1,7 @@
 <template lang="">
-  <div class="datsan mx-1 rounded-md shadow-md bg-neutral-800 my-2 max-w-lg relative lg:w-auto">
+  <div
+    class="datsan mx-1 rounded-md shadow-md bg-neutral my-2 max-w-lg relative lg:w-auto"
+  >
     <div class="flex justify-end absolute right-0 top-0">
       <button
         id="dropdownButton"
@@ -31,11 +33,33 @@
       >
         <ul class="py-1" aria-labelledby="dropdownButton">
           <li>
-            <a
-              @click="store.removeDatzan(datzan.id)"
-              class="block px-4 py-2 text-md text-red-600 hover:bg-gray-600"
-              >Delete</a
+            <label
+              for="my-modal"
+              class="block px-4 py-2 text-md text-red-600 hover:bg-gray-600 cursor-pointer"
+              >Delete</label
             >
+            <input type="checkbox" id="my-modal" class="modal-toggle" />
+            <div class="modal">
+              <div class="modal-box relative">
+                <label
+                  for="my-modal"
+                  class="btn btn-sm btn-circle absolute right-2 top-2"
+                  >✕</label
+                >
+                <h3 class="font-bold text-lg">
+                  Are you sure you want to delete this object?
+                </h3>
+                <p class="py-4">This action cannot be undone</p>
+                <div
+                  class="modal-action"
+                  @click="store.removeDatzan(datzan.id)"
+                >
+                  <label for="my-modal" class="btn border-error text-error"
+                    >Delete!</label
+                  >
+                </div>
+              </div>
+            </div>
           </li>
         </ul>
       </div>
@@ -64,7 +88,7 @@
       <a
         @click="$router.push(`/datsan/${datzan.id}`)"
         class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-indigo-600 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 ease-linear transition-all duration-150"
-        >
+      >
         Read more
         <svg
           aria-hidden="true"

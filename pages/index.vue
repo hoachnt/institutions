@@ -48,7 +48,7 @@
             p-2.5
             w-full
             text-sm
-            bg-neutral-800
+            bg-neutral
             rounded-lg
             placeholder-gray-400
             text-white
@@ -57,9 +57,32 @@
           "
           placeholder="Write your description here..."
         ></textarea>
-        <UIButton @click="createDatzan" class="min-w-full"
-          >Create Datzan</UIButton
+        <button
+          @click="createDatzan"
+          class="
+            min-w-full
+            bg-indigo-500
+            text-white
+            border border-indigo-500
+            hover:bg-indigo-500 hover:text-white
+            active:bg-indigo-600
+            font-bold
+            uppercase
+            text-sm
+            px-6
+            py-3
+            rounded
+            outline-none
+            focus:outline-none
+            mt-1
+            mb-1
+            ease-linear
+            transition-all
+            duration-150
+          "
         >
+          Create Datzan
+        </button>
       </form>
       <h1 class="mb-1 text-4xl mt-8">Datzans</h1>
       <transition name="fade">

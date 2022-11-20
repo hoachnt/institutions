@@ -18,7 +18,7 @@
         mx-1
         rounded-md
         shadow-md
-        bg-neutral-800
+        bg-neutral
         my-2
         min-w-full
         relative
