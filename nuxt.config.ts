@@ -5,7 +5,8 @@ export default defineNuxtConfig({
     layoutTransition: { name: 'layout', mode: 'out-in' }
   },
   publicRuntimeConfig: {
-    url: process.env.VITE_ENDPOINT
+    url: process.env.VITE_ENDPOINT,
+    my_domain: process.env.MY_DOMAIN
   },
   imports: {
     dirs: ['stores'],

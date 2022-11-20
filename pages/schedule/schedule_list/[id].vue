@@ -221,7 +221,7 @@ const generatePdf = async () => {
   });
   doc.setTextColor(90, 8, 26);
   doc.setFont("PTSans");
-  doc.setFontSize(22).text(scheduleTitle.value.title, 0.5, 1.0);
+  doc.setFontSize(25).text(scheduleTitle.value.title, 0.5, 1.0);
   doc.setLineWidth(0.01).line(0.5, 1.1, 8.0, 1.1);
   doc.autoTable({
     styles: {
@@ -232,6 +232,7 @@ const generatePdf = async () => {
       textColor: [0, 0, 0],
       fillColor: [255, 255, 255],
       cellPadding: 0.2,
+      fontSize: 15,
     },
     columnStyles: { 
       fillColor: [253, 218, 13]
@@ -239,9 +240,9 @@ const generatePdf = async () => {
     theme: "plain",
     body: newArray,
     columns: [
-      { header: "Date", dataKey: itemPdf.datetime },
-      { header: "Time", dataKey: itemPdf.time },
-      { header: "Description", dataKey: itemPdf.description },
+      { header: "Дата", dataKey: itemPdf.datetime },
+      { header: "Время", dataKey: itemPdf.time },
+      { header: "Описание", dataKey: itemPdf.description },
     ],
 
     margin: { top: 1.5 },

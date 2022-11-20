@@ -4,6 +4,59 @@
       <form @submit.prevent class="">
         <UIInput placeholder="Datzan name" v-model:value="datzan.name" />
         <UIInput placeholder="Datzan address" v-model:value="datzan.address" />
+        <UIInput
+          type="file"
+          id="file"
+          class="
+            block
+            w-full
+            py-1
+            text-sm text-slate-500
+            file:mr-4
+            file:py-2
+            file:px-4
+            file:rounded-full
+            file:border-0
+            file:text-sm
+            file:font-semibold
+            file:bg-violet-50
+            file:text-sky-600
+            hover:file:bg-blue-600 hover:file:text-white
+            cursor-pointer
+          "
+          v-model:value="datzan.img"
+        />
+        <label
+          for="message"
+          class="
+            block
+            mb-1
+            mt-3
+            text-lg
+            font-medium
+            text-gray-900
+            dark:text-white
+          "
+          >Description</label
+        >
+        <textarea
+          v-model="datzan.description"
+          id="message"
+          rows="4"
+          class="
+            block
+            p-2.5
+            w-full
+            text-sm
+            bg-neutral-800
+            rounded-lg
+            placeholder-gray-400
+            text-white
+            focus:ring-indigo-500 focus:border-indigo-500
+            my-1
+          "
+          placeholder="Write your description here..."
+        ></textarea>
         <UIButton @click="createDatzan" class="min-w-full"
           >Create Datzan</UIButton
         >
@@ -32,6 +85,8 @@ useHead({
 const datzan = {
   name: "",
   address: "",
+  description: "",
+  img: "",
 };
 
 onMounted(() => {
@@ -40,17 +95,44 @@ onMounted(() => {
 
 const createDatzan = () => {
   try {
-    return $fetch(`${store.url}/items/datzans`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token.value}`,
-      },
-      body: datzan,
-    }).then(() => store.fetchDatzan());
+    pushHotelImage();
+
+    const response = $fetch(`${store.url}/files?sort=uploaded_on`)
+      .then((response) => {
+        let responseData = response.data;
+
+        datzan.img = responseData[responseData.length - 1].id;
+
+        return $fetch(`${store.url}/items/datzans`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+          },
+          body: datzan,
+        });
+      })
+      .then(() => store.fetchDatzan());
   } catch (error) {
     console.log(error);
   }
 };
+function pushHotelImage() {
+  const file = document.getElementById("file");
+
+  const formData = new FormData();
+  console.log(file);
+
+  formData.append("title", "Image");
+  formData.append("file", file.files[0]);
+
+  return $fetch(`${store.url}/files`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token.value}`,
+    },
+    body: formData,
+  });
+}
 </script>
 <style>
 .fade-enter-active,

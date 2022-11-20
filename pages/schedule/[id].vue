@@ -1,32 +1,8 @@
 <template>
   <main>
     <div class="container m-auto px-4">
-      <div class="schedule-header mb-3 flex justify-between items-center">
+      <div class="schedule-header mb-3 flex">
         <h1 class="text-4xl">All schedules</h1>
-        <UIButton @click="showQrCode">
-          <font-awesome-icon :icon="['fa', 'fa-qrcode']" class="text-xl" />
-        </UIButton>
-        <div
-          class="
-            qr-code-wrapper
-            fixed
-            min-w-full min-h-screen
-            top-0
-            left-0
-            flex
-            justify-center
-            items-center
-          "
-          v-if="qrCode == true"
-          @click="qrCode = false"
-        >
-          <qrcode-vue
-            :value="value"
-            :size="size"
-            level="H"
-            class="rounded-xl"
-          />
-        </div>
       </div>
       <div v-for="title in scheduleTitle" :key="title.id" class="flex">
         <UIButton
@@ -81,6 +57,7 @@ import QrcodeVue from "qrcode.vue";
 const user = useDirectusUser();
 const store = usePiniaStore();
 const config = useRuntimeConfig();
+const route = useRoute();
 
 defineComponent({
   QrcodeVue,
@@ -91,11 +68,7 @@ useHead({
 });
 const token = useDirectusToken();
 
-const qrCode = ref(false);
-const value = ref("");
-const size = ref(300);
 const url = config.public.url;
-const websiteUrl = getWebUrl();
 const datzanId = useRoute().params.id;
 const scheduleTitle = ref("");
 const addTitle = ref(false);
@@ -124,10 +97,6 @@ const addNewTitle = async () => {
   }).then(() => fetchScheduleTitle());
 };
 const setLocalStorage = () => localStorage.setItem("datzanId", datzanId);
-const generateQrCode = () => {
-  value.value = `${websiteUrl}`;
-};
-const showQrCode = () => (qrCode.value = !qrCode.value);
 const removeSchedule = async (id) => {
   try {
     scheduleTitle.value = scheduleTitle.value.filter((items) => items.id != id);
@@ -141,7 +110,7 @@ const removeSchedule = async (id) => {
   } catch (error) {}
 };
 function getWebUrl() {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     return window.location.href;
   } else {
     console.log("it is server side");
@@ -151,8 +120,6 @@ function getWebUrl() {
 onMounted(() => {
   fetchScheduleTitle();
   setLocalStorage();
-  generateQrCode();
-  getWebUrl();
 });
 </script>
 <style>
