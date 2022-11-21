@@ -20,6 +20,9 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
     const userCreated = ref(user.value.id);
     const token = useDirectusToken();
     const schedules = ref([]);
+    const email = ref("");
+    const userEmail = ref(user.value.email);
+    const removeMessage = ref("This action cannot be undone");
 
     const fetchDatzan = async () => {
       try {
@@ -31,7 +34,7 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
             },
           }
         );
-          
+
         datzans.value = response.data;
       } catch (error) {
         alert(error);
@@ -41,14 +44,19 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
     };
     const removeDatzan = async (id) => {
       try {
-        datzans.value = datzans.value.filter((items) => items.id != id);
+        if (email.value === userEmail.value) {
+          datzans.value = datzans.value.filter((items) => items.id != id);
 
-        let response = await $fetch(`${url}/items/datzans/${id}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token.value}`,
-          },
-        });
+          let response = await $fetch(`${url}/items/datzans/${id}`, {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token.value}`,
+            },
+          });
+        } else {
+          removeMessage.value = "Wrong email";
+          alert(removeMessage.value)
+        }
       } catch (error) {}
     };
     const removeEvent = async (id) => {
@@ -74,6 +82,8 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
       removeDatzan,
       schedules,
       removeEvent,
+      email,
+      removeMessage
     };
   }
 });

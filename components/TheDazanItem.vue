@@ -49,12 +49,18 @@
                 <h3 class="font-bold text-lg">
                   Are you sure you want to delete this object?
                 </h3>
-                <p class="py-4">This action cannot be undone</p>
+                <div class="form-control min-w-full">
+                  <label class="label">
+                    <span class="label-text">Your email</span>
+                  </label>
+                  <input type="email" placeholder="Email" class="input input-bordered min-w-full" v-model="store.email"/>
+                </div>
+                <p class="py-4">{{store.removeMessage}}</p>
                 <div
                   class="modal-action"
-                  @click="store.removeDatzan(datzan.id)"
                 >
-                  <label for="my-modal" class="btn border-error text-error"
+                  
+                  <label for="my-modal" class="btn border-error text-error" @click="store.removeDatzan(datzan.id)"
                     >Delete!</label
                   >
                 </div>

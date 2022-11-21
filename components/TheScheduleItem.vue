@@ -44,7 +44,7 @@
               >Delete</label
             >
             <input type="checkbox" id="my-modal" class="modal-toggle" />
-            <div class="modal">
+            <div class="modal modal-bottom sm:modal-middle">
               <div class="modal-box relative">
                 <label
                   for="my-modal"
