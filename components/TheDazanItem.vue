@@ -1,6 +1,6 @@
 <template lang="">
   <div
-    class="datsan mx-1 rounded-md shadow-md bg-neutral my-2 max-w-lg lg:w-auto relative"
+    class="datsan mx-1 rounded-md shadow-md bg-neutral my-2 min-w-full relative"
   >
     <div class="flex justify-end absolute right-0 top-0">
       <button
@@ -93,7 +93,7 @@
         {{ datzan.address }}
       </p>
       <a
-        @click="$router.push(`/datsan/${datzan.id}`)"
+        @click="$router.push(`/locations/${datzan.id}`)"
         class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-indigo-600 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 ease-linear transition-all duration-150"
       >
         Read more

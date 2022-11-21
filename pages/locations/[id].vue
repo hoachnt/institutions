@@ -55,7 +55,7 @@
         </p>
         <div class="flex justify-between items-center">
           <a
-            @click="$router.push(`/schedule/${datzan.id}`)"
+            @click="$router.push(`/events`)"
             class="
               inline-flex
               items-center

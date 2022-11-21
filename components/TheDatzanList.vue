@@ -1,6 +1,6 @@
 <template lang="">
 <div class="flex justify-around flex-wrap">
-  <div v-for="datzan in datzans" :key="datzan.id" class="lg:flex-1">
+  <div v-for="datzan in datzans" :key="datzan.id" class="min-w-full">
     <TheDazanItem :datzan="datzan" />
   </div>
 </div>
