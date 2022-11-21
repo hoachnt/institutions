@@ -39,8 +39,8 @@
               >Delete</label
             >
             <input type="checkbox" id="my-modal" class="modal-toggle" />
-            <div class="modal">
-              <div class="modal-box relative">
+            <div class="modal modal-bottom sm:modal-middle">
+              <div class="modal-box">
                 <label
                   for="my-modal"
                   class="btn btn-sm btn-circle absolute right-2 top-2"

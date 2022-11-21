@@ -24,7 +24,7 @@ export default defineNuxtConfig({
         ],
       },
     ],
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
   ],
   directus: {
     url: "https://directus.hoach.skryonline.com",
