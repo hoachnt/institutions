@@ -22,7 +22,8 @@
         </UIButton>
         <UIRemoveButton
           @click="removeSchedule(title.id)"
-          class="ml-2"
+          class="ml-2 tooltip"
+          data-tip="Delete"
           v-if="token"
         >
           <font-awesome-icon icon="fa-solid fa-trash" />
@@ -57,7 +58,7 @@ import QrcodeVue from "qrcode.vue";
 const user = useDirectusUser();
 const store = usePiniaStore();
 const config = useRuntimeConfig();
-const route = useRoute()
+const route = useRoute();
 
 defineComponent({
   QrcodeVue,
@@ -110,7 +111,7 @@ const removeSchedule = async (id) => {
   } catch (error) {}
 };
 function getWebUrl() {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     return window.location.href;
   } else {
     console.log("it is server side");

@@ -1,6 +1,6 @@
 <template lang="">
   <div
-    class="datsan mx-1 rounded-md shadow-md bg-neutral my-2 max-w-lg relative lg:w-auto"
+    class="datsan mx-1 rounded-md shadow-md bg-neutral my-2 max-w-lg lg:w-auto relative"
   >
     <div class="flex justify-end absolute right-0 top-0">
       <button
@@ -64,6 +64,7 @@
         </ul>
       </div>
     </div>
+
     <div>
       <img
         class="rounded-t-lg"

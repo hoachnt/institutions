@@ -35,39 +35,35 @@
         >
           Indigo Color
         </a>
-        <button
-          @click="toggleNavbar"
-          class="
-            cursor-pointer
-            text-xl
-            leading-none
-            px-3
-            py-1
-            border border-solid border-transparent
-            rounded
-            bg-transparent
-            block
-            lg:hidden
-            outline-none
-            focus:outline-none
-          "
-          type="button"
-        >
-          <span class="sr-only">Open main menu</span>
+        <label class="btn swap swap-rotate lg:hidden">
+          <!-- this hidden checkbox controls the state -->
+          <input type="checkbox" @click="toggleNavbar" />
+
+          <!-- hamburger icon -->
           <svg
-            class="w-6 h-6"
-            aria-hidden="true"
-            fill="currentColor"
-            viewBox="0 0 20 20"
+            class="swap-on fill-current"
             xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 512 512"
           >
             <path
-              fill-rule="evenodd"
-              d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-              clip-rule="evenodd"
-            ></path>
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
           </svg>
-        </button>
+          <!-- close icon -->
+          <svg
+            class="swap-off fill-current"
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 512 512"
+          >
+            <polygon
+              points="400 145.49 366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49"
+            />
+          </svg>
+        </label>
       </div>
       <div
         class="lg:flex items-center min-w-full lg:min-w-0"
