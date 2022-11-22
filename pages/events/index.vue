@@ -3,7 +3,8 @@
     <div class="container px-4 m-auto">
       <transition name="fade">
         <div>
-          <TheScheduleTitles :scheduleTitles="scheduleTitles" />
+          <TheScheduleTitles :scheduleTitles="scheduleTitles" v-if="scheduleTitles != '' "/>
+          <h1 v-else class="text-3xl text-error text-center">You do not have events</h1>
         </div>
       </transition>
     </div>
