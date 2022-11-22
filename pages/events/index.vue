@@ -1,9 +1,11 @@
 <template lang="">
   <main>
     <div class="container px-4 m-auto">
-      <div>
-        <TheScheduleTitles :scheduleTitles="scheduleTitles" />
-      </div>
+      <transition name="fade">
+        <div>
+          <TheScheduleTitles :scheduleTitles="scheduleTitles" />
+        </div>
+      </transition>
     </div>
   </main>
 </template>
@@ -63,7 +65,11 @@ const createEvent = async () => {
 };
 const fetchScheduleTitles = async () => {
   try {
-    let response = await $fetch(`${url}/items/schedule_title`);
+    let response = await $fetch(
+      `${url}/items/schedule_title?filter={ "datzanId":"${
+        useRoute().query.location
+      }" }`
+    );
 
     scheduleTitles.value = response.data;
   } catch (error) {
@@ -73,7 +79,6 @@ const fetchScheduleTitles = async () => {
 const getLocalStorage = () => {
   dazanId.value = localStorage.getItem("dazanId");
 };
-
 onMounted(() => {
   getLocalStorage();
   fetchScheduleTitles();
@@ -84,5 +89,14 @@ onMounted(() => {
   .create-btn {
     min-width: 0px !important;
   }
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

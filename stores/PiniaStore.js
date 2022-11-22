@@ -62,14 +62,19 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
     const removeEvent = async (id) => {
       try {
         schedules.value = schedules.value.filter((items) => items.id != id);
+        console.log(schedules.value)
 
         let response = await $fetch(`${url}/items/events/${id}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${token.value}`,
           },
-        });
-      } catch (error) {}
+        })
+
+        await document.location.reload(true)
+      } catch (error) {
+        console.log(error)
+      }
     };
 
     return {
@@ -83,7 +88,7 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
       schedules,
       removeEvent,
       email,
-      removeMessage
+      removeMessage,
     };
   }
 });

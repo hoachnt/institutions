@@ -9,9 +9,7 @@
 </template>
 <script setup>
 const props = defineProps({
-  scheduleTitles: {
-    type: Array,
-  },
+  scheduleTitles: {},
 });
 </script>
 <style lang=""></style>

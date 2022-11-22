@@ -24,7 +24,7 @@
     </div>
 
     <UIButton
-      @click="$router.push('/events/new')"
+      @click="$router.push({ name: 'events-new', query: { location: useRoute().query.location, scheduleTitleId: scheduleTitle.id } })"
       class="create-btn flex items-center justify-center min-w-full"
       v-if="token"
     >
@@ -38,10 +38,7 @@
   <div v-else>Schedules Empty</div>
   <UIButton @click="generatePdf" class="flex items-center">
     <div>
-      <font-awesome-icon
-        icon="fa-solid fa-file-pdf"
-        class="text-3xl mx-2"
-      />
+      <font-awesome-icon icon="fa-solid fa-file-pdf" class="text-3xl mx-2" />
     </div>
     <p>Generate Pdf</p>
   </UIButton>
@@ -64,6 +61,7 @@ const props = defineProps({
 const showInputTitle = ref(false);
 const url = config.public.url;
 const schedules = ref([]);
+const visible = false;
 
 const fetchSchedule = async () => {
   try {
@@ -71,12 +69,12 @@ const fetchSchedule = async () => {
       `${url}/items/events?filter={"ScheduleTitleId":"${props.scheduleTitle.id}"}`
     );
 
-    schedules.value = await response.data;
+    store.schedules = await response.data;
+    schedules.value = store.schedules;
   } catch (error) {
     alert(error);
   }
 };
-
 const generatePdf = async () => {
   let itemPdf = {
     time: "",
@@ -154,4 +152,5 @@ onMounted(() => {
   fetchSchedule();
 });
 </script>
-<style lang=""></style>;
+<style lang=""></style>
+;

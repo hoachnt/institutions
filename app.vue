@@ -1,7 +1,6 @@
 <template>
   <div class="min-h-screen bg-base-100">
     <TheNavbar />
-    <NuxtPage />
   </div>
 </template>
 <script setup>
