@@ -57,7 +57,7 @@
                 <p class="py-4">This action cannot be undone</p>
                 <div
                   class="modal-action"
-                  @click="store.removeEvent(schedule.id)"
+                  @click="$emit('removeEvent', schedule.id)"
                 >
                   <label for="my-modal" class="btn border-error text-error"
                     >Delete!</label

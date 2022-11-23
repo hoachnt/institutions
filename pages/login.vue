@@ -31,6 +31,10 @@
 <script setup>
 const { login } = useDirectusAuth();
 
+definePageMeta({
+  middleware: ["authenticated"],
+});
+
 const router = useRouter();
 const data = reactive({
   email: "",

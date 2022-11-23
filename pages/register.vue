@@ -41,6 +41,11 @@
 </template>
 <script setup>
 import { usePiniaStore } from "@/stores/PiniaStore";
+
+definePageMeta({
+  middleware: ["authenticated"],
+});
+
 const { createUser } = useDirectusAuth();
 const { login } = useDirectusAuth();
 

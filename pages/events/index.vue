@@ -25,10 +25,8 @@
           <TheScheduleTitles
             :scheduleTitles="scheduleTitles"
             v-if="scheduleTitles != ''"
+            @removeSchedule="removeSchedule"
           />
-          <h1 v-else class="text-3xl text-error text-center">
-            You do not have events
-          </h1>
         </div>
       </transition>
     </div>
@@ -85,6 +83,19 @@ const fetchScheduleTitles = async () => {
     );
 
     scheduleTitles.value = response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+const removeSchedule = async (id) => {
+  try {
+    await $fetch(`${url}/items/schedule_title/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+    });
+    await fetchScheduleTitles();
   } catch (error) {
     console.log(error);
   }

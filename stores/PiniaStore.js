@@ -40,8 +40,7 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
         datzans.value = response.data;
       } catch (error) {
         if (error.status == 401) {
-          alert("You are not authorized")
-          logOut();
+          alert("You are not authorized or authorization timed out")
         }
         alert(error);
       }
@@ -74,23 +73,6 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
         }
       } catch (error) {}
     };
-    const removeEvent = async (id) => {
-      try {
-        schedules.value = schedules.value.filter((items) => items.id != id);
-        console.log(schedules.value);
-
-        let response = await $fetch(`${url}/items/events/${id}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token.value}`,
-          },
-        });
-
-        await document.location.reload(true);
-      } catch (error) {
-        console.log(error);
-      }
-    };
 
     return {
       authenticated,
@@ -101,7 +83,6 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
       url,
       removeDatzan,
       schedules,
-      removeEvent,
       email,
       removeMessage,
       removeDatzanError,

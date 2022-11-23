@@ -15,7 +15,10 @@
         Update Title
       </UIButton>
     </div>
-    <ul class="menu menu-horizontal bg-neutral rounded-xl min-w-full flex justify-between md:min-w-0" v-if="token">
+    <ul
+      class="menu menu-horizontal bg-neutral rounded-xl min-w-full flex justify-between md:min-w-0"
+      v-if="token"
+    >
       <li>
         <a
           @click="changeTitle"
@@ -47,16 +50,24 @@
         <a
           class="tooltip flex items-center"
           data-tip="Delete"
-          @click="removeSchedule(scheduleTitle.id)"
+          @click="$emit('removeSchedule', scheduleTitle.id)"
         >
           <font-awesome-icon icon="fa-solid fa-trash" />
         </a>
       </li>
     </ul>
   </div>
-  <TheScheduleList :schedules="schedules" v-if="schedules != ''" />
+  <TheScheduleList
+    :schedules="schedules"
+    v-if="schedules != ''"
+    @removeEvent="removeEvent"
+  />
   <div v-else class="text-center text-error text-3xl">Schedule is Empty</div>
-  <UIButton @click="generatePdf" class="flex items-center" v-if="schedules != ''">
+  <UIButton
+    @click="generatePdf"
+    class="flex items-center"
+    v-if="schedules != ''"
+  >
     <div>
       <font-awesome-icon icon="fa-solid fa-file-pdf" class="text-3xl mx-2" />
     </div>
@@ -68,6 +79,7 @@ import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import "assets/fonts/PTSans-normal.js";
 
+const user = useDirectusUser();
 const token = useDirectusToken();
 const store = usePiniaStore();
 const config = useRuntimeConfig();
@@ -83,6 +95,7 @@ const url = config.public.url;
 const schedules = ref([]);
 const visible = false;
 const title = ref("");
+const scheduleTitles = ref("");
 
 const changeTitle = () => (showInputTitle.value = true);
 const updateTitle = async () => {
@@ -111,14 +124,16 @@ const fetchSchedule = async () => {
     alert(error);
   }
 };
-const removeSchedule = async (id) => {
+const removeEvent = async (id) => {
+  console.log('nice')
   try {
-    await $fetch(`${url}/items/schedule_title/${id}`, {
+    let response = await $fetch(`${url}/items/events/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token.value}`,
       },
     });
+
     await fetchSchedule();
   } catch (error) {
     console.log(error);
