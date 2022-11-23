@@ -3,7 +3,7 @@
     <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content flex flex-col">
       <!-- Navbar -->
-      <div class="w-full navbar bg-indigo-500 mb-3 flex justify-between">
+      <div class="w-full navbar bg-indigo-500 mb-3 flex justify-between sticky top-0 z-10">
         <div class="flex-none lg:hidden">
           <label for="my-drawer-3" class="btn btn-square btn-ghost">
             <svg
@@ -25,10 +25,21 @@
           <a class="text-2xl uppercase"> Indigo </a>
         </div>
         <div class="flex-none hidden lg:block">
-          <ul class="menu menu-horizontal">
+          <ul class="menu menu-horizontal bg-base-100 rounded-xl">
             <!-- Navbar menu content here -->
-            <li class="nav-item" @click="$router.push('/')" v-if="token">
+            <li
+              v-if="token"
+              @click="$router.push('/locations/new')"
+            >
               <a class="btn">
+                <div class="mr-1">
+                  <font-awesome-icon icon="fa-solid fa-plus" />
+                </div>
+                <p>Add</p>
+              </a>
+            </li>
+            <li class="nav-item" @click="$router.push('/')" v-if="token">
+              <a class="btn rounded-none">
                 <div class="mr-1">
                   <font-awesome-icon icon="fa-solid fa-house" />
                 </div>
@@ -68,9 +79,17 @@
     </div>
     <div class="drawer-side">
       <label for="my-drawer-3" class="drawer-overlay"></label>
-      <ul class="menu p-4 w-80 bg-base-100">
+      <ul class="sidebar menu w-80 bg-base-100">
         <!-- Sidebar content here -->
-        <li class="nav-item" @click="$router.push('/')" v-if="token">
+        <li v-if="token" @click="$router.push('/locations/new')">
+          <a class="btn">
+            <div class="mr-1">
+              <font-awesome-icon icon="fa-solid fa-plus" />
+            </div>
+            <p>Add</p>
+          </a>
+        </li>
+        <li @click="$router.push('/')" v-if="token">
           <a>
             <div class="mr-1">
               <font-awesome-icon icon="fa-solid fa-house" />
@@ -78,12 +97,12 @@
             <p>Home</p>
           </a>
         </li>
-        <li class="nav-item" @click="$router.push('/register')" v-if="!token">
+        <li @click="$router.push('/register')" v-if="!token">
           <a>
             <p>Register</p>
           </a>
         </li>
-        <li class="nav-item" @click="$router.push('/login')" v-if="!token">
+        <li @click="$router.push('/login')" v-if="!token">
           <a>
             <div class="mr-1">
               <font-awesome-icon icon="fa-solid fa-right-to-bracket" />
@@ -91,7 +110,7 @@
             <p>Login</p>
           </a>
         </li>
-        <li class="nav-item" @click="logOut" v-if="token">
+        <li @click="logOut" v-if="token">
           <a>
             <div class="mr-1">
               <font-awesome-icon icon="fa-solid fa-right-from-bracket" />
@@ -120,5 +139,8 @@ const logOut = async () => {
 <style>
 a {
   cursor: pointer;
+}
+.sidebar {
+  padding: 15px !important;
 }
 </style>

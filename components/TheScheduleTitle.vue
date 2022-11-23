@@ -1,6 +1,6 @@
 <template lang="">
   <div class="schedule-item-header mt-8 flex flex-wrap justify-between">
-    <div class="flex flex-wrap items-center mr-2 flex-1">
+    <div class="flex flex-wrap items-center mr-3 flex-1 mb-3 md:mb-0">
       <h1 v-if="showInputTitle == false" class="text-4xl">
         {{ scheduleTitle.title }}
       </h1>
@@ -11,32 +11,52 @@
         v-model:value="scheduleTitle.title"
         class="text-4xl"
       />
-      <div
-        @click="changeTitle"
-        v-if="showInputTitle == false && token"
-        class="text-2xl cursor-pointer text-indigo-500 hover:text-white active:bg-indigo-600 ease-linear transition-all duration-150"
-      >
-        <font-awesome-icon icon="fa-solid fa-pen-to-square" />
-      </div>
-      <UIButton @click="updateTitle" v-else-if="showInputTitle != false">
+      <UIButton @click="updateTitle" v-if="showInputTitle != false">
         Update Title
       </UIButton>
     </div>
-
-    <UIButton
-      @click="$router.push({ name: 'events-new', query: { location: useRoute().query.location, scheduleTitleId: scheduleTitle.id } })"
-      class="create-btn flex items-center justify-center min-w-full"
-      v-if="token"
-    >
-      <div>
-        <font-awesome-icon icon="fa-solid fa-plus" class="mx-1" />
-      </div>
-      <p>Create</p>
-    </UIButton>
+    <ul class="menu menu-horizontal bg-neutral rounded-xl min-w-full flex justify-between md:min-w-0" v-if="token">
+      <li>
+        <a
+          @click="changeTitle"
+          class="tooltip flex items-center"
+          data-tip="Update"
+        >
+          <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+        </a>
+      </li>
+      <li>
+        <a
+          @click="
+            $router.push({
+              name: 'events-new',
+              query: {
+                location: useRoute().query.location,
+                scheduleTitleId: scheduleTitle.id,
+              },
+            })
+          "
+        >
+          <div>
+            <font-awesome-icon icon="fa-solid fa-plus" class="mr-1" />
+          </div>
+          <p>Create</p>
+        </a>
+      </li>
+      <li>
+        <a
+          class="tooltip flex items-center"
+          data-tip="Delete"
+          @click="removeSchedule(scheduleTitle.id)"
+        >
+          <font-awesome-icon icon="fa-solid fa-trash" />
+        </a>
+      </li>
+    </ul>
   </div>
   <TheScheduleList :schedules="schedules" v-if="schedules != ''" />
-  <div v-else>Schedules Empty</div>
-  <UIButton @click="generatePdf" class="flex items-center">
+  <div v-else class="text-center text-error text-3xl">Schedule is Empty</div>
+  <UIButton @click="generatePdf" class="flex items-center" v-if="schedules != ''">
     <div>
       <font-awesome-icon icon="fa-solid fa-file-pdf" class="text-3xl mx-2" />
     </div>
@@ -62,17 +82,46 @@ const showInputTitle = ref(false);
 const url = config.public.url;
 const schedules = ref([]);
 const visible = false;
+const title = ref("");
 
+const changeTitle = () => (showInputTitle.value = true);
+const updateTitle = async () => {
+  let response = await $fetch(
+    `${url}/items/schedule_title/${props.scheduleTitle.id}`,
+    {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+      body: {
+        title: props.scheduleTitle.title,
+      },
+    }
+  );
+  showInputTitle.value = false;
+};
 const fetchSchedule = async () => {
   try {
     let response = await $fetch(
       `${url}/items/events?filter={"ScheduleTitleId":"${props.scheduleTitle.id}"}`
     );
 
-    store.schedules = await response.data;
-    schedules.value = store.schedules;
+    schedules.value = await response.data;
   } catch (error) {
     alert(error);
+  }
+};
+const removeSchedule = async (id) => {
+  try {
+    await $fetch(`${url}/items/schedule_title/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+    });
+    await fetchSchedule();
+  } catch (error) {
+    console.log(error);
   }
 };
 const generatePdf = async () => {

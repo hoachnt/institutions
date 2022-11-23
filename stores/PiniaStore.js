@@ -23,6 +23,7 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
     const email = ref("");
     const userEmail = ref(user.value.email);
     const removeMessage = ref("This action cannot be undone");
+    const removeDatzanError = ref(false);
 
     const fetchDatzan = async () => {
       try {
@@ -55,25 +56,36 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
           });
         } else {
           removeMessage.value = "Wrong email";
-          alert(removeMessage.value)
+
+          let timer = setTimeout(function tick() {
+            removeDatzanError.value = true;
+
+            timer = setTimeout(tick, 2000); // (*)
+          }, 0);
+
+          setTimeout(() => {
+            clearTimeout(timer);
+
+            removeDatzanError.value = false;
+          }, 4000);
         }
       } catch (error) {}
     };
     const removeEvent = async (id) => {
       try {
         schedules.value = schedules.value.filter((items) => items.id != id);
-        console.log(schedules.value)
+        console.log(schedules.value);
 
         let response = await $fetch(`${url}/items/events/${id}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${token.value}`,
           },
-        })
+        });
 
-        await document.location.reload(true)
+        await document.location.reload(true);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     };
 
@@ -89,6 +101,7 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
       removeEvent,
       email,
       removeMessage,
+      removeDatzanError,
     };
   }
 });
