@@ -3,11 +3,17 @@
     <div class="container m-auto max-w-lg">
       <form @submit.prevent="submit" class="px-4">
         <h1 class="text-2xl mb-1">Login</h1>
-        <UIInput type="email" placeholder="Email" v-model:value="data.email" />
+        <UIInput
+          type="email"
+          placeholder="Email"
+          v-model:value="data.email"
+          required
+        />
         <UIInput
           type="password"
           placeholder="Password"
           v-model:value="data.password"
+          required
         />
         <UIButton class="min-w-full">Log in</UIButton>
         <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
@@ -32,15 +38,18 @@ const data = reactive({
 });
 const submit = async () => {
   try {
-    let response = await login({
-      email: data.email,
-      password: data.password,
-    });
-
-    const token = useDirectusToken();
+    if (data.email.length >= 1 && data.password.length >= 1) {
+      let response = await login({
+        email: data.email,
+        password: data.password,
+      });
+    }
 
     await router.push("/");
   } catch (e) {
+    if(e.status == 401) {
+      alert("Wrong email or password")
+    }
     console.log(e);
   }
 };

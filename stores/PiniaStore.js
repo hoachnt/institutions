@@ -24,6 +24,7 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
     const userEmail = ref(user.value.email);
     const removeMessage = ref("This action cannot be undone");
     const removeDatzanError = ref(false);
+    const scheduleTitleId = ref("");
 
     const fetchDatzan = async () => {
       try {
@@ -38,9 +39,11 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
 
         datzans.value = response.data;
       } catch (error) {
+        if (error.status == 401) {
+          alert("You are not authorized")
+          logOut();
+        }
         alert(error);
-
-        logOut();
       }
     };
     const removeDatzan = async (id) => {
@@ -102,6 +105,8 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
       email,
       removeMessage,
       removeDatzanError,
+      scheduleTitleId,
+      user,
     };
   }
 });

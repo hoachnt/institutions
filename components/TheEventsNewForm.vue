@@ -81,9 +81,11 @@ const createEvent = async () => {
       query: { location: useRoute().query.location },
     });
   } catch (error) {
+    if (error.status == 401) {
+      alert(`Error ${error.status}`)
+      useRouter().push("/login");
+    }
     alert(error);
-
-    useRouter().push("/login");
   }
 };
 </script>

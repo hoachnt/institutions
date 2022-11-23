@@ -5,7 +5,7 @@
         type="text"
         placeholder="New Schedule..."
         v-if="addTitle == true"
-        v-model:value="title"
+        v-model:value="scheduleTitle.title"
       />
       <UIButton
         @click="addTitle = true"
@@ -48,7 +48,10 @@ const config = useRuntimeConfig();
 const url = config.public.url;
 const dazanId = ref("");
 const addTitle = ref(false);
-const title = ref("");
+const scheduleTitle = reactive({
+  title: "",
+  datzanId: useRoute().query.location,
+});
 const scheduleTitleId = useRoute().params.id;
 const scheduleTitles = ref("");
 let newEvent = reactive({
@@ -87,16 +90,23 @@ const fetchScheduleTitles = async () => {
   }
 };
 const addNewTitle = async () => {
-  return await $fetch(`${url}/items/schedule_title`, {
+  const response = await $fetch(`${url}/items/schedule_title`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token.value}`,
     },
-    body: {
-      title: title.value,
-      datzanId: useRoute().query.location,
-    },
-  }).then(() => fetchScheduleTitles());
+    body: scheduleTitle,
+  }).then((response) => {
+    fetchScheduleTitles();
+
+    useRouter().push({
+      name: "events-new",
+      query: {
+        location: useRoute().query.location,
+        scheduleTitleId: response.data.id,
+      },
+    });
+  });
 };
 const getLocalStorage = () => {
   dazanId.value = localStorage.getItem("dazanId");

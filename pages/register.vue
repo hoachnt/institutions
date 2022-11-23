@@ -7,17 +7,24 @@
           type="text"
           placeholder="First name"
           v-model:value="data.firstName"
+          required
         />
         <UIInput
           type="text"
           placeholder="Last name"
           v-model:value="data.lastName"
         />
-        <UIInput type="email" placeholder="Email" v-model:value="data.email" />
+        <UIInput
+          type="email"
+          placeholder="Email"
+          v-model:value="data.email"
+          required
+        />
         <UIInput
           type="password"
           placeholder="Password"
           v-model:value="data.password"
+          required
         />
         <UIButton class="min-w-full">Sign up</UIButton>
         <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
@@ -47,22 +54,22 @@ const data = reactive({
 });
 const submit = async () => {
   try {
-    let newUser = await createUser({
-      first_name: data.firstName,
-      last_name: data.lastName,
-      email: data.email,
-      password: data.password,
-      role: data.adminRole,
-    });
+    if (data.firstName.length >= 1) {
+      let newUser = await createUser({
+        first_name: data.firstName,
+        last_name: data.lastName,
+        email: data.email,
+        password: data.password,
+        role: data.adminRole,
+      });
 
-    let response = await login({
-      email: data.email,
-      password: data.password,
-    });
+      let response = await login({
+        email: data.email,
+        password: data.password,
+      });
 
-    const token = useDirectusToken();
-
-    await router.push("/");
+      await router.push("/locations/new");
+    }
   } catch (error) {
     console.log(error);
   }

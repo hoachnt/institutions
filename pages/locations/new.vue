@@ -3,9 +3,10 @@
     <div class="container m-auto px-4">
       <transition name="fade">
         <form @submit.prevent class="">
-          <UIInput placeholder="Datzan name" v-model:value="datzan.name" />
+          <h1 class="text-4xl mb-2">Create a new location</h1>
+          <UIInput placeholder="Location name" v-model:value="datzan.name" />
           <UIInput
-            placeholder="Datzan address"
+            placeholder="Location address"
             v-model:value="datzan.address"
           />
           <UIInput
@@ -134,8 +135,11 @@ const createDatzan = () => {
           body: datzan,
         });
       })
-      .then(() => store.fetchDatzan())
-      .then(() => useRouter().push("/"));
+      .then((response) => {
+        store.fetchDatzan();
+
+        useRouter().push({ name: "events", query: { location: response.data.id } });
+      });
   } catch (error) {
     console.log(error);
   }

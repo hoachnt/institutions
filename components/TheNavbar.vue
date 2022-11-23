@@ -3,7 +3,19 @@
     <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content flex flex-col">
       <!-- Navbar -->
-      <div class="w-full navbar bg-indigo-500 mb-3 flex justify-between sticky top-0 z-10">
+      <div
+        class="
+          w-full
+          navbar
+          bg-indigo-500
+          mb-3
+          flex
+          justify-between
+          sticky
+          top-0
+          z-10
+        "
+      >
         <div class="flex-none lg:hidden">
           <label for="my-drawer-3" class="btn btn-square btn-ghost">
             <svg
@@ -27,10 +39,7 @@
         <div class="flex-none hidden lg:block">
           <ul class="menu menu-horizontal bg-base-100 rounded-xl">
             <!-- Navbar menu content here -->
-            <li
-              v-if="token"
-              @click="$router.push('/locations/new')"
-            >
+            <li v-if="token" @click="$router.push('/locations/new')">
               <a class="btn">
                 <div class="mr-1">
                   <font-awesome-icon icon="fa-solid fa-plus" />
@@ -81,8 +90,27 @@
       <label for="my-drawer-3" class="drawer-overlay"></label>
       <ul class="sidebar menu w-80 bg-base-100">
         <!-- Sidebar content here -->
+        <!-- <li v-if="token">
+          <a class="rounded-lg px-0">
+            <div class="avatar online placeholder">
+              <div
+                class="bg-neutral-focus text-neutral-content rounded-full w-16"
+              >
+                <span class="text-xl">{{ user.first_name }}</span>
+              </div>
+            </div>
+            <div class="offer">
+              <span>
+                {{ user.first_name }} {{ user.last_name}}
+              </span>
+              <p class="text-gray-500">
+                {{ user.email }}
+              </p>
+            </div>
+          </a>
+        </li> -->
         <li v-if="token" @click="$router.push('/locations/new')">
-          <a class="btn">
+          <a class="add-btn btn rounded-lg">
             <div class="mr-1">
               <font-awesome-icon icon="fa-solid fa-plus" />
             </div>
@@ -90,7 +118,7 @@
           </a>
         </li>
         <li @click="$router.push('/')" v-if="token">
-          <a>
+          <a class="rounded-lg">
             <div class="mr-1">
               <font-awesome-icon icon="fa-solid fa-house" />
             </div>
@@ -98,12 +126,12 @@
           </a>
         </li>
         <li @click="$router.push('/register')" v-if="!token">
-          <a>
+          <a class="rounded-lg">
             <p>Register</p>
           </a>
         </li>
         <li @click="$router.push('/login')" v-if="!token">
-          <a>
+          <a class="rounded-lg">
             <div class="mr-1">
               <font-awesome-icon icon="fa-solid fa-right-to-bracket" />
             </div>
@@ -111,7 +139,7 @@
           </a>
         </li>
         <li @click="logOut" v-if="token">
-          <a>
+          <a class="rounded-lg">
             <div class="mr-1">
               <font-awesome-icon icon="fa-solid fa-right-from-bracket" />
             </div>
@@ -123,6 +151,8 @@
   </div>
 </template>
 <script setup>
+const user = useDirectusUser();
+
 const { logout } = useDirectusAuth();
 
 const token = useDirectusToken();
@@ -141,6 +171,9 @@ a {
   cursor: pointer;
 }
 .sidebar {
-  padding: 15px !important;
+  padding: 65px 15px !important;
+}
+.add-btn {
+  margin: 10px 0 !important;
 }
 </style>
