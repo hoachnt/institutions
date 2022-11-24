@@ -50,9 +50,10 @@ const submit = async () => {
     }
 
     await router.push("/");
+    await document.location.reload(true);
   } catch (e) {
-    if(e.status == 401) {
-      alert("Wrong email or password")
+    if (e.status == 401) {
+      alert("Wrong email or password");
     }
     console.log(e);
   }

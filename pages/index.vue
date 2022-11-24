@@ -3,7 +3,7 @@
     <div class="m-auto px-4 max-w-3xl">
       <h1 class="my-1 text-4xl">Locations</h1>
       <transition name="fade">
-        <TheDatzanList :datzans="datzans" v-if="datzans != ''" />
+        <TheDatzanList :datzans="store.datzans" v-if="datzans != ''" />
         <div v-else>Location Empty</div>
       </transition>
     </div>
@@ -40,6 +40,7 @@ const fetchDatzan = async () => {
     );
 
     datzans.value = response.data;
+    store.datzans = datzans.value;
   } catch (error) {
     if (error.status == 401) {
       alert("You are not authorized or authorization timed out");

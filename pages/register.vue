@@ -74,6 +74,8 @@ const submit = async () => {
       });
 
       await router.push("/locations/new");
+
+      await document.location.reload(true);
     }
   } catch (error) {
     console.log(error);

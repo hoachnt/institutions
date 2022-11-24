@@ -136,6 +136,8 @@ const datzan = reactive({
   type: "",
 });
 
+console.log(store.url)
+
 const createDatzan = () => {
   try {
     pushHotelImage();
