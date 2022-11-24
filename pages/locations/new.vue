@@ -4,11 +4,33 @@
       <transition name="fade">
         <form @submit.prevent class="">
           <h1 class="text-4xl mb-2">Create a new location</h1>
-          <UIInput placeholder="Location name" v-model:value="datzan.name" />
-          <UIInput
-            placeholder="Location address"
-            v-model:value="datzan.address"
-          />
+          <select
+            id="countries"
+            class="
+              border border-gray-300
+              text-gray-900 text-sm
+              rounded-md
+              focus:ring-blue-500 focus:border-blue-500
+              block
+              w-full
+              p-2.5
+              bg-base-100
+              my-1
+              dark:border-gray-600
+              dark:placeholder-base-100
+              dark:text-white
+              dark:focus:ring-blue-500
+              dark:focus:border-blue-500
+            "
+            v-model="datzan.type"
+          >
+            <option disabled value="">Select Type</option>
+            <option value="Church">Church</option>
+            <option value="Temple">Temple</option>
+            <option value="Mosque">Mosque</option>
+          </select>
+          <UIInput placeholder="Name" v-model:value="datzan.name" />
+          <UIInput placeholder="Address" v-model:value="datzan.address" />
           <UIInput
             type="file"
             id="file"
@@ -111,8 +133,8 @@ const datzan = {
   address: "",
   description: "",
   img: "",
+  type: "",
 };
-
 onMounted(() => {
   store.fetchDatzan();
 });
@@ -138,7 +160,10 @@ const createDatzan = () => {
       .then((response) => {
         store.fetchDatzan();
 
-        useRouter().push({ name: "events", query: { location: response.data.id } });
+        useRouter().push({
+          name: "events",
+          query: { location: response.data.id },
+        });
       });
   } catch (error) {
     console.log(error);

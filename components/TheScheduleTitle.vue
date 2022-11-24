@@ -97,7 +97,7 @@ const visible = false;
 const title = ref("");
 const scheduleTitles = ref("");
 
-const changeTitle = () => (showInputTitle.value = true);
+const changeTitle = () => (showInputTitle.value = !showInputTitle.value);
 const updateTitle = async () => {
   let response = await $fetch(
     `${url}/items/schedule_title/${props.scheduleTitle.id}`,

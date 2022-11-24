@@ -123,6 +123,9 @@
           ></path>
         </svg>
       </a>
+      <div class="card-actions justify-end">
+        <div class="badge badge-outline">{{datzan.type}}</div> 
+      </div>
     </div>
     <div class="toast">
       <div class="alert alert-error" v-if="store.removeDatzanError">

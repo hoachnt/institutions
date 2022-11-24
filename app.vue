@@ -4,6 +4,12 @@
   </div>
 </template>
 <script setup>
+const { logout } = useDirectusAuth();
+const user = useDirectusUser();
+
+if(!user.value) {
+  logout()
+}
 </script>
 <style>
 .page-enter-active,
