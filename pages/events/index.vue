@@ -6,6 +6,8 @@
         placeholder="New Schedule..."
         v-if="addTitle == true"
         v-model:value="scheduleTitle.title"
+        required
+        minlength="1"
       />
       <UIButton
         @click="addTitle = true"
@@ -101,23 +103,25 @@ const removeSchedule = async (id) => {
   }
 };
 const addNewTitle = async () => {
-  const response = await $fetch(`${url}/items/schedule_title`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token.value}`,
-    },
-    body: scheduleTitle,
-  }).then((response) => {
-    fetchScheduleTitles();
-
-    useRouter().push({
-      name: "events-new",
-      query: {
-        location: useRoute().query.location,
-        scheduleTitleId: response.data.id,
+  if (scheduleTitle.title != "") {
+    const response = await $fetch(`${url}/items/schedule_title`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token.value}`,
       },
+      body: scheduleTitle,
+    }).then((response) => {
+      fetchScheduleTitles();
+
+      useRouter().push({
+        name: "events-new",
+        query: {
+          location: useRoute().query.location,
+          scheduleTitleId: response.data.id,
+        },
+      });
     });
-  });
+  }
 };
 const getLocalStorage = () => {
   dazanId.value = localStorage.getItem("dazanId");

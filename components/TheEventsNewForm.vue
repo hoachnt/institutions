@@ -36,6 +36,7 @@
           placeholder="Description"
           type="text"
           v-model:value="newEvent.description"
+          required
         />
         <UIButton
           @click="createEvent"
@@ -69,20 +70,22 @@ let newEvent = reactive({
 });
 const createEvent = async () => {
   try {
-    await $fetch(`${url}/items/events`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token.value}`,
-      },
-      body: newEvent,
-    });
-    await useRouter().push({
-      name: "events",
-      query: { location: useRoute().query.location },
-    });
+    if (newEvent.datetime != "" && newEvent.time != "" && newEvent.description != "") {
+      await $fetch(`${url}/items/events`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+        },
+        body: newEvent,
+      });
+      await useRouter().push({
+        name: "events",
+        query: { location: useRoute().query.location },
+      });
+    }
   } catch (error) {
     if (error.status == 401) {
-      alert(`Error ${error.status}`)
+      alert(`Error ${error.status}`);
       useRouter().push("/login");
     }
     alert(error);

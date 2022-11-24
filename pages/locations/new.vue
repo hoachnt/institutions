@@ -23,14 +23,19 @@
               dark:focus:border-blue-500
             "
             v-model="datzan.type"
+            required
           >
             <option disabled value="">Select Type</option>
             <option value="Church">Church</option>
             <option value="Temple">Temple</option>
             <option value="Mosque">Mosque</option>
           </select>
-          <UIInput placeholder="Name" v-model:value="datzan.name" />
-          <UIInput placeholder="Address" v-model:value="datzan.address" />
+          <UIInput placeholder="Name" v-model:value="datzan.name" required />
+          <UIInput
+            placeholder="Address"
+            v-model:value="datzan.address"
+            required
+          />
           <UIInput
             type="file"
             id="file"
@@ -136,33 +141,36 @@ const datzan = reactive({
   type: "",
 });
 
-console.log(store.url)
-
 const createDatzan = () => {
   try {
-    pushHotelImage();
+    if (datzan.name != "" && datzan.address != "" && datzan.type != "") {
+      pushHotelImage();
 
-    const response = $fetch(`${store.url}/files?sort=uploaded_on`)
-      .then((response) => {
-        let responseData = response.data;
+      const response = $fetch(`${store.url}/files?sort=uploaded_on`)
+        .then((response) => {
+          let responseData = response.data;
 
-        datzan.img = responseData[responseData.length - 1].id;
+          if (file.files[0] !== undefined) {
+            datzan.img = responseData[responseData.length - 1].id;
+          } else {
+            datzan.img = null;
+          }
 
-        return $fetch(`${store.url}/items/datzans`, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token.value}`,
-          },
-          body: datzan,
+          return $fetch(`${store.url}/items/datzans`, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token.value}`,
+            },
+            body: datzan,
+          });
+        })
+        .then((response) => {
+          useRouter().push({
+            name: "events",
+            query: { location: response.data.id },
+          });
         });
-      })
-      .then((response) => {
-
-        useRouter().push({
-          name: "events",
-          query: { location: response.data.id },
-        });
-      });
+    }
   } catch (error) {
     console.log(error);
   }
@@ -171,7 +179,6 @@ function pushHotelImage() {
   const file = document.getElementById("file");
 
   const formData = new FormData();
-  console.log(file);
 
   formData.append("title", "Image");
   formData.append("file", file.files[0]);
