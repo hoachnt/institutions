@@ -156,7 +156,7 @@ const fetchDatzan = async () => {
   }
 };
 const generateQrCode = () => {
-  value.value = `${config.public.my_domain}/datsan/${useRoute().params.id}`;
+  value.value = `${config.public.my_domain}${useRoute().path}`;
 };
 const showQrCode = () => (qrCode.value = !qrCode.value);
 onMounted(() => {
