@@ -12,7 +12,7 @@
         v-if="addTitle == false && token"
         class="min-w-full tooltip tooltip-bottom" data-tip="Create Schedule"
       >
-        <font-awesome-icon icon="fa-solid fa-plus" />
+        <font-awesome-icon icon="fa-solid fa-plus" v-if="store.loading"/>
       </UIButton>
       <UIButton
         @click="addNewTitle"

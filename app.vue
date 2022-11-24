@@ -7,7 +7,7 @@
 const { logout } = useDirectusAuth();
 const user = useDirectusUser();
 
-if(!user.value) {
+if(user.value == undefined) {
   logout()
 }
 </script>

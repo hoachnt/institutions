@@ -41,7 +41,7 @@
           "
         >
           <div>
-            <font-awesome-icon icon="fa-solid fa-plus" class="mr-1" />
+            <font-awesome-icon icon="fa-solid fa-plus" class="mr-1" v-if="store.loading" />
           </div>
           <p>Create</p>
         </a>
@@ -62,7 +62,7 @@
     v-if="schedules != ''"
     @removeEvent="removeEvent"
   />
-  <div v-else class="text-center text-error text-3xl">Schedule is Empty</div>
+  <div v-else class="text-xl text-gray-600">Schedule is Empty</div>
   <UIButton
     @click="generatePdf"
     class="flex items-center"
@@ -89,6 +89,7 @@ const props = defineProps({
     type: Object,
   },
 });
+const emit = defineEmits(["removeSchedule"]);
 
 const showInputTitle = ref(false);
 const url = config.public.url;
@@ -125,7 +126,6 @@ const fetchSchedule = async () => {
   }
 };
 const removeEvent = async (id) => {
-  console.log('nice')
   try {
     let response = await $fetch(`${url}/items/events/${id}`, {
       method: "DELETE",

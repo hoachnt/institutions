@@ -36,13 +36,28 @@
         <div class="px-2 mx-2 cursor-pointer" @click="$router.push('/')">
           <a class="text-2xl uppercase"> Indigo </a>
         </div>
+        <div
+          v-if="token"
+          @click="$router.push('/locations/new')"
+          class="lg:hidden"
+        >
+          <a class="btn rounded-xl px-6">
+            <div class="sm:mr-2">
+              <font-awesome-icon icon="fa-solid fa-plus" v-if="store.loading" />
+            </div>
+            <p class="hidden sm:block">Add</p>
+          </a>
+        </div>
         <div class="flex-none hidden lg:block">
           <ul class="menu menu-horizontal bg-base-100 rounded-xl">
             <!-- Navbar menu content here -->
             <li v-if="token" @click="$router.push('/locations/new')">
               <a class="btn">
                 <div class="mr-1">
-                  <font-awesome-icon icon="fa-solid fa-plus" />
+                  <font-awesome-icon
+                    icon="fa-solid fa-plus"
+                    v-if="store.loading"
+                  />
                 </div>
                 <p>Add</p>
               </a>
@@ -50,7 +65,10 @@
             <li class="nav-item" @click="$router.push('/')" v-if="token">
               <a class="btn rounded-none">
                 <div class="mr-1">
-                  <font-awesome-icon icon="fa-solid fa-house" />
+                  <font-awesome-icon
+                    icon="fa-solid fa-house"
+                    v-if="store.loading"
+                  />
                 </div>
                 <p>Home</p>
               </a>
@@ -67,7 +85,10 @@
             <li class="nav-item" @click="$router.push('/login')" v-if="!token">
               <a class="btn">
                 <div class="mr-1">
-                  <font-awesome-icon icon="fa-solid fa-right-to-bracket" />
+                  <font-awesome-icon
+                    icon="fa-solid fa-right-to-bracket"
+                    v-if="store.loading"
+                  />
                 </div>
                 <p>Login</p>
               </a>
@@ -75,7 +96,10 @@
             <li class="nav-item" @click="logOut" v-if="token">
               <a class="btn">
                 <div class="mr-1">
-                  <font-awesome-icon icon="fa-solid fa-right-from-bracket" />
+                  <font-awesome-icon
+                    icon="fa-solid fa-right-from-bracket"
+                    v-if="store.loading"
+                  />
                 </div>
                 <p>Logout</p>
               </a>
@@ -90,29 +114,11 @@
       <label for="my-drawer-3" class="drawer-overlay"></label>
       <ul class="sidebar menu w-80 bg-base-100">
         <!-- Sidebar content here -->
-        <!-- <li v-if="token">
-          <a class="rounded-lg px-0">
-            <div class="avatar online placeholder">
-              <div
-                class="bg-neutral-focus text-neutral-content rounded-full w-16"
-              >
-                <span class="text-xl">{{ user.first_name }}</span>
-              </div>
-            </div>
-            <div class="offer">
-              <span>
-                {{ user.first_name }} {{ user.last_name}}
-              </span>
-              <p class="text-gray-500">
-                {{ user.email }}
-              </p>
-            </div>
-          </a>
-        </li> -->
+        <!-- <UIUserInfo /> -->
         <li v-if="token" @click="$router.push('/locations/new')">
           <a class="add-btn btn rounded-lg">
             <div class="mr-1">
-              <font-awesome-icon icon="fa-solid fa-plus" />
+              <font-awesome-icon icon="fa-solid fa-plus" v-if="store.loading" />
             </div>
             <p>Add</p>
           </a>
@@ -120,7 +126,10 @@
         <li @click="$router.push('/')" v-if="token">
           <a class="rounded-lg">
             <div class="mr-1">
-              <font-awesome-icon icon="fa-solid fa-house" />
+              <font-awesome-icon
+                icon="fa-solid fa-house"
+                v-if="store.loading"
+              />
             </div>
             <p>Home</p>
           </a>
@@ -133,7 +142,10 @@
         <li @click="$router.push('/login')" v-if="!token">
           <a class="rounded-lg">
             <div class="mr-1">
-              <font-awesome-icon icon="fa-solid fa-right-to-bracket" />
+              <font-awesome-icon
+                icon="fa-solid fa-right-to-bracket"
+                v-if="store.loading"
+              />
             </div>
             <p>Login</p>
           </a>
@@ -141,7 +153,10 @@
         <li @click="logOut" v-if="token">
           <a class="rounded-lg">
             <div class="mr-1">
-              <font-awesome-icon icon="fa-solid fa-right-from-bracket" />
+              <font-awesome-icon
+                icon="fa-solid fa-right-from-bracket"
+                v-if="store.loading"
+              />
             </div>
             <p>Logout</p>
           </a>
@@ -151,10 +166,10 @@
   </div>
 </template>
 <script setup>
-const user = useDirectusUser();
+import { usePiniaStore } from "@/stores/PiniaStore";
 
+const store = usePiniaStore();
 const { logout } = useDirectusAuth();
-
 const token = useDirectusToken();
 const router = useRouter();
 
@@ -162,8 +177,6 @@ const logOut = async () => {
   await logout();
 
   await router.push("/login");
-
-  await document.location.reload(true);
 };
 </script>
 <style>

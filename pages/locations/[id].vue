@@ -95,7 +95,11 @@
               </svg>
             </a>
             <UIButton @click="showQrCode">
-              <font-awesome-icon :icon="['fa', 'fa-qrcode']" class="text-xl" />
+              <font-awesome-icon
+                :icon="['fa', 'fa-qrcode']"
+                class="text-xl"
+                v-if="store.loading"
+              />
             </UIButton>
             <div
               class="

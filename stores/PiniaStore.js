@@ -12,6 +12,13 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
     await document.location.reload(true);
   };
 
+  const loading = ref(false);
+
+  const nuxtApp = useNuxtApp();
+  nuxtApp.hook("page:finish", () => {
+    loading.value = true;
+  });
+
   if (user.value) {
     const authenticated = ref(false);
     const config = useRuntimeConfig();
@@ -40,7 +47,7 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
         datzans.value = response.data;
       } catch (error) {
         if (error.status == 401) {
-          alert("You are not authorized or authorization timed out")
+          alert("You are not authorized or authorization timed out");
         }
         alert(error);
       }
@@ -88,6 +95,10 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
       removeDatzanError,
       scheduleTitleId,
       user,
+      loading,
     };
   }
+  return {
+    loading,
+  };
 });
