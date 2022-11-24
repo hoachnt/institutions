@@ -108,7 +108,7 @@
               duration-150
             "
           >
-            Create Datzan
+            Create {{ datzan.type }}
           </button>
         </form>
       </transition>
@@ -128,15 +128,12 @@ useHead({
   title: "Datzan",
 });
 
-const datzan = {
+const datzan = reactive({
   name: "",
   address: "",
   description: "",
   img: "",
   type: "",
-};
-onMounted(() => {
-  store.fetchDatzan();
 });
 
 const createDatzan = () => {
@@ -158,7 +155,6 @@ const createDatzan = () => {
         });
       })
       .then((response) => {
-        store.fetchDatzan();
 
         useRouter().push({
           name: "events",

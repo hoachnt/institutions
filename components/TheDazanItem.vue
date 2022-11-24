@@ -78,7 +78,7 @@
 
     <div>
       <img
-        class="rounded-t-lg"
+        class="rounded-t-lg min-w-full"
         :src="`https://directus.hoach.skryonline.com/assets/${datzan.img}`"
         alt=""
       />

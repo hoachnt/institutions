@@ -81,6 +81,10 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
       } catch (error) {}
     };
 
+    onMounted(() => {
+      fetchDatzan();
+    });
+
     return {
       authenticated,
       userCreated,
