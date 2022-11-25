@@ -2,7 +2,7 @@
   <main>
     <transition name="fade">
       <div class="m-auto px-4 max-w-3xl">
-        <h1 class="my-1 text-4xl">Locations</h1>
+        <h1 class="my-1 text-4xl">{{ $t('locations') }}</h1>
         <transition name="fade">
           <TheDatzanList :datzans="store.datzans" v-if="datzans != ''" />
           <button class="btn btn-square loading btn-primary" v-else></button>
@@ -13,6 +13,8 @@
 </template>
 <script setup>
 import { usePiniaStore } from "@/stores/PiniaStore";
+
+
 const token = useDirectusToken();
 const user = useDirectusUser();
 
@@ -47,7 +49,7 @@ const fetchDatzan = async () => {
     if (error.status == 401) {
       alert("You are not authorized or authorization timed out");
 
-      await store.logOut()
+      await store.logOut();
     }
   }
 };

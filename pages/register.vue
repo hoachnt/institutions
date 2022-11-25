@@ -2,7 +2,7 @@
   <main>
     <div class="container m-auto max-w-lg">
       <form @submit.prevent="submit" class="px-4">
-        <h1 class="text-2xl mb-1">Sign up</h1>
+        <h1 class="text-2xl mb-1">{{ $t("register") }}</h1>
         <UIInput
           type="text"
           placeholder="First name"
@@ -26,13 +26,13 @@
           v-model:value="data.password"
           required
         />
-        <UIButton class="min-w-full">Sign up</UIButton>
+        <UIButton class="min-w-full">{{ $t("register") }}</UIButton>
         <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
           Have account?
           <a
             @click="$router.push('/login')"
             class="text-indigo-700 hover:underline dark:indigo-500"
-            >Login</a
+            >{{ $t("login") }}</a
           >
         </div>
       </form>

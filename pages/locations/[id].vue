@@ -79,7 +79,7 @@
                 duration-150
               "
             >
-              Schedule
+              {{ $t("schedules") }}
               <svg
                 aria-hidden="true"
                 class="w-4 h-4 ml-2 -mr-1"

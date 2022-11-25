@@ -45,11 +45,11 @@
             <div class="sm:mr-2">
               <font-awesome-icon icon="fa-solid fa-plus" v-if="store.loading" />
             </div>
-            <p class="hidden sm:block">Add</p>
+            <p class="hidden sm:block">{{ $t("add") }}</p>
           </a>
         </div>
-        <div class="flex-none hidden lg:block">
-          <ul class="menu menu-horizontal bg-base-100 rounded-xl">
+        <div class="hidden lg:flex">
+          <ul class="menu menu-horizontal bg-base-100 rounded-xl mx-1">
             <!-- Navbar menu content here -->
             <li v-if="token" @click="$router.push('/locations/new')">
               <a class="btn">
@@ -59,7 +59,7 @@
                     v-if="store.loading"
                   />
                 </div>
-                <p>Add</p>
+                <p>{{ $t("add") }}</p>
               </a>
             </li>
             <li class="nav-item" @click="$router.push('/')" v-if="token">
@@ -70,7 +70,7 @@
                     v-if="store.loading"
                   />
                 </div>
-                <p>Home</p>
+                <p>{{ $t("home") }}</p>
               </a>
             </li>
             <li
@@ -79,7 +79,7 @@
               v-if="!token"
             >
               <a class="btn">
-                <p>Register</p>
+                <p>{{ $t("register") }}</p>
               </a>
             </li>
             <li class="nav-item" @click="$router.push('/login')" v-if="!token">
@@ -90,7 +90,7 @@
                     v-if="store.loading"
                   />
                 </div>
-                <p>Login</p>
+                <p>{{ $t("login") }}</p>
               </a>
             </li>
             <li class="nav-item" @click="logOut" v-if="token">
@@ -101,10 +101,21 @@
                     v-if="store.loading"
                   />
                 </div>
-                <p>Logout</p>
+                <p>{{ $t("logOut") }}</p>
               </a>
             </li>
           </ul>
+          <form class="ml-2">
+            <select
+              class="select select-bordered w-full max-w-xs"
+              v-model="locale"
+            >
+              <option disabled selected>Choose language</option>
+              <option value="en">English</option>
+              <option value="ru">Рускиий</option>
+              <option value="vn">Tiếng Việt</option>
+            </select>
+          </form>
         </div>
       </div>
       <!-- Page content here -->
@@ -120,7 +131,7 @@
             <div class="mr-1">
               <font-awesome-icon icon="fa-solid fa-plus" v-if="store.loading" />
             </div>
-            <p>Add</p>
+            <p>{{ $t("add") }}</p>
           </a>
         </li>
         <li @click="$router.push('/')" v-if="token">
@@ -131,12 +142,12 @@
                 v-if="store.loading"
               />
             </div>
-            <p>Home</p>
+            <p>{{ $t("home") }}</p>
           </a>
         </li>
         <li @click="$router.push('/register')" v-if="!token">
           <a class="rounded-lg">
-            <p>Register</p>
+            <p>{{ $t("register") }}</p>
           </a>
         </li>
         <li @click="$router.push('/login')" v-if="!token">
@@ -147,7 +158,7 @@
                 v-if="store.loading"
               />
             </div>
-            <p>Login</p>
+            <p>{{ $t("login") }}</p>
           </a>
         </li>
         <li @click="logOut" v-if="token">
@@ -158,7 +169,20 @@
                 v-if="store.loading"
               />
             </div>
-            <p>Logout</p>
+            <p>{{ $t("logOut") }}</p>
+          </a>
+        </li>
+        <li>
+          <a class="rounded-lg">
+            <select
+              class="select select-bordered w-full max-w-xs"
+              v-model="locale"
+            >
+              <option disabled selected>Choose language</option>
+              <option value="en">English</option>
+              <option value="ru">Рускиий</option>
+              <option value="vn">Tiếng Việt</option>
+            </select>
           </a>
         </li>
       </ul>
@@ -168,6 +192,8 @@
 <script setup>
 import { usePiniaStore } from "@/stores/PiniaStore";
 
+const { locale } = useI18n();
+
 const store = usePiniaStore();
 const { logout } = useDirectusAuth();
 const token = useDirectusToken();
@@ -175,7 +201,7 @@ const router = useRouter();
 
 const logOut = async () => {
   await logout();
-  
+
   await router.push("/login");
 
   await document.location.reload(true);
@@ -190,5 +216,8 @@ a {
 }
 .add-btn {
   margin: 10px 0 !important;
+}
+select {
+  background: #262626;
 }
 </style>
