@@ -1,14 +1,16 @@
 <template>
   <div class="min-h-screen bg-base-100">
-    <TheNavbar />
+    <transition name="page">
+      <TheNavbar />
+    </transition>
   </div>
 </template>
 <script setup>
 const { logout } = useDirectusAuth();
 const user = useDirectusUser();
 
-if(user.value == undefined) {
-  logout()
+if (user.value == undefined) {
+  logout();
 }
 </script>
 <style>

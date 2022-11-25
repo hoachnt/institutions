@@ -1,12 +1,14 @@
 <template>
   <main>
-    <div class="m-auto px-4 max-w-3xl">
-      <h1 class="my-1 text-4xl">Locations</h1>
-      <transition name="fade">
-        <TheDatzanList :datzans="store.datzans" v-if="datzans != ''" />
-        <div v-else>Location Empty</div>
-      </transition>
-    </div>
+    <transition name="fade">
+      <div class="m-auto px-4 max-w-3xl">
+        <h1 class="my-1 text-4xl">Locations</h1>
+        <transition name="fade">
+          <TheDatzanList :datzans="store.datzans" v-if="datzans != ''" />
+          <button class="btn btn-square loading btn-primary" v-else></button>
+        </transition>
+      </div>
+    </transition>
   </main>
 </template>
 <script setup>
