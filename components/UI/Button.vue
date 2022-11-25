@@ -19,6 +19,7 @@
       ease-linear
       transition-all
       duration-150
+      select-none
     "
   >
     <slot></slot>

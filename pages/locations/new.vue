@@ -1,6 +1,12 @@
 <template>
   <main>
     <div class="container m-auto px-4">
+      <div class="text-sm breadcrumbs mb-4">
+        <ul>
+          <li><a @click="$router.push('/')">Home</a></li>
+          <li><a>New</a></li>
+        </ul>
+      </div>
       <transition name="fade">
         <form @submit.prevent class="">
           <h1 class="text-4xl mb-2">Create a new location</h1>

@@ -28,6 +28,14 @@
           v-if="scheduleTitles != ''"
           @removeSchedule="removeSchedule"
         />
+
+        <div
+          v-else-if="scheduleTitles == '' && token"
+          class="text-xl text-gray-400 btn min-w-full my-3"
+          @click="addTitle = true"
+        >
+          You don't have schedules
+        </div>
       </transition>
     </div>
   </main>

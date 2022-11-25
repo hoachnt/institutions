@@ -67,7 +67,21 @@
       v-if="schedules != ''"
       @removeEvent="removeEvent"
     />
-    <div v-else class="text-xl text-gray-400 btn min-w-full my-3">Schedule is Empty</div>
+    <div
+      v-else-if="schedules == '' && token"
+      class="text-xl text-gray-400 btn min-w-full my-3"
+      @click="
+        $router.push({
+          name: 'events-new',
+          query: {
+            location: useRoute().query.location,
+            scheduleTitleId: scheduleTitle.id,
+          },
+        })
+      "
+    >
+      Schedule is Empty
+    </div>
   </transition>
 
   <UIButton

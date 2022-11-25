@@ -1,6 +1,19 @@
 <template lang="">
   <main>
     <div class="container px-4 m-auto">
+      <div class="text-sm breadcrumbs mb-4">
+        <ul>
+          <li>
+            <a
+              @click="
+                $router.push({ name: 'events', query: { location: useRoute().query.location } })
+              "
+              >Events</a
+            >
+          </li>
+          <li><a>New</a></li>
+        </ul>
+      </div>
       <form @submit.prevent v-if="token">
         <h1 class="text-4xl mb-2">Create a new event</h1>
         <div>
@@ -70,7 +83,11 @@ let newEvent = reactive({
 });
 const createEvent = async () => {
   try {
-    if (newEvent.datetime != "" && newEvent.time != "" && newEvent.description != "") {
+    if (
+      newEvent.datetime != "" &&
+      newEvent.time != "" &&
+      newEvent.description != ""
+    ) {
       await $fetch(`${url}/items/events`, {
         method: "POST",
         headers: {

@@ -34,7 +34,7 @@
           </label>
         </div>
         <div class="px-2 mx-2 cursor-pointer" @click="$router.push('/')">
-          <a class="text-2xl uppercase"> Indigo </a>
+          <a class="text-2xl uppercase select-none"> Indigo </a>
         </div>
         <div
           v-if="token"
