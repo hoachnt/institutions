@@ -46,8 +46,9 @@ const fetchDatzan = async () => {
   } catch (error) {
     if (error.status == 401) {
       alert("You are not authorized or authorization timed out");
+
+      await store.logOut()
     }
-    alert(error);
   }
 };
 

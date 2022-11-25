@@ -1,18 +1,18 @@
 <template>
-  <transition name="fade">
-    <div
-      class="
-        container
-        w-2/4
-        min-w-full
-        sm:min-w-0
-        m-0
-        sm:m-auto
-        flex
-        justify-center
-        px-3
-      "
-    >
+  <div
+    class="
+      container
+      w-2/4
+      min-w-full
+      sm:min-w-0
+      m-0
+      sm:m-auto
+      flex
+      justify-center
+      px-3
+    "
+  >
+    <transition name="fade">
       <div
         class="
           datsan
@@ -125,8 +125,8 @@
           </div>
         </div>
       </div>
-    </div>
-  </transition>
+    </transition>
+  </div>
 </template>
 <script setup>
 import { usePiniaStore } from "@/stores/PiniaStore";

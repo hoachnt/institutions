@@ -64,7 +64,7 @@
                 <div class="modal-action">
                   <label
                     for="my-modal"
-                    class="btn border-error text-error"
+                    class="btn btn-outline btn-error"
                     @click="store.removeDatzan(datzan.id)"
                     >Delete!</label
                   >

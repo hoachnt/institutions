@@ -63,23 +63,30 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
               Authorization: `Bearer ${token.value}`,
             },
           });
+
+          removeMessage.value = "Location was deleted";
+
+          timer();
         } else {
           removeMessage.value = "Wrong email";
 
-          let timer = setTimeout(function tick() {
-            removeDatzanError.value = true;
-
-            timer = setTimeout(tick, 2000); // (*)
-          }, 0);
-
-          setTimeout(() => {
-            clearTimeout(timer);
-
-            removeDatzanError.value = false;
-          }, 4000);
+          timer();
         }
       } catch (error) {}
     };
+    function timer() {
+      let timer = setTimeout(function tick() {
+        removeDatzanError.value = true;
+
+        timer = setTimeout(tick, 2000); // (*)
+      }, 0);
+
+      setTimeout(() => {
+        clearTimeout(timer);
+
+        removeDatzanError.value = false;
+      }, 4000);
+    }
 
     onMounted(() => {
       fetchDatzan();
@@ -100,6 +107,7 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
       scheduleTitleId,
       user,
       loading,
+      logOut,
     };
   }
   return {

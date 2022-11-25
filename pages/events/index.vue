@@ -14,7 +14,7 @@
         v-if="addTitle == false && token"
         class="min-w-full"
       >
-        <font-awesome-icon icon="fa-solid fa-plus" v-if="store.loading"/>
+        <font-awesome-icon icon="fa-solid fa-plus" v-if="store.loading" />
       </UIButton>
       <UIButton
         @click="addNewTitle"
@@ -23,13 +23,11 @@
         >Add schedule</UIButton
       >
       <transition name="fade">
-        <div>
-          <TheScheduleTitles
-            :scheduleTitles="scheduleTitles"
-            v-if="scheduleTitles != ''"
-            @removeSchedule="removeSchedule"
-          />
-        </div>
+        <TheScheduleTitles
+          :scheduleTitles="scheduleTitles"
+          v-if="scheduleTitles != ''"
+          @removeSchedule="removeSchedule"
+        />
       </transition>
     </div>
   </main>

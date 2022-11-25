@@ -41,7 +41,11 @@
           "
         >
           <div>
-            <font-awesome-icon icon="fa-solid fa-plus" class="mr-1" v-if="store.loading" />
+            <font-awesome-icon
+              icon="fa-solid fa-plus"
+              class="mr-1"
+              v-if="store.loading"
+            />
           </div>
           <p>Create</p>
         </a>
@@ -57,12 +61,15 @@
       </li>
     </ul>
   </div>
-  <TheScheduleList
-    :schedules="schedules"
-    v-if="schedules != ''"
-    @removeEvent="removeEvent"
-  />
-  <div v-else class="text-xl text-gray-600">Schedule is Empty</div>
+  <transition name="fade">
+    <TheScheduleList
+      :schedules="schedules"
+      v-if="schedules != ''"
+      @removeEvent="removeEvent"
+    />
+    <div v-else class="text-xl text-gray-400 btn min-w-full my-3">Schedule is Empty</div>
+  </transition>
+
   <UIButton
     @click="generatePdf"
     class="flex items-center"
@@ -216,5 +223,4 @@ onMounted(() => {
   fetchSchedule();
 });
 </script>
-<style lang=""></style>
-;
+<style></style>
