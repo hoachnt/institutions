@@ -119,7 +119,17 @@
         </div>
       </div>
       <!-- Page content here -->
-      <NuxtPage />
+      <NuxtLoadingIndicator />
+      <ClientOnly>
+        <template #default>
+          <NuxtPage />
+        </template>
+        <template fallback-tag="button" #fallback>
+          <div class="loader min-w-full flex items-center justify-center bg-black min-h-screen">
+            <button class="btn btn-square loading btn-primary"></button>
+          </div>
+        </template>
+      </ClientOnly>
     </div>
     <div class="drawer-side">
       <label for="my-drawer-3" class="drawer-overlay"></label>

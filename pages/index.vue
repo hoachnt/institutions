@@ -5,8 +5,12 @@
         <h1 class="my-1 text-4xl">{{ $t("institutions") }}</h1>
         <transition name="fade">
           <TheDatzanList :datzans="store.datzans" v-if="datzans != ''" />
-          <button class="btn btn-square loading btn-primary" v-else></button>
         </transition>
+        <ClientOnly>
+          <template fallback-tag="button" #fallback>
+            <button class="btn btn-square loading btn-primary"></button>
+          </template>
+        </ClientOnly>
       </div>
     </transition>
   </main>

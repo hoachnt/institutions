@@ -1,30 +1,37 @@
 <template>
   <main>
     <div class="container m-auto max-w-lg">
-      <form @submit.prevent="submit" class="px-4">
-        <h1 class="text-2xl mb-1">{{ $t("login") }}</h1>
-        <UIInput
-          type="email"
-          placeholder="Email"
-          v-model:value="data.email"
-          required
-        />
-        <UIInput
-          type="password"
-          placeholder="Password"
-          v-model:value="data.password"
-          required
-        />
-        <UIButton class="min-w-full">{{ $t("login") }}</UIButton>
-        <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-          Not registered?
-          <a
-            @click="$router.push('/register')"
-            class="text-indigo-700 hover:underline dark:indigo-500"
-            >{{ $t("register") }}</a
-          >
-        </div>
-      </form>
+      <Suspense>
+        <template #default>
+          <form @submit.prevent="submit" class="px-4">
+            <h1 class="text-2xl mb-1">{{ $t("login") }}</h1>
+            <UIInput
+              type="email"
+              placeholder="Email"
+              v-model:value="data.email"
+              required
+            />
+            <UIInput
+              type="password"
+              placeholder="Password"
+              v-model:value="data.password"
+              required
+            />
+            <UIButton class="min-w-full">{{ $t("login") }}</UIButton>
+            <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+              Not registered?
+              <a
+                @click="$router.push('/register')"
+                class="text-indigo-700 hover:underline dark:indigo-500"
+                >{{ $t("register") }}</a
+              >
+            </div>
+          </form>
+        </template>
+        <template #fallback>
+          <button class="btn btn-square loading btn-primary"></button>
+        </template>
+      </Suspense>
     </div>
   </main>
 </template>
