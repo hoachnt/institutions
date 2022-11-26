@@ -2,7 +2,7 @@
   <main>
     <transition name="fade">
       <div class="m-auto px-4 max-w-3xl">
-        <h1 class="my-1 text-4xl">{{ $t('locations') }}</h1>
+        <h1 class="my-1 text-4xl">{{ $t("locations") }}</h1>
         <transition name="fade">
           <TheDatzanList :datzans="store.datzans" v-if="datzans != ''" />
           <button class="btn btn-square loading btn-primary" v-else></button>
@@ -14,13 +14,12 @@
 <script setup>
 import { usePiniaStore } from "@/stores/PiniaStore";
 
-
 const token = useDirectusToken();
 const user = useDirectusUser();
 
 const store = usePiniaStore();
 
-const userCreated = ref(user.value.id);
+const userCreated = ref(user.value?.id);
 const datzans = ref([]);
 const config = useRuntimeConfig();
 const url = config.public.url;

@@ -15,6 +15,7 @@
 .page-enter-from,
 .page-leave-to {
   opacity: 0;
+  transform: translateY(100px);
 }
 .rotate-enter-active,
 .rotate-leave-active {
