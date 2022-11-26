@@ -34,7 +34,8 @@ export default defineNuxtConfig({
       locale: "en",
       messages: {
         en: {
-          locations: "Locations",
+          institutions: "Institutions",
+          createANewInstitution: "Create a new institution",
           readMore: "Read more",
           schedules: "Schedules",
           login: "Login",
@@ -49,7 +50,6 @@ export default defineNuxtConfig({
           questionBeforeDeletion: "Are you sure you want to delete this object?",
           actionCannotBeUndone: "This action cannot be undone",
           yourEmail: "Your email",
-          createANewLocation: "Create a new location",
           description: "Description",
           create: "Create",
           selectType: "Select type",
@@ -67,7 +67,8 @@ export default defineNuxtConfig({
           downloadPdf: "Download PDF"
         },
         ru: {
-          locations: "Расположения",
+          institutions: "Учреждения",
+          createANewInstitution: "Создать новое учреждение",
           readMore: "Читать далее",
           schedules: "Расписания",
           login: "Войти",
@@ -82,7 +83,6 @@ export default defineNuxtConfig({
           questionBeforeDeletion: "Вы действительно хотите удалить объект?",
           actionCannotBeUndone: "Объект не может быть восстановлен",
           yourEmail: "Ваш email",
-          createANewLocation: "Создать новое местоположение",
           description: "Описание",
           create: "Создать",
           selectType: "Выберите тип",
@@ -100,7 +100,8 @@ export default defineNuxtConfig({
           downloadPdf: "Скачать PDF"
         },
         vn: {
-          locations: "Địa điểm",
+          institutions: "Tổ chức",
+          createANewInstitution: "Tạo một tổ chức mới",
           readMore: "Đọc thêm",
           schedules: "lịch trình",
           login: "Đăng nhập",
@@ -115,7 +116,6 @@ export default defineNuxtConfig({
           questionBeforeDeletion: "Bạn có chắc chắn muốn xóa không?",
           actionCannotBeUndone: "Hành động này không thể được hoàn tác",
           yourEmail: "Email của bạn",
-          createANewLocation: "Tạo một địa điểm mới",
           description: "Mô tả",
           create: "Tạo",
           selectType: "Lựa chọn",

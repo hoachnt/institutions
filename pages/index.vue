@@ -2,7 +2,7 @@
   <main>
     <transition name="fade">
       <div class="m-auto px-4 max-w-3xl">
-        <h1 class="my-1 text-4xl">{{ $t("locations") }}</h1>
+        <h1 class="my-1 text-4xl">{{ $t("institutions") }}</h1>
         <transition name="fade">
           <TheDatzanList :datzans="store.datzans" v-if="datzans != ''" />
           <button class="btn btn-square loading btn-primary" v-else></button>
@@ -19,7 +19,6 @@ const user = useDirectusUser();
 
 const store = usePiniaStore();
 
-const userCreated = ref(user.value?.id);
 const datzans = ref([]);
 const config = useRuntimeConfig();
 const url = config.public.url;
@@ -31,31 +30,35 @@ useHead({
   title: "Datzan",
 });
 
-const fetchDatzan = async () => {
-  try {
-    let response = await $fetch(
-      `${url}/items/datzans?filter={"user_created":"${userCreated.value}"}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token.value}`,
-        },
+if (user.value) {
+  const userCreated = ref(user.value.id);
+
+  const fetchDatzan = async () => {
+    try {
+      let response = await $fetch(
+        `${url}/items/datzans?filter={"user_created":"${userCreated.value}"}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+          },
+        }
+      );
+
+      datzans.value = response.data;
+      store.datzans = datzans.value;
+    } catch (error) {
+      if (error.status == 401) {
+        alert("You are not authorized or authorization timed out");
+
+        await store.logOut();
       }
-    );
-
-    datzans.value = response.data;
-    store.datzans = datzans.value;
-  } catch (error) {
-    if (error.status == 401) {
-      alert("You are not authorized or authorization timed out");
-
-      await store.logOut();
     }
-  }
-};
+  };
 
-onMounted(() => {
-  fetchDatzan();
-});
+  onMounted(() => {
+    fetchDatzan();
+  });
+}
 </script>
 <style>
 .fade-enter-active,

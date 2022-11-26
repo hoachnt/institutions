@@ -11,7 +11,7 @@
       text-sm
       px-6
       py-3
-      rounded
+      rounded-lg
       outline-none
       focus:outline-none
       mt-1

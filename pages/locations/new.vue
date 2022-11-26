@@ -9,7 +9,7 @@
       </div>
       <transition name="fade">
         <form @submit.prevent class="">
-          <h1 class="text-4xl mb-2">{{ $t( 'createANewLocation' ) }}</h1>
+          <h1 class="text-4xl mb-2">{{ $t( 'createANewInstitution' ) }}</h1>
           <select
             id="countries"
             class="
