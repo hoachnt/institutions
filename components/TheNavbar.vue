@@ -203,8 +203,6 @@ const logOut = async () => {
   await logout();
 
   await router.push("/login");
-
-  await document.location.reload(true);
 };
 </script>
 <style>

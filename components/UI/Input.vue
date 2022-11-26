@@ -4,7 +4,6 @@
     :value="value"
     @input="emitUpdateInput"
     class="input w-full bg-neutral my-1"
-    autocomplete="off"
   />
 </template>
 <script>
