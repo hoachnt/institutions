@@ -34,14 +34,14 @@
             <a
               @click="toggleUpdate"
               class="block px-4 py-2 text-md hover:bg-gray-600"
-              >Edit</a
+              >{{ $t("update") }}</a
             >
           </li>
           <li>
             <label
               for="my-modal"
               class="block px-4 py-2 text-md text-red-600 hover:bg-gray-600 cursor-pointer"
-              >Delete</label
+              >{{ $t("delete") }}</label
             >
             <input type="checkbox" id="my-modal" class="modal-toggle" />
             <div class="modal modal-bottom sm:modal-middle">
@@ -52,15 +52,15 @@
                   >✕</label
                 >
                 <h3 class="font-bold text-lg">
-                  Are you sure you want to delete this object?
+                  {{ $t("questionBeforeDeletion") }}
                 </h3>
-                <p class="py-4">This action cannot be undone</p>
+                <p class="py-4">{{ $t("actionCannotBeUndone") }}</p>
                 <div
                   class="modal-action"
                   @click="$emit('removeEvent', schedule.id)"
                 >
                   <label for="my-modal" class="btn border-error text-error"
-                    >Delete!</label
+                    >{{ $t("delete") }}!</label
                   >
                 </div>
               </div>
@@ -86,7 +86,9 @@
       <UIInput type="date" v-model:value="schedule.datetime" />
       <UIInput type="time" v-model:value="schedule.time" />
       <UIInput type="text" v-model:value="schedule.description" />
-      <UIButton @click="updateEvent">Update</UIButton>
+      <UIButton @click="updateEvent">
+        {{ $t("update") }}
+      </UIButton>
     </form>
   </div>
 </template>

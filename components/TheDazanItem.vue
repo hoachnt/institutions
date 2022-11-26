@@ -36,7 +36,7 @@
             <label
               for="my-modal"
               class="block px-4 py-2 text-md text-red-600 hover:bg-gray-600 cursor-pointer"
-              >Delete</label
+              >{{ $t("delete") }}</label
             >
             <input type="checkbox" id="my-modal" class="modal-toggle" />
             <div class="modal modal-bottom sm:modal-middle">
@@ -47,11 +47,11 @@
                   >✕</label
                 >
                 <h3 class="font-bold text-lg">
-                  Are you sure you want to delete this object?
+                  {{ $t("questionBeforeDeletion") }}
                 </h3>
                 <div class="form-control min-w-full">
                   <label class="label">
-                    <span class="label-text">Your email</span>
+                    <span class="label-text">{{ $t("yourEmail") }}</span>
                   </label>
                   <input
                     type="email"
@@ -60,13 +60,13 @@
                     v-model="store.email"
                   />
                 </div>
-                <p class="py-4">{{ store.removeMessage }}</p>
+                <p class="py-4">{{ $t("actionCannotBeUndone") }}</p>
                 <div class="modal-action">
                   <label
                     for="my-modal"
                     class="btn btn-outline btn-error"
                     @click="store.removeDatzan(datzan.id)"
-                    >Delete!</label
+                    >{{ $t("delete") }}!</label
                   >
                 </div>
               </div>
@@ -85,9 +85,7 @@
     </div>
     <div class="p-5">
       <div>
-        <h5
-          class="mb-2 text-2xl font-bold tracking-tight text-white"
-        >
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">
           {{ datzan.name }}
         </h5>
       </div>
@@ -101,15 +99,17 @@
         @click="$router.push(`/locations/${datzan.id}`)"
         class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-indigo-600 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 ease-linear transition-all duration-150 select-none"
       >
-      {{ $t('readMore') }}
+        {{ $t("readMore") }}
       </a>
 
       <a
-        @click="$router.push({name: 'events', query: {location: datzan.id}})"
+        @click="
+          $router.push({ name: 'events', query: { location: datzan.id } })
+        "
         class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 ease-linear transition-all duration-150 mx-2 select-none"
       >
-      {{ $t('schedules') }}
-      <svg
+        {{ $t("schedules") }}
+        <svg
           aria-hidden="true"
           class="w-4 h-4 ml-2 -mr-1"
           fill="currentColor"
@@ -124,13 +124,13 @@
         </svg>
       </a>
       <div class="card-actions justify-end">
-        <div class="badge badge-outline select-none">{{datzan.type}}</div> 
+        <div class="badge badge-outline select-none">{{ datzan.type }}</div>
       </div>
     </div>
     <div class="toast">
       <div class="alert alert-error" v-if="store.removeDatzanError">
         <div>
-          <span>Success. {{store.removeMessage}}</span>
+          <span>Success. {{ store.removeMessage }}</span>
         </div>
       </div>
     </div>

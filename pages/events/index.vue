@@ -20,7 +20,7 @@
         @click="addNewTitle"
         v-else-if="addTitle == true"
         class="min-w-full"
-        >Add schedule</UIButton
+        >{{ $t("addSchedule") }}</UIButton
       >
       <transition name="fade">
         <TheScheduleTitles
@@ -34,7 +34,7 @@
           class="text-xl text-gray-400 btn min-w-full my-3"
           @click="addTitle = true"
         >
-          You don't have schedules
+        {{ $t("dontHaveSchedules") }}
         </div>
       </transition>
     </div>

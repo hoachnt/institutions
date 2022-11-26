@@ -12,7 +12,7 @@
         class="text-4xl"
       />
       <UIButton @click="updateTitle" v-if="showInputTitle != false">
-        Update Title
+        {{ $t( 'updateTitle' ) }}
       </UIButton>
     </div>
     <ul
@@ -47,7 +47,7 @@
               v-if="store.loading"
             />
           </div>
-          <p>Create</p>
+          <p>{{ $t( 'create' ) }}</p>
         </a>
       </li>
       <li>
@@ -80,7 +80,7 @@
         })
       "
     >
-      Schedule is Empty
+    {{ $t("emptySchedule") }}
     </div>
   </transition>
 
@@ -92,7 +92,7 @@
     <div>
       <font-awesome-icon icon="fa-solid fa-file-pdf" class="text-3xl mx-2" />
     </div>
-    <p>Generate Pdf</p>
+    <p>{{ $t( 'downloadPdf' ) }}</p>
   </UIButton>
 </template>
 <script setup>

@@ -15,13 +15,13 @@
         </ul>
       </div>
       <form @submit.prevent v-if="token">
-        <h1 class="text-4xl mb-2">Create a new event</h1>
+        <h1 class="text-4xl mb-2">{{ $t("createANewEvent") }}</h1>
         <div>
           <label
             for="date"
             class="block mb-1 mt-3 text-lg font-medium text-gray-900 dark:text-white"
           >
-            Date
+          {{ $t("date") }}
           </label>
           <UIInput
             type="date"
@@ -35,7 +35,7 @@
             for="time"
             class="block mb-1 mt-3 text-lg font-medium text-gray-900 dark:text-white"
           >
-            Time
+          {{ $t("time") }}
           </label>
           <UIInput
             placeholder="Time"
@@ -54,7 +54,7 @@
         <UIButton
           @click="createEvent"
           class="min-w-full dark:bg-indigo-500 dark:text-white"
-          >Create</UIButton
+          >{{ $t("create") }}</UIButton
         >
       </form>
     </div>

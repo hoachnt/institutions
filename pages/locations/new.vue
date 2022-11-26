@@ -9,7 +9,7 @@
       </div>
       <transition name="fade">
         <form @submit.prevent class="">
-          <h1 class="text-4xl mb-2">Create a new location</h1>
+          <h1 class="text-4xl mb-2">{{ $t( 'createANewLocation' ) }}</h1>
           <select
             id="countries"
             class="
@@ -31,10 +31,10 @@
             v-model="datzan.type"
             required
           >
-            <option disabled value="">Select Type</option>
-            <option value="Church">Church</option>
-            <option value="Temple">Temple</option>
-            <option value="Mosque">Mosque</option>
+            <option disabled value="">{{ $t( 'selectType' ) }}</option>
+            <option value="Church">{{ $t( 'church' ) }}</option>
+            <option value="Temple">{{ $t( 'temple' ) }}</option>
+            <option value="Mosque">{{ $t( 'mosque' ) }}</option>
           </select>
           <UIInput placeholder="Name" v-model:value="datzan.name" required />
           <UIInput
@@ -75,7 +75,7 @@
               text-gray-900
               dark:text-white
             "
-            >Description</label
+            >{{ $t( 'description' ) }}</label
           >
           <textarea
             v-model="datzan.description"
