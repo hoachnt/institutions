@@ -11,7 +11,7 @@ import {
   faRightFromBracket,
   faRightToBracket,
   faTrash,
-  faXmark
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 // This is important, we are going to let Nuxt worry about the CSS
@@ -30,7 +30,7 @@ library.add(
   faRightFromBracket,
   faRightToBracket,
   faTrash,
-  faXmark
+  faXmark,
 );
 
 export default defineNuxtPlugin((nuxtApp) => {

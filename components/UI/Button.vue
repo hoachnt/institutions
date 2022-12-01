@@ -2,16 +2,16 @@
   <button
     type="submit"
     class="
-      text-indigo-500
-      border border-indigo-500
-      hover:bg-indigo-500 hover:text-white
-      active:bg-indigo-600
+      text-content
+      border border-primary
+      hover:bg-primary hover:text-white
+      active:bg-secondary
       font-bold
       uppercase
       text-sm
       px-6
       py-3
-      rounded-lg
+      rounded-xl
       outline-none
       focus:outline-none
       mt-1

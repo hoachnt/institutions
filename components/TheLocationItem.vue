@@ -1,12 +1,12 @@
 <template lang="">
   <div
-    class="datsan mx-1 rounded-md shadow-md bg-neutral my-2 min-w-full relative"
+    class="datsan mx-1 rounded-xl shadow-md bg-neutral my-2 min-w-full relative"
   >
     <div class="flex justify-end absolute right-0 top-0">
       <button
         id="dropdownButton"
         data-dropdown-toggle="dropdown"
-        class="shadow-xl inline-block ease-linear transition-all duration-150 text-gray-500 dark:text-gray-400 bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5 w-9 h-9 items-center justify-center"
+        class="shadow-xl p-2 m-1 ease-linear transition-all duration-150 text-gray-500 dark:text-gray-400 bg-neutral focus:ring-4 focus:outline-none dark:focus:ring-neutral rounded-xl text-sm w-10 h-10 flex items-center justify-center"
         type="button"
         @click="toggleNavbar"
       >
@@ -28,14 +28,14 @@
       <!-- Dropdown menu -->
       <div
         id="dropdown"
-        class="z-10 text-base list-none bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700 absolute right-0 top-11"
+        class="z-10 text-base list-non divide-y divide-gray-100 rounded-lg shadow w-44 bg-neutral absolute -right-5 top-12"
         v-if="showMenu"
       >
         <ul class="py-1" aria-labelledby="dropdownButton">
           <li>
             <label
               for="my-modal"
-              class="block px-4 py-2 text-md text-red-600 hover:bg-gray-600 cursor-pointer"
+              class="block px-4 py-2 text-md text-red-600 hover:bg-base-100 cursor-pointer ease-linear transition-all duration-150 select-none"
               >{{ $t("delete") }}</label
             >
             <input type="checkbox" id="my-modal" class="modal-toggle" />
@@ -46,7 +46,7 @@
                   class="btn btn-sm btn-circle absolute right-2 top-2"
                   >✕</label
                 >
-                <h3 class="font-bold text-lg">
+                <h3 class="font-bold text-lg text-white">
                   {{ $t("questionBeforeDeletion") }}
                 </h3>
                 <div class="form-control min-w-full">
@@ -56,16 +56,18 @@
                   <input
                     type="email"
                     placeholder="Email"
-                    class="input input-bordered min-w-full"
+                    class="input input-bordered min-w-full text-white"
                     v-model="store.email"
                   />
                 </div>
-                <p class="py-4">{{ $t("actionCannotBeUndone") }}</p>
+                <p class="py-4 text-white">
+                  {{ $t("actionCannotBeUndone") }}
+                </p>
                 <div class="modal-action">
                   <label
                     for="my-modal"
                     class="btn btn-outline btn-error"
-                    @click="store.removeDatzan(datzan.id)"
+                    @click="store.removeDatzan(location.id)"
                     >{{ $t("delete") }}!</label
                   >
                 </div>
@@ -78,35 +80,36 @@
 
     <div>
       <img
-        class="rounded-t-lg min-w-full"
-        :src="`https://directus.hoach.skryonline.com/assets/${datzan.img}`"
+        class="rounded-xl min-w-full"
+        :src="`https://directus.hoach.skryonline.com/assets/${location.img}`"
         alt=""
       />
     </div>
     <div class="p-5">
       <div>
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">
-          {{ datzan.name }}
+          {{ location.name }}
         </h5>
       </div>
       <p class="mb-3 font-normal text-gray-400">
-        {{ datzan.description }}
+        {{ location.description }}
       </p>
       <p class="mb-3 font-normal text-gray-400">
-        {{ datzan.address }}
+        {{ location.address }}
       </p>
-      <a
-        @click="$router.push(`/locations/${datzan.id}`)"
-        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-indigo-600 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 ease-linear transition-all duration-150 select-none"
+      <v-btn
+        @click="$router.push(`/locations/${location.id}`)"
+        class="inline-flex items-center px-4 w-auto h-auto py-3 text-sm font-medium text-center text-black bg-white rounded-xl hover:bg-secondary ease-linear transition-all duration-150 select-none"
       >
         {{ $t("readMore") }}
-      </a>
+      </v-btn>
 
-      <a
+      <v-btn
+        variant="outlined"
         @click="
-          $router.push({ name: 'events', query: { location: datzan.id } })
+          $router.push({ name: 'events', query: { location: location.id } })
         "
-        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 ease-linear transition-all duration-150 mx-2 select-none"
+        class="inline-flex items-center px-4 w-auto h-auto py-3 bg-none text-sm font-medium text-center text-white rounded-xl hover:bg-primary ease-linear transition-all duration-150 mx-2 select-none"
       >
         {{ $t("schedules") }}
         <svg
@@ -122,9 +125,9 @@
             clip-rule="evenodd"
           ></path>
         </svg>
-      </a>
-      <div class="card-actions justify-end">
-        <div class="badge badge-outline select-none">{{ datzan.type }}</div>
+      </v-btn>
+      <div class="card-actions justify-end mt-4">
+        <div class="badge badge-outline select-none">{{ location.type }}</div>
       </div>
     </div>
     <div class="toast">
@@ -143,7 +146,7 @@ const store = usePiniaStore();
 const showMenu = ref(false);
 const toggleNavbar = () => (showMenu.value = !showMenu.value);
 const props = defineProps({
-  datzan: Object,
+  location: Object,
 });
 </script>
 <style>

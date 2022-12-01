@@ -1,20 +1,10 @@
 <template>
-  <div class="drawer">
+  <div class="drawer drawer-mobile">
     <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content flex flex-col">
       <!-- Navbar -->
       <div
-        class="
-          w-full
-          navbar
-          bg-indigo-500
-          mb-3
-          flex
-          justify-between
-          sticky
-          top-0
-          z-10
-        "
+        class="w-full navbar bg-base-100 flex justify-between sticky top-0 z-10"
       >
         <div class="flex-none lg:hidden">
           <label for="my-drawer-3" class="btn btn-square btn-ghost">
@@ -36,108 +26,31 @@
         <div class="px-2 mx-2 cursor-pointer" @click="$router.push('/')">
           <a class="text-2xl uppercase select-none"> Indigo </a>
         </div>
-        <div
-          v-if="token"
-          @click="$router.push('/locations/new')"
-          class="lg:hidden"
-        >
-          <a class="btn rounded-xl px-6">
+        <div v-if="token" @click="$router.push('/locations/new')" class="block">
+          <v-btn class="btn rounded-xl px-6 mx-2">
             <div class="sm:mr-2">
               <font-awesome-icon icon="fa-solid fa-plus" v-if="store.loading" />
             </div>
             <p class="hidden sm:block">{{ $t("add") }}</p>
-          </a>
-        </div>
-        <div class="hidden lg:flex">
-          <ul class="menu menu-horizontal bg-base-100 rounded-xl mx-1">
-            <!-- Navbar menu content here -->
-            <li v-if="token" @click="$router.push('/locations/new')">
-              <a class="btn">
-                <div class="mr-1">
-                  <font-awesome-icon
-                    icon="fa-solid fa-plus"
-                    v-if="store.loading"
-                  />
-                </div>
-                <p>{{ $t("add") }}</p>
-              </a>
-            </li>
-            <li class="nav-item" @click="$router.push('/')" v-if="token">
-              <a class="btn rounded-none">
-                <div class="mr-1">
-                  <font-awesome-icon
-                    icon="fa-solid fa-house"
-                    v-if="store.loading"
-                  />
-                </div>
-                <p>{{ $t("home") }}</p>
-              </a>
-            </li>
-            <li
-              class="nav-item"
-              @click="$router.push('/register')"
-              v-if="!token"
+            <v-tooltip activator="parent" location="bottom"
+              >Add Institution</v-tooltip
             >
-              <a class="btn">
-                <p>{{ $t("register") }}</p>
-              </a>
-            </li>
-            <li class="nav-item" @click="$router.push('/login')" v-if="!token">
-              <a class="btn">
-                <div class="mr-1">
-                  <font-awesome-icon
-                    icon="fa-solid fa-right-to-bracket"
-                    v-if="store.loading"
-                  />
-                </div>
-                <p>{{ $t("login") }}</p>
-              </a>
-            </li>
-            <li class="nav-item" @click="logOut" v-if="token">
-              <a class="btn">
-                <div class="mr-1">
-                  <font-awesome-icon
-                    icon="fa-solid fa-right-from-bracket"
-                    v-if="store.loading"
-                  />
-                </div>
-                <p>{{ $t("logOut") }}</p>
-              </a>
-            </li>
-          </ul>
-          <form class="ml-2">
-            <select
-              class="select select-bordered w-full max-w-xs"
-              v-model="locale"
-            >
-              <option disabled selected>Choose language</option>
-              <option value="en">English</option>
-              <option value="ru">Рускиий</option>
-              <option value="vn">Tiếng Việt</option>
-            </select>
-          </form>
+          </v-btn>
         </div>
       </div>
       <!-- Page content here -->
-      <NuxtLoadingIndicator />
-      <ClientOnly>
-        <template #default>
-          <NuxtPage />
-        </template>
-        <template fallback-tag="button" #fallback>
-          <div class="loader min-w-full flex items-center justify-center bg-black min-h-screen">
-            <button class="btn btn-square loading btn-primary"></button>
-          </div>
-        </template>
-      </ClientOnly>
+      <main>
+        <NuxtLoadingIndicator />
+        <NuxtPage class="mt-3" />
+      </main>
     </div>
     <div class="drawer-side">
       <label for="my-drawer-3" class="drawer-overlay"></label>
-      <ul class="sidebar menu w-80 bg-base-100">
+      <ul class="sidebar menu w-80">
         <!-- Sidebar content here -->
         <!-- <UIUserInfo /> -->
         <li v-if="token" @click="$router.push('/locations/new')">
-          <a class="add-btn btn rounded-lg">
+          <a class="add-btn btn rounded-lg lg:hidden">
             <div class="mr-1">
               <font-awesome-icon icon="fa-solid fa-plus" v-if="store.loading" />
             </div>
@@ -183,17 +96,18 @@
           </a>
         </li>
         <li>
-          <a class="rounded-lg">
-            <select
-              class="select select-bordered w-full max-w-xs"
+          <a>
+            <v-select
               v-model="locale"
-            >
-              <option disabled selected>Choose language</option>
-              <option value="en">English</option>
-              <option value="ru">Рускиий</option>
-              <option value="vn">Tiếng Việt</option>
-            </select>
+              label="Language"
+              :items="languages"
+              item-title="language"
+              item-value="abbr"
+            ></v-select>
           </a>
+        </li>
+        <li>
+          <TheFooter />
         </li>
       </ul>
     </div>
@@ -201,6 +115,7 @@
 </template>
 <script setup>
 import { usePiniaStore } from "@/stores/PiniaStore";
+const user = useDirectusUser();
 
 const { locale } = useI18n();
 
@@ -208,6 +123,11 @@ const store = usePiniaStore();
 const { logout } = useDirectusAuth();
 const token = useDirectusToken();
 const router = useRouter();
+const languages = [
+  { language: "English", abbr: "en" },
+  { language: "Рускиий", abbr: "ru" },
+  { language: "Tiếng Việt", abbr: "vn" },
+];
 
 const logOut = async () => {
   await logout();
@@ -221,11 +141,18 @@ a {
 }
 .sidebar {
   padding: 65px 15px !important;
+  background: rgb(13, 13, 13);
 }
 .add-btn {
   margin: 10px 0 !important;
 }
 select {
   background: #262626;
+}
+.content {
+  min-height: calc(100vh - 80px);
+}
+.footer {
+  flex: 0 0 auto;
 }
 </style>

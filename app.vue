@@ -1,11 +1,32 @@
 <template>
-  <div class="min-h-screen bg-base-100">
-    <transition name="page">
-      <TheNavbar />
-    </transition>
+  <div class="min-h-screen bg-base-100" data-theme="lofi">
+    <ClientOnly>
+      <template #default>
+        <transition name="blur">
+          <TheNavbar />
+        </transition>
+      </template>
+      <template fallback-tag="button" #fallback>
+        <transition name="blur">
+          <div
+            class="
+              loader
+              min-w-full
+              flex
+              items-center
+              justify-center
+              bg-black
+              min-h-screen
+            "
+          >
+            <button class="btn btn-square loading btn-primary btn-lg"></button>
+          </div>
+        </transition>
+      </template>
+    </ClientOnly>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 </script>
 <style>
 .page-enter-active,
@@ -17,14 +38,14 @@
   opacity: 0;
   transform: translateY(100px);
 }
-.rotate-enter-active,
-.rotate-leave-active {
+.blur-enter-active,
+.blur-leave-active {
   transition: all 0.4s;
 }
-.rotate-enter-from,
-.rotate-leave-to {
+.blur-enter-from,
+.blur-leave-to {
   opacity: 0;
-  transform: rotate3d(1, 1, 1);
+  filter: blur(1rem);
 }
 body {
   background: #000;

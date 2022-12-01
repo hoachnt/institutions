@@ -1,14 +1,14 @@
 <template lang="">
 <div class="flex justify-around flex-wrap">
-  <div v-for="datzan in datzans" :key="datzan.id" class="min-w-full">
-    <TheDazanItem :datzan="datzan" />
+  <div v-for="location in locations" :key="location.id" class="min-w-full">
+    <TheLocationItem :location="location" />
   </div>
 </div>
 
 </template>
 <script setup>
 const props = defineProps({
-  datzans: Array,
+  locations: Array,
 });
 </script>
 <style lang="">

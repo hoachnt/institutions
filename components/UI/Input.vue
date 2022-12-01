@@ -3,7 +3,7 @@
     type="text"
     :value="value"
     @input="emitUpdateInput"
-    class="input w-full bg-neutral my-1"
+    class="input w-full bg-neutral my-1 rounded-lg ease-linear transition-all duration-150"
   />
 </template>
 <script>

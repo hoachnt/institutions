@@ -9,14 +9,14 @@
       </div>
       <transition name="fade">
         <form @submit.prevent class="">
-          <h1 class="text-4xl mb-2">{{ $t( 'createANewInstitution' ) }}</h1>
+          <h1 class="text-4xl mb-2">{{ $t("createANewInstitution") }}</h1>
           <select
             id="countries"
             class="
               border border-gray-300
               text-gray-900 text-sm
               rounded-md
-              focus:ring-blue-500 focus:border-blue-500
+              focus:ring-primary focus:border-primary
               block
               w-full
               p-2.5
@@ -25,21 +25,21 @@
               dark:border-gray-600
               dark:placeholder-base-100
               dark:text-white
-              dark:focus:ring-blue-500
-              dark:focus:border-blue-500
+              dark:focus:ring-primary
+              dark:focus:border-primary
             "
-            v-model="datzan.type"
+            v-model="location.type"
             required
           >
-            <option disabled value="">{{ $t( 'selectType' ) }}</option>
-            <option value="Church">{{ $t( 'church' ) }}</option>
-            <option value="Temple">{{ $t( 'temple' ) }}</option>
-            <option value="Mosque">{{ $t( 'mosque' ) }}</option>
+            <option disabled value="">{{ $t("selectType") }}</option>
+            <option value="Church">{{ $t("church") }}</option>
+            <option value="Temple">{{ $t("temple") }}</option>
+            <option value="Mosque">{{ $t("mosque") }}</option>
           </select>
-          <UIInput placeholder="Name" v-model:value="datzan.name" required />
+          <UIInput placeholder="Name" v-model:value="location.name" required />
           <UIInput
             placeholder="Address"
-            v-model:value="datzan.address"
+            v-model:value="location.address"
             required
           />
           <UIInput
@@ -58,11 +58,11 @@
               file:text-sm
               file:font-semibold
               file:bg-violet-50
-              file:text-sky-600
-              hover:file:bg-blue-600 hover:file:text-white
+              file:text-secondary
+              hover:file:bg-secondary hover:file:text-white
               cursor-pointer
             "
-            v-model:value="datzan.img"
+            v-model:value="location.img"
           />
           <label
             for="message"
@@ -75,10 +75,10 @@
               text-gray-900
               dark:text-white
             "
-            >{{ $t( 'description' ) }}</label
+            >{{ $t("description") }}</label
           >
           <textarea
-            v-model="datzan.description"
+            v-model="location.description"
             id="message"
             rows="4"
             class="
@@ -90,37 +90,14 @@
               rounded-lg
               placeholder-gray-400
               text-white
-              focus:ring-indigo-500 focus:border-indigo-500
+              focus:ring-primary focus:border-primary
               my-1
             "
             placeholder="Write your description here..."
           ></textarea>
-          <button
-            @click="createDatzan"
-            class="
-              min-w-full
-              bg-indigo-500
-              text-white
-              border border-indigo-500
-              hover:bg-indigo-500 hover:text-white
-              active:bg-indigo-600
-              font-bold
-              uppercase
-              text-sm
-              px-6
-              py-3
-              rounded
-              outline-none
-              focus:outline-none
-              mt-1
-              mb-1
-              ease-linear
-              transition-all
-              duration-150
-            "
-          >
-            Create {{ datzan.type }}
-          </button>
+          <UIButton block @click="createDatzan" class="min-w-full text-white">
+            Create {{ location.type }}
+          </UIButton>
         </form>
       </transition>
     </div>
@@ -136,10 +113,10 @@ definePageMeta({
   middleware: ["auth"],
 });
 useHead({
-  title: "Datzan",
+  title: "Create Institution",
 });
 
-const datzan = reactive({
+const location = reactive({
   name: "",
   address: "",
   description: "",
@@ -147,35 +124,49 @@ const datzan = reactive({
   type: "",
 });
 
-const createDatzan = () => {
+const response = async () => {
+  await $fetch(`${store.url}/files?sort=uploaded_on`)
+    .then((response) => {
+      let responseData = response.data;
+
+      if (file.files[0] !== undefined) {
+        location.img = responseData[responseData.length - 1].id;
+      } else {
+        location.img = null;
+      }
+
+      return $fetch(`${store.url}/items/location`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+        },
+        body: location,
+      });
+    })
+    .then((response) => {
+      useRouter().push({
+        name: "events",
+        query: { location: response.data.id },
+      });
+    });
+};
+
+const createDatzan = async () => {
   try {
-    if (datzan.name != "" && datzan.address != "" && datzan.type != "") {
-      pushHotelImage();
-
-      const response = $fetch(`${store.url}/files?sort=uploaded_on`)
-        .then((response) => {
-          let responseData = response.data;
-
-          if (file.files[0] !== undefined) {
-            datzan.img = responseData[responseData.length - 1].id;
-          } else {
-            datzan.img = null;
-          }
-
-          return $fetch(`${store.url}/items/datzans`, {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${token.value}`,
-            },
-            body: datzan,
-          });
-        })
-        .then((response) => {
-          useRouter().push({
-            name: "events",
-            query: { location: response.data.id },
-          });
-        });
+    if (
+      location.name != "" &&
+      location.address != "" &&
+      location.type != "" &&
+      location.img != ""
+    ) {
+      await pushHotelImage();
+      await response();
+    } else if (
+      location.name != "" &&
+      location.address != "" &&
+      location.type != ""
+    ) {
+      await response();
     }
   } catch (error) {
     console.log(error);

@@ -31,7 +31,7 @@
           Have account?
           <a
             @click="$router.push('/login')"
-            class="text-indigo-700 hover:underline dark:indigo-500"
+            class="text-content underline"
             >{{ $t("login") }}</a
           >
         </div>
@@ -39,28 +39,34 @@
     </div>
   </main>
 </template>
-<script setup>
-import { usePiniaStore } from "@/stores/PiniaStore";
-
+<script setup lang="ts">
 definePageMeta({
   middleware: ["authenticated"],
 });
+
+type UserRegister = {
+  firstName: string;
+  lastName: string;
+  adminRole: string;
+  email: string;
+  password: string;
+};
 
 const { createUser } = useDirectusAuth();
 const { login } = useDirectusAuth();
 
 const router = useRouter();
-const data = reactive({
+const data: UserRegister = reactive({
   firstName: "",
   lastName: "",
   adminRole: "d9f8b306-3cfd-400b-926d-a8af29f45736",
   email: "",
   password: "",
 });
-const submit = async () => {
+const submit = async (): Promise<void> => {
   try {
     if (data.firstName.length >= 1) {
-      let newUser = await createUser({
+      await createUser({
         first_name: data.firstName,
         last_name: data.lastName,
         email: data.email,

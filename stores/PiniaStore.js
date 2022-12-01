@@ -23,7 +23,7 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
     const authenticated = ref(false);
     const config = useRuntimeConfig();
     const url = config.public.url;
-    const datzans = ref([]);
+    const locations = ref([]);
     const userCreated = ref(user.value.id);
     const token = useDirectusToken();
     const schedules = ref([]);
@@ -31,12 +31,13 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
     const userEmail = ref(user.value.email);
     const removeMessage = ref("This action cannot be undone");
     const removeDatzanError = ref(false);
+    const toastVisible = ref(false);
     const scheduleTitleId = ref("");
 
     const fetchDatzan = async () => {
       try {
         let response = await $fetch(
-          `${url}/items/datzans?filter={"user_created":"${userCreated.value}"}`,
+          `${url}/items/location?filter={"user_created":"${userCreated.value}"}`,
           {
             headers: {
               Authorization: `Bearer ${token.value}`,
@@ -44,7 +45,7 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
           }
         );
 
-        datzans.value = response.data;
+        locations.value = response.data;
       } catch (error) {
         if (error.status == 401) {
           alert("You are not authorized or authorization timed out");
@@ -55,9 +56,9 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
     const removeDatzan = async (id) => {
       try {
         if (email.value === userEmail.value) {
-          datzans.value = datzans.value.filter((items) => items.id != id);
+          locations.value = locations.value.filter((items) => items.id != id);
 
-          let response = await $fetch(`${url}/items/datzans/${id}`, {
+          let response = await $fetch(`${url}/items/location/${id}`, {
             method: "DELETE",
             headers: {
               Authorization: `Bearer ${token.value}`,
@@ -66,15 +67,15 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
 
           removeMessage.value = "Location was deleted";
 
-          timer();
+          removeTimer();
         } else {
           removeMessage.value = "Wrong email";
 
-          timer();
+          removeTimer();
         }
       } catch (error) {}
     };
-    function timer() {
+    function removeTimer() {
       let timer = setTimeout(function tick() {
         removeDatzanError.value = true;
 
@@ -87,6 +88,19 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
         removeDatzanError.value = false;
       }, 4000);
     }
+    function showToast() {
+      let timer = setTimeout(function tick() {
+        toastVisible.value = true;
+
+        timer = setTimeout(tick, 2000); // (*)
+      }, 0);
+
+      setTimeout(() => {
+        clearTimeout(timer);
+
+        toastVisible.value = false;
+      }, 4000);
+    }
 
     onMounted(() => {
       fetchDatzan();
@@ -97,7 +111,7 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
       userCreated,
       token,
       fetchDatzan,
-      datzans,
+      locations,
       url,
       removeDatzan,
       schedules,
@@ -108,6 +122,8 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
       user,
       loading,
       logOut,
+      toastVisible,
+      showToast,
     };
   }
   return {

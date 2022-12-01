@@ -4,11 +4,19 @@
       <div class="m-auto px-4 max-w-3xl">
         <h1 class="my-1 text-4xl">{{ $t("institutions") }}</h1>
         <transition name="fade">
-          <TheDatzanList :datzans="store.datzans" v-if="datzans != ''" />
+          <TheLocationList
+            :locations="store.locations"
+            v-if="locations != ''"
+          />
+        </transition>
+        <transition name="fade">
+          <UIToast v-if="store.toastVisible == true"
+            >Access. {{ message }}</UIToast
+          >
         </transition>
         <ClientOnly>
           <template fallback-tag="button" #fallback>
-            <button class="btn btn-square loading btn-primary"></button>
+            <button class="btn btn-square loading btn-secondary"></button>
           </template>
         </ClientOnly>
       </div>
@@ -18,29 +26,29 @@
 <script setup>
 import { usePiniaStore } from "@/stores/PiniaStore";
 
+const store = usePiniaStore();
 const token = useDirectusToken();
 const user = useDirectusUser();
 
-const store = usePiniaStore();
-
-const datzans = ref([]);
+const locations = ref([]);
 const config = useRuntimeConfig();
 const url = config.public.url;
+const message = ref("");
 
 definePageMeta({
   middleware: ["auth"],
 });
 useHead({
-  title: "Datzan",
+  title: "Institutions",
 });
 
-if (user.value) {
+if (user.value && store != undefined) {
   const userCreated = ref(user.value.id);
 
   const fetchDatzan = async () => {
     try {
       let response = await $fetch(
-        `${url}/items/datzans?filter={"user_created":"${userCreated.value}"}`,
+        `${url}/items/location?filter={"user_created":"${userCreated.value}"}`,
         {
           headers: {
             Authorization: `Bearer ${token.value}`,
@@ -48,8 +56,8 @@ if (user.value) {
         }
       );
 
-      datzans.value = response.data;
-      store.datzans = datzans.value;
+      locations.value = response.data;
+      store.locations = locations.value;
     } catch (error) {
       if (error.status == 401) {
         alert("You are not authorized or authorization timed out");
@@ -59,8 +67,16 @@ if (user.value) {
     }
   };
 
+  const messageLogin = () => {
+    if (useRoute().query.message !== "login") return;
+    store.showToast();
+
+    message.value = "You are logged in";
+  };
+
   onMounted(() => {
     fetchDatzan();
+    messageLogin();
   });
 }
 </script>

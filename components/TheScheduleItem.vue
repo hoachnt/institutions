@@ -1,10 +1,10 @@
 <template lang="">
-  <div class="block min-w-full p-6 pb-10 rounded-lg shadow-md bg-neutral my-3">
+  <div class="block min-w-full p-6 pb-10 rounded-xl shadow-md bg-neutral my-3">
     <div class="flex justify-end relative" v-if="token">
       <button
         id="dropdownButton"
         data-dropdown-toggle="dropdown"
-        class="inline-block ease-linear transition-all duration-150 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5 w-9 h-9 items-center justify-center"
+        class="ease-linear transition-all duration-150 text-base-100 bg-base-100 dark:text-gray-400 hover:bg-neutral focus:ring-4 focus:outline-none focus:ring-base-100 rounded-xl text-sm p-1.5 w-10 h-10 flex items-center justify-center"
         type="button"
         @click="toggleNavbar"
       >
@@ -26,21 +26,21 @@
       <!-- Dropdown menu -->
       <div
         id="dropdown"
-        class="z-10 text-base list-none divide-y divide-gray-100 rounded shadow w-44 bg-gray-700 absolute -right-10 top-12"
+        class="z-10 text-base list-non divide-y divide-gray-100 rounded-lg shadow w-44 bg-base-100 absolute -right-5 top-11"
         v-if="showMenu"
       >
         <ul class="py-1" aria-labelledby="dropdownButton">
           <li>
             <a
               @click="toggleUpdate"
-              class="block px-4 py-2 text-md hover:bg-gray-600"
+              class="block px-4 py-2 text-md hover:bg-neutral cursor-pointer ease-linear transition-all duration-150 select-none"
               >{{ $t("update") }}</a
             >
           </li>
           <li>
             <label
               for="my-modal"
-              class="block px-4 py-2 text-md text-red-600 hover:bg-gray-600 cursor-pointer"
+              class="block px-4 py-2 text-md text-red-600 hover:bg-neutral cursor-pointer ease-linear transition-all duration-150 select-none"
               >{{ $t("delete") }}</label
             >
             <input type="checkbox" id="my-modal" class="modal-toggle" />
@@ -59,7 +59,7 @@
                   class="modal-action"
                   @click="$emit('removeEvent', schedule.id)"
                 >
-                  <label for="my-modal" class="btn border-error text-error"
+                  <label for="my-modal" class="btn border-error text-red-600"
                     >{{ $t("delete") }}!</label
                   >
                 </div>
@@ -68,6 +68,9 @@
           </li>
         </ul>
       </div>
+    </div>
+    <div class="mb-2 text-2xl font-bold tracking-tight text-white">
+      {{ schedule.name }}
     </div>
     <div class="mb-2 text-2xl font-bold tracking-tight text-white">
       {{ new Date(schedule.datetime).getDate() }}/{{
@@ -83,6 +86,7 @@
       v-if="showUpdate"
       class="p-2 bg-base-100 rounded-md mt-10"
     >
+      <UIInput type="text" v-model:value="schedule.name" />
       <UIInput type="date" v-model:value="schedule.datetime" />
       <UIInput type="time" v-model:value="schedule.time" />
       <UIInput type="text" v-model:value="schedule.description" />

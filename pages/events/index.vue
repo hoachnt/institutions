@@ -1,6 +1,18 @@
 <template lang="">
   <main>
     <div class="container px-4 m-auto">
+      <div class="text-sm breadcrumbs mb-4">
+        <ul>
+          <li>
+            <a @click="$router.push(`/locations/${useRoute().query.location}`)"
+              >Location</a
+            >
+          </li>
+          <li>
+            <a>Schedules</a>
+          </li>
+        </ul>
+      </div>
       <UIInput
         type="text"
         placeholder="New Schedule..."
@@ -14,7 +26,7 @@
         v-if="addTitle == false && token"
         class="min-w-full"
       >
-        <font-awesome-icon icon="fa-solid fa-plus" v-if="store.loading" />
+        {{ $t("createANewSchedule") }}
       </UIButton>
       <UIButton
         @click="addNewTitle"
@@ -28,13 +40,12 @@
           v-if="scheduleTitles != ''"
           @removeSchedule="removeSchedule"
         />
-
         <div
-          v-else-if="scheduleTitles == '' && token"
+          v-else-if="schedules == '' && token"
           class="text-xl text-gray-400 btn min-w-full my-3"
           @click="addTitle = true"
         >
-        {{ $t("dontHaveSchedules") }}
+          {{ $t("dontHaveSchedules") }}
         </div>
       </transition>
     </div>
@@ -52,40 +63,19 @@ const store = usePiniaStore();
 const config = useRuntimeConfig();
 
 const url = config.public.url;
-const dazanId = ref("");
 const addTitle = ref(false);
+const schedules = ref([]);
 const scheduleTitle = reactive({
   title: "",
-  datzanId: useRoute().query.location,
+  location_id: useRoute().query.location,
 });
 const scheduleTitleId = useRoute().params.id;
 const scheduleTitles = ref("");
-let newEvent = reactive({
-  datetime: "",
-  time: "",
-  description: "",
-  datzanId: dazanId.value,
-  ScheduleTitleId: scheduleTitleId,
-});
-const createEvent = async () => {
-  try {
-    await $fetch(`${url}/items/events`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token.value}`,
-      },
-      body: newEvent,
-    }).then(() => fetchSchedule());
-  } catch (error) {
-    alert(error);
 
-    useRouter().push("/login");
-  }
-};
 const fetchScheduleTitles = async () => {
   try {
     let response = await $fetch(
-      `${url}/items/schedule_title?filter={ "datzanId":"${
+      `${url}/items/schedule_title?filter={ "location_id":"${
         useRoute().query.location
       }" }`
     );
@@ -129,11 +119,7 @@ const addNewTitle = async () => {
     });
   }
 };
-const getLocalStorage = () => {
-  dazanId.value = localStorage.getItem("dazanId");
-};
 onMounted(() => {
-  getLocalStorage();
   fetchScheduleTitles();
 });
 </script>

@@ -22,7 +22,7 @@
               Not registered?
               <a
                 @click="$router.push('/register')"
-                class="text-indigo-700 hover:underline dark:indigo-500"
+                class="text-content underline"
                 >{{ $t("register") }}</a
               >
             </div>
@@ -35,15 +35,21 @@
     </div>
   </main>
 </template>
-<script setup>
+<script setup lang="ts">
 const { login } = useDirectusAuth();
 
 definePageMeta({
   middleware: ["authenticated"],
 });
 
+type User = {
+  email: string;
+  password: string;
+};
+
 const router = useRouter();
-const data = reactive({
+const booleanTrue: boolean = true;
+const data: User = reactive({
   email: "",
   password: "",
 });
@@ -56,8 +62,10 @@ const submit = async () => {
       });
     }
 
-    await router.push("/");
-  } catch (e) {
+    await router.push({ name: "index", query: { message: "login" } });
+
+    await document.location.reload(booleanTrue);
+  } catch (e: any) {
     if (e.status == 401) {
       alert("Wrong email or password");
     }

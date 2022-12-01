@@ -1,6 +1,6 @@
 <template lang="">
   <div class="schedule-item-header mt-8 flex flex-wrap justify-between">
-    <div class="flex flex-wrap items-center mr-3 flex-1 mb-3 md:mb-0">
+    <div class="schedule-title flex flex-wrap items-center mr-3 flex-1 mb-3 md:mb-0">
       <h1 v-if="showInputTitle == false" class="text-4xl">
         {{ scheduleTitle.title }}
       </h1>
@@ -9,11 +9,15 @@
         placeholder="Change title..."
         v-else
         v-model:value="scheduleTitle.title"
-        class="text-4xl"
+        class="text-4xl my-0"
       />
-      <UIButton @click="updateTitle" v-if="showInputTitle != false">
-        {{ $t( 'updateTitle' ) }}
-      </UIButton>
+      <v-btn
+        @click="updateTitle"
+        v-if="showInputTitle != false"
+        class="inline-flex items-center w-auto h-auto px-3 py-3 mt-2 text-sm font-medium text-center text-black bg-white rounded-lg hover:bg-secondary ease-linear transition-all duration-150 select-none"
+      >
+        {{ $t("updateTitle") }}
+      </v-btn>
     </div>
     <ul
       class="menu menu-horizontal bg-neutral rounded-xl min-w-full flex justify-between md:min-w-0"
@@ -47,7 +51,7 @@
               v-if="store.loading"
             />
           </div>
-          <p>{{ $t( 'create' ) }}</p>
+          <p>{{ $t("create") }}</p>
         </a>
       </li>
       <li>
@@ -80,7 +84,7 @@
         })
       "
     >
-    {{ $t("emptySchedule") }}
+      {{ $t("emptySchedule") }}
     </div>
   </transition>
 
@@ -92,7 +96,7 @@
     <div>
       <font-awesome-icon icon="fa-solid fa-file-pdf" class="text-3xl mx-2" />
     </div>
-    <p>{{ $t( 'downloadPdf' ) }}</p>
+    <p>{{ $t("downloadPdf") }}</p>
   </UIButton>
 </template>
 <script setup>
@@ -237,4 +241,8 @@ onMounted(() => {
   fetchSchedule();
 });
 </script>
-<style></style>
+<style>
+.schedule-title {
+  
+}
+</style>

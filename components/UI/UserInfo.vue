@@ -16,15 +16,9 @@
   </li>
 </template>
 <script setup>
-let user = {
-  first_name: '',
-  last_name: '',
-  email: ''
-};
-
-if (useRoute().path != "/register" || useRoute().path != "/login") {
-  user = useDirectusUser();
-}
+const props = defineProps({
+  user: {},
+});
 const token = useDirectusToken();
 </script>
 <style lang=""></style>

@@ -6,9 +6,12 @@
           <li>
             <a
               @click="
-                $router.push({ name: 'events', query: { location: useRoute().query.location } })
+                $router.push({
+                  name: 'events',
+                  query: { location: useRoute().query.location },
+                })
               "
-              >Events</a
+              >Schedules</a
             >
           </li>
           <li><a>New</a></li>
@@ -18,10 +21,25 @@
         <h1 class="text-4xl mb-2">{{ $t("createANewEvent") }}</h1>
         <div>
           <label
+            for="name"
+            class="block mb-1 mt-3 text-lg font-medium text-gray-900 dark:text-white"
+          >
+            {{ $t("name") }}
+          </label>
+          <UIInput
+            placeholder="Name"
+            type="text"
+            v-model:value="newEvent.name"
+            id="name"
+            required
+          />
+        </div>
+        <div>
+          <label
             for="date"
             class="block mb-1 mt-3 text-lg font-medium text-gray-900 dark:text-white"
           >
-          {{ $t("date") }}
+            {{ $t("date") }}
           </label>
           <UIInput
             type="date"
@@ -35,7 +53,7 @@
             for="time"
             class="block mb-1 mt-3 text-lg font-medium text-gray-900 dark:text-white"
           >
-          {{ $t("time") }}
+            {{ $t("time") }}
           </label>
           <UIInput
             placeholder="Time"
@@ -53,7 +71,7 @@
         />
         <UIButton
           @click="createEvent"
-          class="min-w-full dark:bg-indigo-500 dark:text-white"
+          class="min-w-full text-white"
           >{{ $t("create") }}</UIButton
         >
       </form>
@@ -78,9 +96,11 @@ let newEvent = reactive({
   datetime: "",
   time: "",
   description: "",
-  datzanId: useRoute().query.location,
+  name: "",
+  location_id: useRoute().query.location,
   ScheduleTitleId: useRoute().query.scheduleTitleId,
 });
+
 const createEvent = async () => {
   try {
     if (

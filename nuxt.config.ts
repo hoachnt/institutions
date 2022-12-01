@@ -2,8 +2,10 @@
 
 export default defineNuxtConfig({
   app: {
-    layoutTransition: { name: "layout", mode: "out-in" },
     pageTransition: { name: "page", mode: "out-in" },
+    head: {
+      title: 'Institution'
+    }
   },
   publicRuntimeConfig: {
     url: process.env.VITE_ENDPOINT,
@@ -37,7 +39,7 @@ export default defineNuxtConfig({
           institutions: "Institutions",
           createANewInstitution: "Create a new institution",
           readMore: "Read more",
-          schedules: "Schedules",
+          schedules: "Schedule",
           login: "Login",
           register: "Register",
           firstName: "Firt name",
@@ -60,17 +62,19 @@ export default defineNuxtConfig({
           addSchedule: "Add schedule",
           emptySchedule: "Schedule is empty",
           createANewEvent: "Create a new event",
+          createANewSchedule: "Create a new schedule",
           date: "Date",
           time: "Time",
           update: "Update",
           updateTitle: "Update title",
-          downloadPdf: "Download PDF"
+          downloadPdf: "Download PDF",
+          name: "Name",
         },
         ru: {
           institutions: "Учреждения",
           createANewInstitution: "Создать новое учреждение",
           readMore: "Читать далее",
-          schedules: "Расписания",
+          schedules: "Расписание",
           login: "Войти",
           register: "Регистрация",
           firstName: "Имя",
@@ -97,7 +101,9 @@ export default defineNuxtConfig({
           time: "Время",
           update: "Обновить",
           updateTitle: "Обновить заголовок",
-          downloadPdf: "Скачать PDF"
+          downloadPdf: "Скачать PDF",
+          name: "Название",
+          createANewSchedule: "Создать новое расписание",
         },
         vn: {
           institutions: "Tổ chức",
@@ -130,7 +136,9 @@ export default defineNuxtConfig({
           time: "Thời gian",
           update: "Cập nhật",
           updateTitle: "Cập nhật tiêu đề",
-          downloadPdf: "Tải PDF"
+          downloadPdf: "Tải PDF",
+          name: "Tiêu đề",
+          createANewSchedule: "Tạo lịch trình mới",
         },
       },
     },
@@ -142,6 +150,7 @@ export default defineNuxtConfig({
   css: [
     "~/assets/css/main.css",
     "@fortawesome/fontawesome-svg-core/styles.css",
+    'vuetify/lib/styles/main.sass',
   ],
   postcss: {
     plugins: {
@@ -155,6 +164,12 @@ export default defineNuxtConfig({
       "@fortawesome/free-solid-svg-icons",
       "@fortawesome/free-regular-svg-icons",
       "@fortawesome/free-brands-svg-icons",
+      "vuetify"
     ],
+  },
+  vite: {
+    define: {
+      'process.env.DEBUG': false,
+    },
   },
 });
