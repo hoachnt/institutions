@@ -69,6 +69,7 @@ export default defineNuxtConfig({
           updateTitle: "Update title",
           downloadPdf: "Download PDF",
           name: "Name",
+          maxLocations: "You can create only 10 institutions",
         },
         ru: {
           institutions: "Учреждения",
@@ -104,6 +105,7 @@ export default defineNuxtConfig({
           downloadPdf: "Скачать PDF",
           name: "Название",
           createANewSchedule: "Создать новое расписание",
+          maxLocations: "Вы можете создать только 10 учреждений",
         },
         vn: {
           institutions: "Tổ chức",
@@ -139,6 +141,7 @@ export default defineNuxtConfig({
           downloadPdf: "Tải PDF",
           name: "Tiêu đề",
           createANewSchedule: "Tạo lịch trình mới",
+          maxLocations: "Bạn chỉ có thể tạo 10 tổ chức",
         },
       },
     },

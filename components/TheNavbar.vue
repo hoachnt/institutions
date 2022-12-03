@@ -98,6 +98,7 @@
         <li>
           <a>
             <v-select
+              transition="slide-y-transition"
               v-model="locale"
               label="Language"
               :items="languages"
