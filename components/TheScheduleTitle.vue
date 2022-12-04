@@ -1,5 +1,5 @@
 <template lang="">
-  <div class="schedule-item-header mt-8 flex flex-wrap justify-between">
+  <div class="schedule-item-header mt-8 flex flex-wrap justify-between sticky top-14 py-2 z-10 bg-base-100">
     <div class="schedule-title flex flex-wrap items-center mr-3 flex-1 mb-3 md:mb-0">
       <h1 v-if="showInputTitle == false" class="text-4xl">
         {{ scheduleTitle.title }}
@@ -242,7 +242,4 @@ onMounted(() => {
 });
 </script>
 <style>
-.schedule-title {
-  
-}
 </style>

@@ -29,11 +29,9 @@
         <UIButton class="min-w-full">{{ $t("register") }}</UIButton>
         <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
           Have account?
-          <a
-            @click="$router.push('/login')"
-            class="text-content underline"
-            >{{ $t("login") }}</a
-          >
+          <a @click="$router.push('/login')" class="text-content underline">{{
+            $t("login")
+          }}</a>
         </div>
       </form>
     </div>
@@ -44,19 +42,19 @@ definePageMeta({
   middleware: ["authenticated"],
 });
 
-type UserRegister = {
+interface IUserRegister {
   firstName: string;
   lastName: string;
   adminRole: string;
   email: string;
   password: string;
-};
+}
 
 const { createUser } = useDirectusAuth();
 const { login } = useDirectusAuth();
 
 const router = useRouter();
-const data: UserRegister = reactive({
+const data: IUserRegister = reactive({
   firstName: "",
   lastName: "",
   adminRole: "d9f8b306-3cfd-400b-926d-a8af29f45736",

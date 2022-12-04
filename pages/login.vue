@@ -42,14 +42,14 @@ definePageMeta({
   middleware: ["authenticated"],
 });
 
-type User = {
+interface IUser {
   email: string;
   password: string;
-};
+}
 
 const router = useRouter();
 const booleanTrue: boolean = true;
-const data: User = reactive({
+const data: IUser = reactive({
   email: "",
   password: "",
 });

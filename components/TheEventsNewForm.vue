@@ -67,7 +67,6 @@
           placeholder="Description"
           type="text"
           v-model:value="newEvent.description"
-          required
         />
         <UIButton
           @click="createEvent"
@@ -103,11 +102,7 @@ let newEvent = reactive({
 
 const createEvent = async () => {
   try {
-    if (
-      newEvent.datetime != "" &&
-      newEvent.time != "" &&
-      newEvent.description != ""
-    ) {
+    if (newEvent.datetime != "" && newEvent.time != "") {
       await $fetch(`${url}/items/events`, {
         method: "POST",
         headers: {

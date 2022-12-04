@@ -32,6 +32,14 @@
         v-if="showMenu"
       >
         <ul class="py-1" aria-labelledby="dropdownButton">
+          <li
+            @click="$router.push({ name: 'locations-edit', query: { location: location.id } })"
+            class="block px-4 py-2 text-md hover:bg-base-100 cursor-pointer ease-linear transition-all duration-150 select-none"
+          >
+            <a>
+              {{ $t('edit') }}
+            </a>
+          </li>
           <li>
             <label
               for="my-modal"

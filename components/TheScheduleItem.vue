@@ -34,7 +34,7 @@
             <a
               @click="toggleUpdate"
               class="block px-4 py-2 text-md hover:bg-neutral cursor-pointer ease-linear transition-all duration-150 select-none"
-              >{{ $t("update") }}</a
+              >{{ $t("edit") }}</a
             >
           </li>
           <li>
@@ -91,7 +91,7 @@
       <UIInput type="time" v-model:value="schedule.time" />
       <UIInput type="text" v-model:value="schedule.description" />
       <UIButton @click="updateEvent">
-        {{ $t("update") }}
+        {{ $t("edit") }}
       </UIButton>
     </form>
   </div>

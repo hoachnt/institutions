@@ -27,7 +27,7 @@
           <a class="text-2xl uppercase select-none"> Indigo </a>
         </div>
         <div v-if="token" @click="$router.push('/locations/new')" class="block">
-          <v-btn class="btn rounded-xl px-6 mx-2">
+          <v-btn class="btn rounded-xl px-6 mx-2 bg-white">
             <div class="sm:mr-2">
               <font-awesome-icon icon="fa-solid fa-plus" v-if="store.loading" />
             </div>
@@ -49,14 +49,14 @@
       <ul class="sidebar menu w-80">
         <!-- Sidebar content here -->
         <!-- <UIUserInfo /> -->
-        <li v-if="token" @click="$router.push('/locations/new')">
+        <!-- <li v-if="token" @click="$router.push('/locations/new')">
           <a class="add-btn btn rounded-lg lg:hidden">
             <div class="mr-1">
               <font-awesome-icon icon="fa-solid fa-plus" v-if="store.loading" />
             </div>
             <p>{{ $t("add") }}</p>
           </a>
-        </li>
+        </li> -->
         <li @click="$router.push('/')" v-if="token">
           <a class="rounded-lg">
             <div class="mr-1">

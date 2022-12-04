@@ -71,7 +71,6 @@
                   rounded-lg
                   hover:bg-secondary
                   focus:ring-4 focus:outline-none
-                  dark:hover:bg-secondary
                   ease-linear
                   transition-all
                   duration-150
