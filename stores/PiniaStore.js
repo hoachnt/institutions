@@ -33,6 +33,9 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
     const removeDatzanError = ref(false);
     const toastVisible = ref(false);
     const scheduleTitleId = ref("");
+    const totalIamges = ref();
+    const LAST_PAGE = ref();
+    const LIMIT_IMAGES = 100;
 
     const fetchDatzan = async () => {
       try {
@@ -101,9 +104,19 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
         toastVisible.value = false;
       }, 4000);
     }
+    const fetchTotalImages = async () => {
+      totalIamges.value = await $fetch(`${url}/files?meta=total_count`);
+
+      LAST_PAGE.value = await Math.ceil(
+        totalIamges.value.meta.total_count / LIMIT_IMAGES
+      );
+
+      return LAST_PAGE.value;
+    };
 
     onMounted(() => {
       fetchDatzan();
+      fetchTotalImages();
     });
 
     return {
@@ -124,6 +137,9 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
       logOut,
       toastVisible,
       showToast,
+      LAST_PAGE,
+      LIMIT_IMAGES,
+      fetchTotalImages,
     };
   }
   return {

@@ -39,7 +39,7 @@
               </select>
               <UIInput placeholder="Name" v-model:value="location.name" />
               <UIInput placeholder="Address" v-model:value="location.address" />
-              <!-- <UIInput
+              <UIInput
                 type="file"
                 id="file"
                 class="
@@ -59,7 +59,7 @@
                   hover:file:bg-secondary hover:file:text-white
                   cursor-pointer
                 "
-              /> -->
+              />
               <label
                 for="message"
                 class="
@@ -116,6 +116,9 @@ const store = usePiniaStore();
 const token = useDirectusToken();
 
 const location: any = ref([]);
+const totalIamges = ref();
+const LAST_PAGE = ref()
+const LIMIT_IMAGES = 100;
 
 const fetchInstitution = async () => {
   try {
@@ -125,7 +128,25 @@ const fetchInstitution = async () => {
     });
   } catch (e) {}
 };
+const fetchTotalImages = async () => {
+  totalIamges.value = await $fetch(`${store.url}/files?meta=total_count`);
+
+  LAST_PAGE.value = await Math.ceil(totalIamges.value.meta.total_count / LIMIT_IMAGES)
+};
 const updateLocation = async () => {
+  pushHotelImage();
+
+  let getImg = await $fetch(`${store.url}/files?sort=uploaded_on`, {
+    params: {
+      limit: LIMIT_IMAGES,
+      page: LAST_PAGE.value,
+    },
+  });
+
+  let responseData = getImg.data;
+
+  location.value.img = responseData[responseData.length - 1].id;
+
   let response = await $fetch(
     `${store.url}/items/location/${location.value.id}`,
     {
@@ -138,8 +159,25 @@ const updateLocation = async () => {
   );
   await useRouter().push("/");
 };
+async function pushHotelImage() {
+  const file = document.getElementById("file");
+
+  const formData = new FormData();
+
+  formData.append("title", "Image");
+  formData.append("file", file.files[0]);
+
+  await $fetch(`${store.url}/files`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token.value}`,
+    },
+    body: formData,
+  });
+}
 onMounted(() => {
   fetchInstitution();
+  fetchTotalImages();
 });
 </script>
 <style lang=""></style>

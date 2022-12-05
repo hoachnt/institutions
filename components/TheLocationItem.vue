@@ -86,13 +86,24 @@
       </div>
     </div>
 
-    <div>
-      <img
-        class="rounded-xl min-w-full"
-        :src="`https://directus.hoach.skryonline.com/assets/${location.img}`"
-        alt=""
-      />
-    </div>
+    <ClientOnly>
+      <template #default>
+        <transition name="blur">
+          <div>
+            <img
+              class="rounded-xl min-w-full"
+              :src="`https://directus.hoach.skryonline.com/assets/${location.img}`"
+              alt=""
+            />
+          </div>
+        </transition>
+      </template>
+      <template #fallback>
+        <transition name="blur">
+          <v-progress-circular indeterminate color="primary"></v-progress-circular>
+        </transition>
+      </template>
+    </ClientOnly>
     <div class="p-5">
       <div>
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">
@@ -160,5 +171,14 @@ const props = defineProps({
 <style>
 .datsan {
   min-width: 310px;
+}
+.blur-enter-active,
+.blur-leave-active {
+  transition: all 0.4s;
+}
+.blur-enter-from,
+.blur-leave-to {
+  opacity: 0;
+  filter: blur(1rem);
 }
 </style>

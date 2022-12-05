@@ -123,6 +123,7 @@ const token = useDirectusToken();
 const { getItems } = useDirectusItems();
 const store = usePiniaStore();
 const snackbar = ref(false);
+const LIMIT_IMAGES = store.LIMIT_IMAGES;
 
 definePageMeta({
   middleware: ["auth"],
@@ -161,11 +162,16 @@ const response = async () => {
   if (locations.value.length >= MAXLOCATIONS) {
     showSnackbar();
   } else {
-    await $fetch(`${store.url}/files?sort=uploaded_on`)
+    await $fetch(`${store.url}/files?sort=uploaded_on`, {
+      params: {
+        limit: LIMIT_IMAGES,
+        page: store.LAST_PAGE,
+      },
+    })
       .then((response) => {
         let responseData = response.data;
 
-        if (file.files[0] !== undefined) {
+        if (!!file.files[0]) {
           location.img = responseData[responseData.length - 1].id;
         } else {
           location.img = null;
@@ -190,17 +196,19 @@ const response = async () => {
 
 const createDatzan = async () => {
   try {
+    pushHotelImage();
+
     if (
-      location.name != "" &&
-      location.address != "" &&
-      location.type != "" &&
-      location.img != ""
+      location.name !== "" &&
+      location.address !== "" &&
+      location.type !== "" &&
+      !!location.img
     ) {
-      await pushHotelImage();
+      await response();
     } else if (
-      location.name != "" &&
-      location.address != "" &&
-      location.type != ""
+      location.name !== "" &&
+      location.address !== "" &&
+      location.type !== ""
     ) {
       await response();
     }
@@ -213,9 +221,6 @@ async function pushHotelImage() {
 
   const formData = new FormData();
 
-  formData.append("title", "Image");
-  formData.append("file", file.files[0]);
-
   await $fetch(`${store.url}/files`, {
     method: "POST",
     headers: {
@@ -223,8 +228,11 @@ async function pushHotelImage() {
     },
     body: formData,
   });
-  await response();
 }
+
+onMounted(() => {
+  store.fetchTotalImages();
+});
 </script>
 <style>
 .fade-enter-active,
