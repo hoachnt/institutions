@@ -196,20 +196,13 @@ const response = async () => {
 
 const createDatzan = async () => {
   try {
-    pushHotelImage();
-
     if (
-      location.name !== "" &&
-      location.address !== "" &&
-      location.type !== "" &&
-      !!location.img
-    ) {
-      await response();
-    } else if (
       location.name !== "" &&
       location.address !== "" &&
       location.type !== ""
     ) {
+      pushHotelImage();
+
       await response();
     }
   } catch (error) {
@@ -220,6 +213,9 @@ async function pushHotelImage() {
   const file = document.getElementById("file");
 
   const formData = new FormData();
+
+  formData.append("title", "Image");
+  formData.append("file", file.files[0]);
 
   await $fetch(`${store.url}/files`, {
     method: "POST",

@@ -117,7 +117,7 @@ const token = useDirectusToken();
 
 const location: any = ref([]);
 const totalIamges = ref();
-const LAST_PAGE = ref()
+const LAST_PAGE = ref();
 const LIMIT_IMAGES = 100;
 
 const fetchInstitution = async () => {
@@ -131,7 +131,9 @@ const fetchInstitution = async () => {
 const fetchTotalImages = async () => {
   totalIamges.value = await $fetch(`${store.url}/files?meta=total_count`);
 
-  LAST_PAGE.value = await Math.ceil(totalIamges.value.meta.total_count / LIMIT_IMAGES)
+  LAST_PAGE.value = await Math.ceil(
+    totalIamges.value.meta.total_count / LIMIT_IMAGES
+  );
 };
 const updateLocation = async () => {
   pushHotelImage();
@@ -175,6 +177,7 @@ async function pushHotelImage() {
     body: formData,
   });
 }
+
 onMounted(() => {
   fetchInstitution();
   fetchTotalImages();
