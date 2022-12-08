@@ -9,13 +9,17 @@
 <script>
 export default {
   props: {
-    value: [Number, String],
+    value: [Number, String, Object, Array],
   },
   methods: {
     emitUpdateInput(event) {
       this.$emit("update:value", event.target.value);
+      console.log(event.target.value)
     },
   },
+  mounted() {
+    console.log(this.value)
+  }
 };
 </script>
 <style lang=""></style>

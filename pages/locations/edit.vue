@@ -59,7 +59,16 @@
                   hover:file:bg-secondary hover:file:text-white
                   cursor-pointer
                 "
+                accept=".jpg, .jpeg, .png, .webp"
+                v-model="location.img"
               />
+              <div class="wrapper py-1 max-w-4xl m-auto">
+                <img
+                  alt=""
+                  :src="`https://directus.hoach.skryonline.com/assets/${location.img}`"
+                  class="rounded-xl img min-w-full"
+                />
+              </div>
               <label
                 for="message"
                 class="
@@ -76,7 +85,7 @@
               <textarea
                 v-model="location.description"
                 id="message"
-                rows="4"
+                rows="10"
                 class="
                   block
                   p-2.5
@@ -136,7 +145,7 @@ const fetchTotalImages = async () => {
   );
 };
 const updateLocation = async () => {
-  pushHotelImage();
+  await pushHotelImage();
 
   let getImg = await $fetch(`${store.url}/files?sort=uploaded_on`, {
     params: {
@@ -162,9 +171,30 @@ const updateLocation = async () => {
   await useRouter().push("/");
 };
 async function pushHotelImage() {
-  const file = document.getElementById("file");
-
+  let img: any = document.querySelector("img");
+  const file: any = document.getElementById("file");
   const formData = new FormData();
+
+  const response = await $fetch(
+    `https://directus.hoach.skryonline.com/files/${location.value.img}`
+  );
+
+  // // Create a new File object
+  // const myFile = new File(
+  //   ['event.target?.result'],
+  //   `${response.data.filename_download}`,
+  //   {
+  //     type: response.data.type,
+  //     lastModified: new Date(),
+  //   }
+  // );
+
+  // // Now let's create a DataTransfer to get a FileList
+  // const dataTransfer = new DataTransfer();
+  // dataTransfer.items.add(myFile);
+  // file.files = dataTransfer.files;
+
+  console.log(response.data, file.files[0], img);
 
   formData.append("title", "Image");
   formData.append("file", file.files[0]);
