@@ -171,33 +171,11 @@ const updateLocation = async () => {
   await useRouter().push("/");
 };
 async function pushHotelImage() {
-  let img: any = document.querySelector("img");
   const file: any = document.getElementById("file");
   const formData = new FormData();
 
-  const response = await $fetch(
-    `https://directus.hoach.skryonline.com/files/${location.value.img}`
-  );
-
-  // // Create a new File object
-  // const myFile = new File(
-  //   ['event.target?.result'],
-  //   `${response.data.filename_download}`,
-  //   {
-  //     type: response.data.type,
-  //     lastModified: new Date(),
-  //   }
-  // );
-
-  // // Now let's create a DataTransfer to get a FileList
-  // const dataTransfer = new DataTransfer();
-  // dataTransfer.items.add(myFile);
-  // file.files = dataTransfer.files;
-
-  console.log(response.data, file.files[0], img);
-
-  formData.append("title", "Image");
-  formData.append("file", file.files[0]);
+  await formData.append("title", "Image");
+  await formData.append("file", file.files[0]);
 
   await $fetch(`${store.url}/files`, {
     method: "POST",

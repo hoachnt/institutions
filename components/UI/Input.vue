@@ -14,12 +14,8 @@ export default {
   methods: {
     emitUpdateInput(event) {
       this.$emit("update:value", event.target.value);
-      console.log(event.target.value)
     },
   },
-  mounted() {
-    console.log(this.value)
-  }
 };
 </script>
 <style lang=""></style>
