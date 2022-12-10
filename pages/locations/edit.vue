@@ -75,7 +75,7 @@
                   block
                   mb-1
                   mt-3
-                  text-lg
+                  text-2xl
                   font-medium
                   text-gray-900
                   dark:text-white
@@ -145,18 +145,22 @@ const fetchTotalImages = async () => {
   );
 };
 const updateLocation = async () => {
-  await pushHotelImage();
+  const file: any = document.getElementById("file");
 
-  let getImg = await $fetch(`${store.url}/files?sort=uploaded_on`, {
-    params: {
-      limit: LIMIT_IMAGES,
-      page: LAST_PAGE.value,
-    },
-  });
+  if (!!file.files[0]) {
+    await pushHotelImage();
 
-  let responseData = getImg.data;
+    let getImg = await $fetch(`${store.url}/files?sort=uploaded_on`, {
+      params: {
+        limit: LIMIT_IMAGES,
+        page: LAST_PAGE.value,
+      },
+    });
 
-  location.value.img = responseData[responseData.length - 1].id;
+    let responseData = getImg.data;
+
+    location.value.img = responseData[responseData.length - 1].id;
+  }
 
   let response = await $fetch(
     `${store.url}/items/location/${location.value.id}`,
