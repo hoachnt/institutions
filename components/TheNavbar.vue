@@ -27,7 +27,7 @@
           <a class="text-2xl uppercase select-none"> Indigo </a>
         </div>
         <div v-if="token" @click="$router.push('/locations/new')" class="block">
-          <v-btn class="btn rounded-xl px-6 mx-2 bg-white">
+          <v-btn class="btn rounded-xl px-6 mx-2 bg-white" color="white">
             <div class="sm:mr-2">
               <font-awesome-icon icon="fa-solid fa-plus" v-if="store.loading" />
             </div>
@@ -41,7 +41,7 @@
       <!-- Page content here -->
       <main>
         <NuxtLoadingIndicator />
-        <NuxtPage class="mt-3"/>
+        <NuxtPage class="mt-3" />
       </main>
     </div>
     <div class="drawer-side">

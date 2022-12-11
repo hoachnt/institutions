@@ -128,6 +128,7 @@
       </p>
       <v-btn
         @click="$router.push(`/locations/${location.id}`)"
+        color="white"
         class="inline-flex items-center px-4 w-auto h-auto py-3 text-sm font-medium text-center text-black bg-white rounded-xl hover:bg-secondary ease-linear transition-all duration-150 select-none"
       >
         {{ $t("readMore") }}
@@ -135,6 +136,7 @@
 
       <v-btn
         variant="outlined"
+        color="white"
         @click="
           $router.push({ name: 'events', query: { location: location.id } })
         "
