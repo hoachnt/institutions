@@ -1,6 +1,10 @@
 <template lang="">
-  <div class="schedule-item-header mt-8 flex flex-wrap justify-between sticky top-14 py-2 z-10 bg-base-100">
-    <div class="schedule-title flex flex-wrap items-center mr-3 flex-1 mb-3 md:mb-0">
+  <div
+    class="schedule-item-header mt-8 flex flex-wrap justify-between sticky top-14 py-2 z-10 bg-base-100"
+  >
+    <div
+      class="schedule-title flex flex-wrap items-center mr-3 flex-1 mb-3 md:mb-0"
+    >
       <h1 v-if="showInputTitle == false" class="text-4xl">
         {{ scheduleTitle.title }}
       </h1>
@@ -23,17 +27,17 @@
       class="menu menu-horizontal bg-neutral rounded-xl min-w-full flex justify-between md:min-w-0"
       v-if="token"
     >
-      <li>
+      <li class="flex-1">
         <a
           @click="changeTitle"
-          class="tooltip flex items-center"
+          class="tooltip w-18 flex justify-center items-center min-w-full"
           data-tip="Update"
         >
           <font-awesome-icon icon="fa-solid fa-pen-to-square" />
         </a>
       </li>
-      <li>
-        <a
+      <li class="flex-1">
+        <a class="min-w-full flex items-center justify-center"
           @click="
             $router.push({
               name: 'events-new',
@@ -54,14 +58,42 @@
           <p>{{ $t("create") }}</p>
         </a>
       </li>
-      <li>
-        <a
-          class="tooltip flex items-center"
-          data-tip="Delete"
-          @click="$emit('removeSchedule', scheduleTitle.id)"
-        >
-          <font-awesome-icon icon="fa-solid fa-trash" />
-        </a>
+      <li class="flex-1">
+        <v-dialog v-model="dialog" persistent class="hover:border-none hover:shadow-0">
+          <template v-slot:activator="{ props }" class="hover:border-none hover:shadow-0">
+            <v-btn
+              color="neutral"
+              v-bind="props"
+              class="tooltip flex items-center min-h-full hover:border-none hover:shadow-0 text-xl w-full"
+              data-tip="Delete"
+            >
+              <font-awesome-icon icon="fa-solid fa-trash" />
+            </v-btn>
+          </template>
+          <v-card>
+            <v-card-title class="text-h5">
+              {{ $t("questionBeforeDeletion") }}
+            </v-card-title>
+            <v-card-text>{{ $t("actionCannotBeUndone") }}</v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="green-darken-1"
+                variant="text"
+                @click="dialog = false"
+              >
+                Disagree
+              </v-btn>
+              <v-btn
+                color="red-darken-1"
+                variant="text"
+                @click="$emit('removeSchedule', scheduleTitle.id)"
+              >
+                Agree
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </li>
     </ul>
   </div>
@@ -122,6 +154,7 @@ const schedules = ref([]);
 const visible = false;
 const title = ref("");
 const scheduleTitles = ref("");
+const dialog = ref(false);
 
 const changeTitle = () => (showInputTitle.value = !showInputTitle.value);
 const updateTitle = async () => {
@@ -158,6 +191,8 @@ const removeEvent = async (id) => {
         Authorization: `Bearer ${token.value}`,
       },
     });
+
+    dialog.value = false;
 
     await fetchSchedule();
   } catch (error) {
@@ -241,5 +276,4 @@ onMounted(() => {
   fetchSchedule();
 });
 </script>
-<style>
-</style>
+<style></style>
