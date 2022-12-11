@@ -22,7 +22,7 @@
         <div>
           <label
             for="name"
-            class="block mb-1 mt-3 text-lg font-medium text-gray-900 dark:text-white"
+            class="block mb-1 mt-3 text-lg font-medium text-white"
           >
             {{ $t("name") }}
           </label>
@@ -37,7 +37,7 @@
         <div>
           <label
             for="date"
-            class="block mb-1 mt-3 text-lg font-medium text-gray-900 dark:text-white"
+            class="block mb-1 mt-3 text-lg font-medium text-white"
           >
             {{ $t("date") }}
           </label>
@@ -51,7 +51,7 @@
         <div>
           <label
             for="time"
-            class="block mb-1 mt-3 text-lg font-medium text-gray-900 dark:text-white"
+            class="block mb-1 mt-3 text-lg font-medium dark:text-white"
           >
             {{ $t("time") }}
           </label>

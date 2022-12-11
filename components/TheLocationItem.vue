@@ -60,7 +60,7 @@
                     class="btn btn-sm btn-circle absolute right-2 top-2"
                     >✕</label
                   >
-                  <h3 class="font-bold text-lg text-white">
+                  <h3 class="font-bold text-lg text-white mb-2">
                     {{ $t("questionBeforeDeletion") }}
                   </h3>
                   <div class="form-control min-w-full">

@@ -16,7 +16,7 @@
                 id="countries"
                 class="
                   border border-gray-300
-                  text-gray-900 text-sm
+                  text-sm
                   rounded-md
                   focus:ring-primary focus:border-primary
                   block
@@ -24,11 +24,9 @@
                   p-2.5
                   bg-base-100
                   my-1
-                  dark:border-gray-600
-                  dark:placeholder-base-100
-                  dark:text-white
-                  dark:focus:ring-primary
-                  dark:focus:border-primary
+                  dark:border-gray-600 dark:placeholder-base-100
+                  text-white
+                  dark:focus:ring-primary dark:focus:border-primary
                 "
                 v-model="location.type"
                 required
@@ -71,15 +69,7 @@
               />
               <label
                 for="message"
-                class="
-                  block
-                  mb-1
-                  mt-3
-                  text-lg
-                  font-medium
-                  text-gray-900
-                  dark:text-white
-                "
+                class="block mb-1 mt-3 text-lg font-medium text-white"
                 >{{ $t("description") }}</label
               >
               <textarea
