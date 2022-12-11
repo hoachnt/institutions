@@ -43,28 +43,30 @@
               class="block px-4 py-2 text-md text-red-600 hover:bg-neutral cursor-pointer ease-linear transition-all duration-150 select-none"
               >{{ $t("delete") }}</label
             >
-            <input type="checkbox" id="my-modal" class="modal-toggle" />
-            <div class="modal modal-bottom sm:modal-middle">
-              <div class="modal-box relative">
-                <label
-                  for="my-modal"
-                  class="btn btn-sm btn-circle absolute right-2 top-2"
-                  >✕</label
-                >
-                <h3 class="font-bold text-lg">
-                  {{ $t("questionBeforeDeletion") }}
-                </h3>
-                <p class="py-4">{{ $t("actionCannotBeUndone") }}</p>
-                <div
-                  class="modal-action"
-                  @click="$emit('removeEvent', schedule.id)"
-                >
-                  <label for="my-modal" class="btn border-error text-red-600"
-                    >{{ $t("delete") }}!</label
+            <teleport to="body">
+              <input type="checkbox" id="my-modal" class="modal-toggle" />
+              <div class="modal modal-bottom sm:modal-middle">
+                <div class="modal-box relative">
+                  <label
+                    for="my-modal"
+                    class="btn btn-sm btn-circle absolute right-2 top-2"
+                    >✕</label
                   >
+                  <h3 class="font-bold text-lg">
+                    {{ $t("questionBeforeDeletion") }}
+                  </h3>
+                  <p class="py-4">{{ $t("actionCannotBeUndone") }}</p>
+                  <div
+                    class="modal-action"
+                    @click="$emit('removeEvent', schedule.id)"
+                  >
+                    <label for="my-modal" class="btn border-error text-red-600"
+                      >{{ $t("delete") }}!</label
+                    >
+                  </div>
                 </div>
               </div>
-            </div>
+            </teleport>
           </li>
         </ul>
       </div>

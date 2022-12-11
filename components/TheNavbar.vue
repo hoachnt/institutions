@@ -41,7 +41,7 @@
       <!-- Page content here -->
       <main>
         <NuxtLoadingIndicator />
-        <NuxtPage class="mt-3" ref="el" />
+        <NuxtPage class="mt-3"/>
       </main>
     </div>
     <div class="drawer-side">
@@ -118,19 +118,6 @@
 import { usePiniaStore } from "@/stores/PiniaStore";
 import { useScroll } from "@vueuse/core";
 
-const el = (ref < HTMLElement) | (null > null);
-const { x, y, isScrolling, arrivedState, directions } = useScroll(el);
-const { left, right, top, bottom } = toRefs(arrivedState);
-const {
-  left: toLeft,
-  right: toRight,
-  top: toTop,
-  bottom: toBottom,
-} = toRefs(directions);
-
-const scrolling = computed(() => {
-  console.log(toTop);
-});
 const user = useDirectusUser();
 const { locale } = useI18n();
 const store = usePiniaStore();

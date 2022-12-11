@@ -33,11 +33,16 @@
       >
         <ul class="py-1" aria-labelledby="dropdownButton">
           <li
-            @click="$router.push({ name: 'locations-edit', query: { location: location.id } })"
+            @click="
+              $router.push({
+                name: 'locations-edit',
+                query: { location: location.id },
+              })
+            "
             class="block px-4 py-2 text-md hover:bg-base-100 cursor-pointer ease-linear transition-all duration-150 select-none"
           >
             <a>
-              {{ $t('edit') }}
+              {{ $t("edit") }}
             </a>
           </li>
           <li>
@@ -46,41 +51,43 @@
               class="block px-4 py-2 text-md text-red-600 hover:bg-base-100 cursor-pointer ease-linear transition-all duration-150 select-none"
               >{{ $t("delete") }}</label
             >
-            <input type="checkbox" id="my-modal" class="modal-toggle" />
-            <div class="modal modal-bottom sm:modal-middle">
-              <div class="modal-box">
-                <label
-                  for="my-modal"
-                  class="btn btn-sm btn-circle absolute right-2 top-2"
-                  >✕</label
-                >
-                <h3 class="font-bold text-lg text-white">
-                  {{ $t("questionBeforeDeletion") }}
-                </h3>
-                <div class="form-control min-w-full">
-                  <label class="label">
-                    <span class="label-text">{{ $t("yourEmail") }}</span>
-                  </label>
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    class="input input-bordered min-w-full text-white"
-                    v-model="store.email"
-                  />
-                </div>
-                <p class="py-4 text-white">
-                  {{ $t("actionCannotBeUndone") }}
-                </p>
-                <div class="modal-action">
+            <teleport to="body">
+              <input type="checkbox" id="my-modal" class="modal-toggle" />
+              <div class="modal modal-bottom sm:modal-middle">
+                <div class="modal-box">
                   <label
                     for="my-modal"
-                    class="btn btn-outline btn-error"
-                    @click="store.removeDatzan(location.id)"
-                    >{{ $t("delete") }}!</label
+                    class="btn btn-sm btn-circle absolute right-2 top-2"
+                    >✕</label
                   >
+                  <h3 class="font-bold text-lg text-white">
+                    {{ $t("questionBeforeDeletion") }}
+                  </h3>
+                  <div class="form-control min-w-full">
+                    <label class="label">
+                      <span class="label-text">{{ $t("yourEmail") }}</span>
+                    </label>
+                    <UIInput
+                      type="email"
+                      placeholder="example@gmail.com"
+                      class="input input-bordered min-w-full text-white"
+                      v-model:value="store.email"
+                    />
+                  </div>
+                  <p class="py-4 text-white">
+                    {{ $t("actionCannotBeUndone") }}
+                  </p>
+                  <div class="modal-action">
+                    <label
+                      for="my-modal"
+                      class="btn btn-outline btn-error"
+                      @click="store.removeDatzan(location.id)"
+                      >{{ $t("delete") }}!</label
+                    >
+                  </div>
                 </div>
               </div>
-            </div>
+            </teleport>
           </li>
         </ul>
       </div>
@@ -100,7 +107,10 @@
       </template>
       <template #fallback>
         <transition name="blur">
-          <v-progress-circular indeterminate color="primary"></v-progress-circular>
+          <v-progress-circular
+            indeterminate
+            color="primary"
+          ></v-progress-circular>
         </transition>
       </template>
     </ClientOnly>

@@ -1,6 +1,6 @@
 <template lang="">
   <div
-    class="schedule-item-header mt-8 flex flex-wrap justify-between sticky top-14 py-2 z-10 bg-base-100"
+    class="schedule-item-header mt-8 flex flex-wrap justify-between top-14 bg-base-100"
   >
     <div
       class="schedule-title flex flex-wrap items-center mr-3 flex-1 mb-3 md:mb-0"
@@ -59,7 +59,7 @@
         </a>
       </li>
       <li class="flex-1">
-        <v-dialog v-model="dialog" persistent class="hover:border-none hover:shadow-0">
+        <v-dialog v-model="dialog" persistent class="hover:border-none hover:shadow-0 max-w-2xl">
           <template v-slot:activator="{ props }" class="hover:border-none hover:shadow-0">
             <v-btn
               color="neutral"
