@@ -37,12 +37,12 @@
                 <option value="Mosque">{{ $t("mosque") }}</option>
               </select>
               <UIInput
-                placeholder="Name"
+                :placeholder="$t('name')"
                 v-model:value="location.name"
                 required
               />
               <UIInput
-                placeholder="Address"
+                :placeholder="$t('address')"
                 v-model:value="location.address"
                 required
               />

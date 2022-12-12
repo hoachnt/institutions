@@ -27,7 +27,7 @@
             {{ $t("name") }}
           </label>
           <UIInput
-            placeholder="Name"
+            :placeholder="$t('name')"
             type="text"
             v-model:value="newEvent.name"
             id="name"
@@ -64,7 +64,7 @@
           />
         </div>
         <UIInput
-          placeholder="Description"
+          :placeholder="$t('description')"
           type="text"
           v-model:value="newEvent.description"
         />

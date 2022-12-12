@@ -5,24 +5,24 @@
         <h1 class="text-2xl mb-1">{{ $t("register") }}</h1>
         <UIInput
           type="text"
-          placeholder="First name"
+          :placeholder="$t('firstName')"
           v-model:value="data.firstName"
           required
         />
         <UIInput
           type="text"
-          placeholder="Last name"
+          :placeholder="$t('lastName')"
           v-model:value="data.lastName"
         />
         <UIInput
           type="email"
-          placeholder="Email"
+          :placeholder="$t('email')"
           v-model:value="data.email"
           required
         />
         <UIInput
           type="password"
-          placeholder="Password"
+          :placeholder="$t('password')"
           v-model:value="data.password"
           required
         />

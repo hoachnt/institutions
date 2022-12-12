@@ -7,13 +7,13 @@
             <h1 class="text-2xl mb-1">{{ $t("login") }}</h1>
             <UIInput
               type="email"
-              placeholder="Email"
+              :placeholder="$t('email')"
               v-model:value="data.email"
               required
             />
             <UIInput
               type="password"
-              placeholder="Password"
+              :placeholder="$t('password')"
               v-model:value="data.password"
               required
             />
@@ -37,6 +37,8 @@
 </template>
 <script setup lang="ts">
 const { login } = useDirectusAuth();
+
+console.log(useRoute().name)
 
 definePageMeta({
   middleware: ["authenticated"],
