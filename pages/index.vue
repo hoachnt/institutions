@@ -27,13 +27,10 @@
 import { usePiniaStore } from "@/stores/PiniaStore";
 
 const store = usePiniaStore();
-const token = useDirectusToken();
 const user = useDirectusUser();
 
-const locations = ref([]);
 const config = useRuntimeConfig();
 const url = config.public.url;
-const message = ref("");
 
 definePageMeta({
   middleware: ["auth"],
@@ -45,39 +42,10 @@ useHead({
 if (user.value && store != undefined) {
   const userCreated = ref(user.value.id);
 
-  const fetchDatzan = async () => {
-    try {
-      let response = await $fetch(
-        `${url}/items/location?filter={"user_created":"${userCreated.value}"}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token.value}`,
-          },
-        }
-      );
+  const { message, messageFunction } = messageLogin();
+  const { locations } = fetchLocations(url);
 
-      locations.value = response.data;
-      store.locations = locations.value;
-    } catch (error) {
-      if (error.status == 401) {
-        alert("You are not authorized or authorization timed out");
-
-        await store.logOut();
-      }
-    }
-  };
-
-  const messageLogin = () => {
-    if (useRoute().query.message !== "login") return;
-    store.showToast();
-
-    message.value = "You are logged in";
-  };
-
-  onMounted(() => {
-    fetchDatzan();
-    messageLogin();
-  });
+  onMounted(messageFunction);
 }
 </script>
 <style>
