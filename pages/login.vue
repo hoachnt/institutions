@@ -38,8 +38,6 @@
 <script setup lang="ts">
 const { login } = useDirectusAuth();
 
-console.log(useRoute().name)
-
 definePageMeta({
   middleware: ["authenticated"],
 });

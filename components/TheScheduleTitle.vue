@@ -16,6 +16,7 @@
         class="text-4xl my-0"
       />
       <v-btn
+        color="white"
         @click="updateTitle"
         v-if="showInputTitle != false"
         class="inline-flex items-center w-auto h-auto px-3 py-3 mt-2 text-sm font-medium text-center text-black bg-white rounded-lg hover:bg-secondary ease-linear transition-all duration-150 select-none"

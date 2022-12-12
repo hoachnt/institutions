@@ -120,6 +120,7 @@ import { useScroll } from "@vueuse/core";
 
 const user = useDirectusUser();
 const { locale } = useI18n();
+console.log(locale.value);
 const store = usePiniaStore();
 const { logout } = useDirectusAuth();
 const token = useDirectusToken();
@@ -135,6 +136,11 @@ const logOut = async () => {
 
   await router.push("/login");
 };
+
+onUpdated(() => {
+  console.log(locale.value)
+  localStorage.setItem("localeStorageLang", locale.value)
+})
 </script>
 <style>
 a {
