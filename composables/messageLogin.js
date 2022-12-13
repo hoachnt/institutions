@@ -1,8 +1,6 @@
-import { usePiniaStore } from "@/stores/PiniaStore";
-
 export default function messageLogin() {
   const store = usePiniaStore();
-  const message = ref("");
+  const message = useState("message", () => '');
 
   const messageFunction = () => {
     if (useRoute().query.message !== "login") return;

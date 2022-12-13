@@ -5,8 +5,8 @@
         <h1 class="my-1 text-4xl">{{ $t("institutions") }}</h1>
         <transition name="fade">
           <TheLocationList
-            :locations="store.locations"
             v-if="locations != ''"
+            :locations="store.locations"
           />
         </transition>
         <transition name="fade">
@@ -31,6 +31,8 @@ const user = useDirectusUser();
 
 const config = useRuntimeConfig();
 const url = config.public.url;
+const token = useDirectusToken();
+const locations = ref([]);
 
 definePageMeta({
   middleware: ["auth"],
@@ -43,9 +45,33 @@ if (user.value && store != undefined) {
   const userCreated = ref(user.value.id);
 
   const { message, messageFunction } = messageLogin();
-  const { locations } = fetchLocations(url);
 
-  onMounted(messageFunction);
+  const fetching = async () => {
+    try {
+      let response = await $fetch(
+        `${url}/items/location?filter={"user_created":"${userCreated.value}"}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+          },
+        }
+      );
+
+      locations.value = response.data;
+      store.locations = locations.value;
+    } catch (error) {
+      if (error.status == 401) {
+        alert("You are not authorized or authorization timed out");
+
+        await store.logOut();
+      }
+    }
+  };
+
+  onMounted(() => {
+    messageFunction();
+    fetching();
+  });
 }
 </script>
 <style>

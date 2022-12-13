@@ -4,7 +4,7 @@
     <div class="drawer-content flex flex-col">
       <!-- Navbar -->
       <div
-        class="w-full navbar bg-base-100 flex justify-between sticky top-0 z-10"
+        class="w-full navbar bg-base-100/80 flex justify-between sticky top-0 z-10 backdrop-blur-lg"
       >
         <div class="flex-none lg:hidden">
           <label for="my-drawer-3" class="btn btn-square btn-ghost">
