@@ -26,6 +26,7 @@
     "@nuxtjs/i18n": "^8.0.0-beta.4",
     "@nuxtjs/proxy": "^2.1.0",
     "@pinia/nuxt": "^0.4.3",
+    "cookie-universal-nuxt": "^2.2.2",
     "daisyui": "^2.41.0",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.25",

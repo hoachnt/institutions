@@ -28,7 +28,7 @@
       <!-- Dropdown menu -->
       <div
         id="dropdown"
-        class="z-0 text-base list-non divide-y divide-gray-100 rounded-lg shadow w-44 bg-neutral absolute -right-5 top-12"
+        class="z-0 text-base list-non divide-y divide-gray-100 rounded-lg shadow w-44 bg-neutral absolute -right-5 top-12 bg-base-100/80 backdrop-blur-lg"
         v-if="showMenu"
       >
         <ul class="py-1" aria-labelledby="dropdownButton">
@@ -53,7 +53,7 @@
             >
             <teleport to="body">
               <input type="checkbox" id="my-modal" class="modal-toggle" />
-              <div class="modal modal-bottom sm:modal-middle">
+              <div class="modal modal-bottom sm:modal-middle bg-base-100/80 backdrop-blur-lg">
                 <div class="modal-box">
                   <label
                     for="my-modal"
@@ -138,7 +138,7 @@
         variant="outlined"
         color="white"
         @click="
-          $router.push({ name: 'events', query: { location: location.id } })
+          $router.push({ name: `events`, query: { location: location.id } })
         "
         class="inline-flex items-center px-4 w-auto h-auto py-3 bg-none text-sm font-medium text-center text-white rounded-xl hover:bg-primary ease-linear transition-all duration-150 mx-2 select-none"
       >

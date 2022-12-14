@@ -46,7 +46,7 @@
     </div>
     <div class="drawer-side">
       <label for="my-drawer-3" class="drawer-overlay"></label>
-      <ul class="sidebar menu w-80">
+      <ul class="sidebar menu w-80 backdrop-blur-lg">
         <!-- Sidebar content here -->
         <!-- <UIUserInfo /> -->
         <!-- <li v-if="token" @click="$router.push('/locations/new')">
@@ -120,7 +120,6 @@ import { useScroll } from "@vueuse/core";
 
 const user = useDirectusUser();
 const { locale } = useI18n();
-console.log(locale.value);
 const store = usePiniaStore();
 const { logout } = useDirectusAuth();
 const token = useDirectusToken();
@@ -130,6 +129,7 @@ const languages = [
   { language: "Рускиий", abbr: "ru" },
   { language: "Tiếng Việt", abbr: "vn" },
 ];
+const localeStorageLang = localStorage.getItem('localeStorageLang')
 
 const logOut = async () => {
   await logout();
@@ -138,8 +138,9 @@ const logOut = async () => {
 };
 
 onUpdated(() => {
-  console.log(locale.value)
-  localStorage.setItem("localeStorageLang", locale.value)
+  const chosenLang = useCookie('chosenLang')
+  
+  chosenLang.value = locale.value
 })
 </script>
 <style>
@@ -148,7 +149,7 @@ a {
 }
 .sidebar {
   padding: 65px 15px !important;
-  background: rgb(13, 13, 13);
+  background: rgba(14, 14, 14, 0.8);
 }
 .add-btn {
   margin: 10px 0 !important;

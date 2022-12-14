@@ -1,24 +1,26 @@
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 
-import { en } from './locales/en'
-import { ru } from './locales/ru'
-import { vn } from './locales/vn'
+import { en } from "./locales/en";
+import { ru } from "./locales/ru";
+import { vn } from "./locales/vn";
+import app from "./middleware/cookies"
+
+const defaultLanguage = "en";
 
 export default defineNuxtConfig({
   app: {
     pageTransition: { name: "page", mode: "out-in" },
     head: {
-      title: 'Institution',
+      title: "Institution",
       meta: [
-        { charset: 'utf-8' },
+        { charset: "utf-8" },
         {
-          hid: 'viewport',
-          name: 'viewport',
-          content:
-            'width=device-width, initial-scale=1, maximum-scale=1.0'
-        }
-      ]
-    }
+          hid: "viewport",
+          name: "viewport",
+          content: "width=device-width, initial-scale=1, maximum-scale=1.0",
+        },
+      ],
+    },
   },
   publicRuntimeConfig: {
     url: process.env.VITE_ENDPOINT,
@@ -28,8 +30,11 @@ export default defineNuxtConfig({
     dirs: ["stores"],
   },
   ssr: true,
+  target: "server",
   modules: [
     "nuxt-directus",
+    "cookie-universal-nuxt",
+    ["cookie-universal-nuxt", { alias: "cookiz" }],
     [
       "@pinia/nuxt",
       {
@@ -43,12 +48,17 @@ export default defineNuxtConfig({
     ],
     "@nuxtjs/tailwindcss",
     "@nuxtjs/i18n",
-    '@vueuse/nuxt',
+    "@vueuse/nuxt",
   ],
   i18n: {
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: "i18n_redirected",
+      redirectOn: "root",
+    },
     vueI18n: {
       legacy: false,
-      locale: "en",
+      locale: defaultLanguage,
       messages: {
         en,
         ru,
@@ -63,7 +73,7 @@ export default defineNuxtConfig({
   css: [
     "~/assets/css/main.css",
     "@fortawesome/fontawesome-svg-core/styles.css",
-    'vuetify/lib/styles/main.sass',
+    "vuetify/lib/styles/main.sass",
   ],
   postcss: {
     plugins: {
@@ -77,12 +87,12 @@ export default defineNuxtConfig({
       "@fortawesome/free-solid-svg-icons",
       "@fortawesome/free-regular-svg-icons",
       "@fortawesome/free-brands-svg-icons",
-      "vuetify"
+      "vuetify",
     ],
   },
   vite: {
     define: {
-      'process.env.DEBUG': false,
+      "process.env.DEBUG": false,
     },
   },
 });

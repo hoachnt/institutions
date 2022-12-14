@@ -26,7 +26,7 @@
       <!-- Dropdown menu -->
       <div
         id="dropdown"
-        class="text-base list-non divide-y divide-gray-100 rounded-lg shadow w-44 bg-base-100 absolute -right-5 top-11"
+        class="text-base list-non divide-y divide-gray-100 rounded-lg shadow w-44 bg-base-100 absolute -right-5 top-11 bg-base-100/80 backdrop-blur-lg"
         v-if="showMenu"
       >
         <ul class="py-1" aria-labelledby="dropdownButton">
@@ -45,7 +45,7 @@
             >
             <teleport to="body">
               <input type="checkbox" id="my-modal" class="modal-toggle" />
-              <div class="modal modal-bottom sm:modal-middle">
+              <div class="modal modal-bottom sm:modal-middle bg-base-100/50 backdrop-blur-lg">
                 <div class="modal-box relative">
                   <label
                     for="my-modal"
