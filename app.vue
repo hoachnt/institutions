@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-base-100" data-theme="lofi">
+  <div class="min-h-screen bg-base-100">
     <ClientOnly>
       <template #default>
         <transition name="blur">

@@ -25,13 +25,9 @@
 </template>
 <script setup>
 import { usePiniaStore } from "@/stores/PiniaStore";
-import app from "@/middleware/cookies"
-
-console.log(app)
 
 const store = usePiniaStore();
 const user = useDirectusUser();
-
 const config = useRuntimeConfig();
 const url = config.public.url;
 const token = useDirectusToken();

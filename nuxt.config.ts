@@ -20,6 +20,9 @@ export default defineNuxtConfig({
           content: "width=device-width, initial-scale=1, maximum-scale=1.0",
         },
       ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      ]
     },
   },
   publicRuntimeConfig: {

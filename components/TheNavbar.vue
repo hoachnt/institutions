@@ -1,10 +1,21 @@
 <template>
   <div class="drawer drawer-mobile">
     <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content flex flex-col">
+    <div class="drawer-content flex flex-col" id="scroll-target">
       <!-- Navbar -->
       <div
-        class="w-full navbar bg-base-100/80 flex justify-between sticky top-0 z-10 backdrop-blur-lg"
+        class="
+          w-full
+          navbar
+          bg-base-100/80
+          flex
+          justify-between
+          sticky
+          top-0
+          z-10
+          backdrop-blur-lg
+        "
+        :class="{ scroll: isActive }"
       >
         <div class="flex-none lg:hidden">
           <label for="my-drawer-3" class="btn btn-square btn-ghost">
@@ -39,7 +50,7 @@
         </div>
       </div>
       <!-- Page content here -->
-      <main>
+      <main v-scroll:#scroll-target="onScroll">
         <NuxtLoadingIndicator />
         <NuxtPage class="mt-3" />
       </main>
@@ -124,24 +135,40 @@ const store = usePiniaStore();
 const { logout } = useDirectusAuth();
 const token = useDirectusToken();
 const router = useRouter();
+const isActive = ref(false);
+const nowPostion = ref(0);
 const languages = [
   { language: "English", abbr: "en" },
   { language: "Рускиий", abbr: "ru" },
   { language: "Tiếng Việt", abbr: "vn" },
 ];
-const localeStorageLang = localStorage.getItem('localeStorageLang')
+const offsetTop = ref(0);
+const localeStorageLang = localStorage.getItem("localeStorageLang");
 
 const logOut = async () => {
   await logout();
 
   await router.push("/login");
 };
+function onScroll(e) {
+  offsetTop.value = e.target.scrollTop;
+
+  setTimeout(() => {
+    nowPostion.value = offsetTop.value;
+  }, 500);
+
+  if (offsetTop.value >= nowPostion.value) {
+    isActive.value = true;
+  } else {
+    isActive.value = false;
+  }
+}
 
 onUpdated(() => {
-  const chosenLang = useCookie('chosenLang')
-  
-  chosenLang.value = locale.value
-})
+  const chosenLang = useCookie("chosenLang");
+
+  chosenLang.value = locale.value;
+});
 </script>
 <style>
 a {
@@ -162,5 +189,11 @@ select {
 }
 .footer {
   flex: 0 0 auto;
+}
+.navbar {
+  transition: .6s cubic-bezier(.71,.29,.4,.8);
+}
+.navbar.scroll {
+  transform: translateY(-100%);
 }
 </style>
