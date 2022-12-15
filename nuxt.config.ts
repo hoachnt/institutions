@@ -3,7 +3,6 @@
 import { en } from "./locales/en";
 import { ru } from "./locales/ru";
 import { vn } from "./locales/vn";
-import app from "./middleware/cookies"
 
 const defaultLanguage = "en";
 
@@ -20,9 +19,7 @@ export default defineNuxtConfig({
           content: "width=device-width, initial-scale=1, maximum-scale=1.0",
         },
       ],
-      link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-      ]
+      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
     },
   },
   publicRuntimeConfig: {
@@ -52,6 +49,7 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@nuxtjs/i18n",
     "@vueuse/nuxt",
+    '@kevinmarrec/nuxt-pwa',
   ],
   i18n: {
     detectBrowserLanguage: {
@@ -67,6 +65,13 @@ export default defineNuxtConfig({
         ru,
         vn,
       },
+    },
+  },
+  pwa: {
+    manifest: {
+      name: "Smart Institutions",
+      short_name: "Institutions",
+      lang: defaultLanguage,
     },
   },
   directus: {

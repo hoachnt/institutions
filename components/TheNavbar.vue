@@ -35,7 +35,7 @@
           </label>
         </div>
         <div class="px-2 mx-2 cursor-pointer" @click="$router.push('/')">
-          <a class="text-2xl uppercase select-none"> Indigo </a>
+          <a class="text-2xl uppercase select-none"> Institutions </a>
         </div>
         <div v-if="token" @click="$router.push('/locations/new')" class="block">
           <v-btn class="btn rounded-xl px-6 mx-2 bg-white" color="white">
@@ -155,7 +155,7 @@ function onScroll(e) {
 
   setTimeout(() => {
     nowPostion.value = offsetTop.value;
-  }, 500);
+  }, 100);
 
   if (offsetTop.value >= nowPostion.value) {
     isActive.value = true;
@@ -191,7 +191,7 @@ select {
   flex: 0 0 auto;
 }
 .navbar {
-  transition: .6s cubic-bezier(.71,.29,.4,.8);
+  transition: .3s cubic-bezier(.71,.29,.4,.8);
 }
 .navbar.scroll {
   transform: translateY(-100%);

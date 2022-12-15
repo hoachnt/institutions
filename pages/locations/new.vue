@@ -72,24 +72,13 @@
                 class="block mb-1 mt-3 text-lg font-medium text-white"
                 >{{ $t("description") }}</label
               >
-              <textarea
+              <v-textarea
+                label="Write your description here"
+                variant="outlined"
                 v-model="location.description"
-                id="message"
-                rows="4"
-                class="
-                  block
-                  p-2.5
-                  w-full
-                  text-sm
-                  bg-neutral
-                  rounded-lg
-                  placeholder-gray-400
-                  text-white
-                  focus:ring-primary focus:border-primary
-                  my-1
-                "
-                placeholder="Write your description here..."
-              ></textarea>
+                placeholder="Type..."
+                rows="8"
+              ></v-textarea>
               <UIButton
                 block
                 @click="createDatzan"

@@ -14,22 +14,7 @@
               <h1 class="text-4xl mb-2">{{ $t("editHeader") }}</h1>
               <select
                 id="countries"
-                class="
-                  border border-gray-300
-                  text-gray-900 text-sm
-                  rounded-md
-                  focus:ring-primary focus:border-primary
-                  block
-                  w-full
-                  p-2.5
-                  bg-base-100
-                  my-1
-                  dark:border-gray-600
-                  dark:placeholder-base-100
-                  dark:text-white
-                  dark:focus:ring-primary
-                  dark:focus:border-primary
-                "
+                class="border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-primary focus:border-primary block w-full p-2.5 bg-base-100 my-1 dark:border-gray-600 dark:placeholder-base-100 dark:text-white dark:focus:ring-primary dark:focus:border-primary"
                 v-model="location.type"
               >
                 <option disabled value="">{{ $t("selectType") }}</option>
@@ -42,23 +27,7 @@
               <UIInput
                 type="file"
                 id="file"
-                class="
-                  block
-                  w-full
-                  py-1
-                  text-sm text-slate-500
-                  file:mr-4
-                  file:py-2
-                  file:px-4
-                  file:rounded-full
-                  file:border-0
-                  file:text-sm
-                  file:font-semibold
-                  file:bg-violet-50
-                  file:text-secondary
-                  hover:file:bg-secondary hover:file:text-white
-                  cursor-pointer
-                "
+                class="block w-full py-1 text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-secondary hover:file:bg-secondary hover:file:text-white cursor-pointer"
                 accept=".jpg, .jpeg, .png, .webp"
                 v-model="location.img"
               />
@@ -71,35 +40,16 @@
               </div>
               <label
                 for="message"
-                class="
-                  block
-                  mb-1
-                  mt-3
-                  text-2xl
-                  font-medium
-                  text-gray-900
-                  dark:text-white
-                "
+                class="block mb-1 mt-3 text-2xl font-medium text-gray-900 dark:text-white"
                 >{{ $t("description") }}</label
               >
-              <textarea
+              <v-textarea
+                label="Write your description here"
+                variant="outlined"
                 v-model="location.description"
-                id="message"
-                rows="10"
-                class="
-                  block
-                  p-2.5
-                  w-full
-                  text-sm
-                  bg-neutral
-                  rounded-lg
-                  placeholder-gray-400
-                  text-white
-                  focus:ring-primary focus:border-primary
-                  my-1
-                "
-                placeholder="Write your description here..."
-              ></textarea>
+                placeholder="Type..."
+                rows="8"
+              ></v-textarea>
               <UIButton
                 block
                 @click="updateLocation"

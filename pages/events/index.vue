@@ -55,7 +55,7 @@
 import { usePiniaStore } from "@/stores/PiniaStore";
 
 useHead({
-  title: "Schedule's",
+  title: "Schedules",
 });
 
 const token = useDirectusToken();
