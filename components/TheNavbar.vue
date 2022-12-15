@@ -155,7 +155,7 @@ function onScroll(e) {
 
   setTimeout(() => {
     nowPostion.value = offsetTop.value;
-  }, 100);
+  }, 500);
 
   if (offsetTop.value >= nowPostion.value) {
     isActive.value = true;
