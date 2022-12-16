@@ -36,6 +36,7 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
     const totalIamges = ref();
     const LAST_PAGE = ref();
     const LIMIT_IMAGES = 100;
+    const message = ref("");
 
     const fetchDatzan = async () => {
       try {
@@ -140,6 +141,7 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
       LAST_PAGE,
       LIMIT_IMAGES,
       fetchTotalImages,
+      message
     };
   }
   return {

@@ -11,7 +11,7 @@
         </transition>
         <transition name="fade">
           <UIToast v-if="store.toastVisible == true"
-            >Access. {{ message }}</UIToast
+            >Access. {{ store.message }}</UIToast
           >
         </transition>
         <ClientOnly>
@@ -24,8 +24,6 @@
   </main>
 </template>
 <script setup>
-import { usePiniaStore } from "@/stores/PiniaStore";
-
 const store = usePiniaStore();
 const user = useDirectusUser();
 const config = useRuntimeConfig();
@@ -42,8 +40,6 @@ useHead({
 
 if (user.value && store != undefined) {
   const userCreated = ref(user.value.id);
-
-  const { message, messageFunction } = messageLogin();
 
   const fetching = async () => {
     try {
@@ -66,10 +62,11 @@ if (user.value && store != undefined) {
       }
     }
   };
+  const { messageFunction } = messageLogin();
 
   onMounted(() => {
-    messageFunction();
     fetching();
+    messageFunction();
   });
 }
 </script>

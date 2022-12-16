@@ -49,7 +49,7 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@nuxtjs/i18n",
     "@vueuse/nuxt",
-    '@kevinmarrec/nuxt-pwa',
+    "@kevinmarrec/nuxt-pwa",
   ],
   i18n: {
     detectBrowserLanguage: {

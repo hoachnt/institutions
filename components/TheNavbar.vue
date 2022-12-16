@@ -155,7 +155,7 @@ function onScroll(e) {
 
   setTimeout(() => {
     nowPostion.value = offsetTop.value;
-  }, 500);
+  }, 10);
 
   if (offsetTop.value >= nowPostion.value) {
     isActive.value = true;
@@ -191,7 +191,7 @@ select {
   flex: 0 0 auto;
 }
 .navbar {
-  transition: .3s cubic-bezier(.71,.29,.4,.8);
+  transition: .2s cubic-bezier(.71,.29,.4,.8);
 }
 .navbar.scroll {
   transform: translateY(-100%);
