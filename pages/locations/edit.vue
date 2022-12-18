@@ -92,10 +92,13 @@
               <UIButton
                 block
                 @click="updateLocation"
+                :disabled="isDisabled"
+                v-if="!isDisabled"
                 class="min-w-full text-white"
               >
                 {{ $t("edit") }} {{ location.name }}
               </UIButton>
+              <UILoadingButton v-else />
             </form>
           </transition>
         </template>
@@ -117,6 +120,7 @@ const totalIamges = ref();
 const LAST_PAGE = ref();
 const LIMIT_IMAGES = 100;
 const { messageFunction } = messageLogin();
+const isDisabled = ref(false);
 
 const fetchInstitution = async () => {
   try {
@@ -134,6 +138,8 @@ const fetchTotalImages = async () => {
   );
 };
 const updateLocation = async () => {
+  isDisabled.value = true;
+
   const file: any = document.getElementById("file");
 
   if (!!file.files[0]) {

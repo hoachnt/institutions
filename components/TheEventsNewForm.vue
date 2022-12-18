@@ -71,8 +71,11 @@
         <UIButton
           @click="createEvent"
           class="min-w-full text-white"
+          :disabled="isDisabled"
+          v-if="!isDisabled"
           >{{ $t("create") }}</UIButton
         >
+        <UILoadingButton v-else />
       </form>
     </div>
   </main>
@@ -87,7 +90,6 @@ useHead({
 const token = useDirectusToken();
 const store = usePiniaStore();
 const config = useRuntimeConfig();
-
 const url = config.public.url;
 const showInputTitle = ref(false);
 const dazanId = ref("");
@@ -99,10 +101,13 @@ let newEvent = reactive({
   location_id: useRoute().query.location,
   ScheduleTitleId: useRoute().query.scheduleTitleId,
 });
+const isDisabled = ref(false);
 
 const createEvent = async () => {
   try {
     if (newEvent.datetime != "" && newEvent.time != "") {
+      isDisabled.value = true;
+
       await $fetch(`${url}/items/events`, {
         method: "POST",
         headers: {

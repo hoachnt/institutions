@@ -83,9 +83,12 @@
                 block
                 @click="createDatzan"
                 class="min-w-full text-white"
+                :disabled="isDisabled"
+                v-if="!isDisabled"
               >
                 Create {{ location.type }}
               </UIButton>
+              <UILoadingButton v-else />
             </form>
           </transition>
         </template>
@@ -103,6 +106,7 @@ const { getItems } = useDirectusItems();
 const store = usePiniaStore();
 const snackbar = ref(false);
 const LIMIT_IMAGES = store.LIMIT_IMAGES;
+const isDisabled = ref(false);
 
 definePageMeta({
   middleware: ["auth"],
@@ -139,6 +143,8 @@ const response = async () => {
   await fetchInstitution();
 
   if (locations.value.length >= MAXLOCATIONS) {
+    isDisabled.value = false;
+
     showSnackbar();
   } else {
     await $fetch(`${store.url}/files?sort=uploaded_on`, {
@@ -180,6 +186,8 @@ const createDatzan = async () => {
       location.address !== "" &&
       location.type !== ""
     ) {
+      isDisabled.value = true;
+
       pushHotelImage();
 
       await response();
