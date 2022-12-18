@@ -1,6 +1,6 @@
 <template>
   <div class="toast">
-    <div class="alert bg-neutral">
+    <div class="alert bg-white">
       <div>
         <slot></slot>
       </div>

@@ -148,7 +148,7 @@ const localeStorageLang = localStorage.getItem("localeStorageLang");
 const logOut = async () => {
   await logout();
 
-  await router.push("/login");
+  await router.push({name: "login", query: {message: "logout"}});
 };
 function onScroll(e) {
   offsetTop.value = e.target.scrollTop;

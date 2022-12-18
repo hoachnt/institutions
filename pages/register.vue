@@ -77,7 +77,7 @@ const submit = async (): Promise<void> => {
         password: data.password,
       });
 
-      await router.push("/locations/new");
+      await router.push({ name: "locations-new", query: { message: "register" } });
 
       await document.location.reload(true);
     }

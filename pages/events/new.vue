@@ -3,6 +3,9 @@
     <TheEventsNewForm />
   </main>
 </template>
-<script setup>
+<script setup lang="ts">
+const { messageFunction } = messageLogin();
+
+onMounted(messageFunction)
 </script>
 <style lang=""></style>

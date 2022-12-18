@@ -1,23 +1,29 @@
 export const usePiniaStore = defineStore("PiniaStore", () => {
   const user = useDirectusUser();
   const { logout } = useDirectusAuth();
-
   const router = useRouter();
-
-  const logOut = async () => {
-    await logout();
-
-    await router.push("/login");
-
-    await document.location.reload(true);
-  };
-
   const loading = ref(false);
+  const toastVisible = ref(false);
+  const message = ref("");
 
   const nuxtApp = useNuxtApp();
   nuxtApp.hook("page:finish", () => {
     loading.value = true;
   });
+
+  function showToast() {
+    let timer = setTimeout(function tick() {
+      toastVisible.value = true;
+
+      timer = setTimeout(tick, 2000); // (*)
+    }, 0);
+
+    setTimeout(() => {
+      clearTimeout(timer);
+
+      toastVisible.value = false;
+    }, 4000);
+  }
 
   if (user.value) {
     const authenticated = ref(false);
@@ -31,31 +37,15 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
     const userEmail = ref(user.value.email);
     const removeMessage = ref("This action cannot be undone");
     const removeDatzanError = ref(false);
-    const toastVisible = ref(false);
     const scheduleTitleId = ref("");
     const totalIamges = ref();
     const LAST_PAGE = ref();
     const LIMIT_IMAGES = 100;
-    const message = ref("");
 
-    const fetchDatzan = async () => {
-      try {
-        let response = await $fetch(
-          `${url}/items/location?filter={"user_created":"${userCreated.value}"}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token.value}`,
-            },
-          }
-        );
+    const logOut = async () => {
+      await logout();
 
-        locations.value = response.data;
-      } catch (error) {
-        if (error.status == 401) {
-          alert("You are not authorized or authorization timed out");
-        }
-        alert(error);
-      }
+      await router.push({ name: "login", query: { message: "logout" } });
     };
     const removeDatzan = async (id) => {
       try {
@@ -92,19 +82,6 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
         removeDatzanError.value = false;
       }, 4000);
     }
-    function showToast() {
-      let timer = setTimeout(function tick() {
-        toastVisible.value = true;
-
-        timer = setTimeout(tick, 2000); // (*)
-      }, 0);
-
-      setTimeout(() => {
-        clearTimeout(timer);
-
-        toastVisible.value = false;
-      }, 4000);
-    }
     const fetchTotalImages = async () => {
       totalIamges.value = await $fetch(`${url}/files?meta=total_count`);
 
@@ -115,16 +92,10 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
       return LAST_PAGE.value;
     };
 
-    onMounted(() => {
-      fetchDatzan();
-      fetchTotalImages();
-    });
-
     return {
       authenticated,
       userCreated,
       token,
-      fetchDatzan,
       locations,
       url,
       removeDatzan,
@@ -135,16 +106,22 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
       scheduleTitleId,
       user,
       loading,
-      logOut,
-      toastVisible,
-      showToast,
       LAST_PAGE,
       LIMIT_IMAGES,
       fetchTotalImages,
-      message
+      logOut,
+      showToast,
+      message: skipHydrate(message),
+      toastVisible: skipHydrate(toastVisible),
     };
   }
   return {
-    loading,
+    loading: skipHydrate(loading),
+    message: skipHydrate(message),
+    showToast,
+    toastVisible: skipHydrate(toastVisible),
   };
 });
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(usePiniaStore, import.meta.hot));
+}

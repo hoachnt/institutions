@@ -33,14 +33,14 @@ export default defineNuxtConfig({
   target: "server",
   modules: [
     "nuxt-directus",
-    "cookie-universal-nuxt",
-    ["cookie-universal-nuxt", { alias: "cookiz" }],
     [
       "@pinia/nuxt",
       {
         autoImports: [
           // automatically imports `defineStore`
           "defineStore", // import { defineStore } from 'pinia'
+          'acceptHMRUpdate',
+          'skipHydrate',
           // automatically imports `defineStore` as `definePiniaStore`
           ["defineStore", "definePiniaStore"], // import { defineStore as definePiniaStore } from 'pinia'
         ],

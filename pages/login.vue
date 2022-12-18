@@ -46,7 +46,7 @@ interface IUser {
   email: string;
   password: string;
 }
-
+const { messageFunction } = messageLogin();
 const router = useRouter();
 const booleanTrue: boolean = true;
 const data: IUser = reactive({
@@ -63,7 +63,6 @@ const submit = async () => {
     }
 
     await router.push({ name: "index", query: { message: "login" } });
-
     await document.location.reload(booleanTrue);
   } catch (e: any) {
     if (e.status == 401) {
@@ -72,6 +71,8 @@ const submit = async () => {
     console.log(e);
   }
 };
+
+onMounted(messageFunction);
 </script>
 <style lang="">
 </style>

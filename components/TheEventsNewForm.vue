@@ -112,7 +112,7 @@ const createEvent = async () => {
       });
       await useRouter().push({
         name: "events",
-        query: { location: useRoute().query.location },
+        query: { location: useRoute().query.location, message: "create_event" },
       });
     }
   } catch (error) {

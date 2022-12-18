@@ -5,6 +5,11 @@
         <transition name="blur">
           <TheNavbar />
         </transition>
+        <transition name="fade">
+          <UIToast v-if="store.toastVisible == true"
+            >Success. {{ store.message }}</UIToast
+          >
+        </transition>
       </template>
       <template fallback-tag="button" #fallback>
         <transition name="blur">
@@ -27,6 +32,13 @@
   </div>
 </template>
 <script setup lang="ts">
+const store = usePiniaStore();
+
+const { messageFunction } = messageLogin();
+
+onMounted(() => {
+  messageFunction();
+});
 </script>
 <style>
 .page-enter-active,

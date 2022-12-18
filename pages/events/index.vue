@@ -61,7 +61,6 @@ useHead({
 const token = useDirectusToken();
 const store = usePiniaStore();
 const config = useRuntimeConfig();
-
 const url = config.public.url;
 const addTitle = ref(false);
 const schedules = ref([]);
@@ -71,6 +70,7 @@ const scheduleTitle = reactive({
 });
 const scheduleTitleId = useRoute().params.id;
 const scheduleTitles = ref("");
+const { messageFunction } = messageLogin();
 
 const fetchScheduleTitles = async () => {
   try {
@@ -114,6 +114,7 @@ const addNewTitle = async () => {
         query: {
           location: useRoute().query.location,
           scheduleTitleId: response.data.id,
+          message: "create_schedule"
         },
       });
     });
@@ -121,6 +122,7 @@ const addNewTitle = async () => {
 };
 onMounted(() => {
   fetchScheduleTitles();
+  messageFunction();
 });
 </script>
 <style>
