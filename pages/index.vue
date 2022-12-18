@@ -8,8 +8,12 @@
             v-if="store.locations != ''"
             :locations="store.locations"
           />
-          <div v-else class="text-xl text-gray-400 btn min-w-full my-3">
-            {{ $t("dontHaveSchedules") }}
+          <div
+            v-else
+            class="text-xl text-gray-400 btn min-w-full my-3"
+            @click="$router.push('/locations/new')"
+          >
+            {{ $t("dontHaveInstitutions") }}
           </div>
         </transition>
       </div>

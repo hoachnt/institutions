@@ -21,7 +21,7 @@ export const vn: object = {
   church: "Nhà thờ",
   temple: "Chùa",
   mosque: "Nhà thờ hồi giáo",
-  dontHaveSchedules: "Bạn không có lịch trình",
+  dontHaveSchedules: "Bạn chưa có lịch trình",
   addSchedule: "Thêm lịch trình",
   emptySchedule: "Lịch trình trống",
   createANewEvent: "Tạo sự kiện mới",
@@ -37,4 +37,5 @@ export const vn: object = {
   edit: "Chỉnh sửa",
   address: "Địa chỉ",
   email: "E-mail",
+  dontHaveInstitutions: "Bạn chưa có tổ chức",
 }

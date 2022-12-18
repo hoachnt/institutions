@@ -37,4 +37,5 @@ export const en: object = {
   edit: "Edit",
   address: "Address",
   email: "E-mail",
+  dontHaveInstitutions: "You don't have institutions",
 };

@@ -37,4 +37,5 @@ export const ru: object = {
   edit: "Редактировать",
   address: "Адрес",
   email: "Элекстронная почта",
+  dontHaveInstitutions: "У вас нет учреждений",
 }
