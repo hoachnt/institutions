@@ -12,7 +12,7 @@
           justify-between
           sticky
           top-0
-          z-10
+          z-20
           backdrop-blur-lg
         "
         :class="{ scroll: isActive }"
