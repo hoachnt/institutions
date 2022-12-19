@@ -1,23 +1,30 @@
 <template>
   <main>
-    <transition name="fade">
-      <div class="m-auto px-4 max-w-3xl">
-        <h1 class="my-1 text-4xl">{{ $t("institutions") }}</h1>
+    <ClientOnly>
+      <template #default>
         <transition name="fade">
-          <TheLocationList
-            v-if="store.locations != ''"
-            :locations="store.locations"
-          />
-          <div
-            v-else
-            class="text-xl text-gray-400 btn min-w-full my-3"
-            @click="$router.push('/locations/new')"
-          >
-            {{ $t("dontHaveInstitutions") }}
+          <div class="m-auto px-4 max-w-3xl">
+            <h1 class="my-1 text-4xl">{{ $t("institutions") }}</h1>
+            <transition name="fade">
+              <TheLocationList
+                v-if="store.locations != ''"
+                :locations="store.locations"
+              />
+              <div
+                v-else
+                class="text-xl text-gray-400 btn min-w-full my-3"
+                @click="$router.push('/locations/new')"
+              >
+                {{ $t("dontHaveInstitutions") }}
+              </div>
+            </transition>
           </div>
         </transition>
-      </div>
-    </transition>
+      </template>
+      <template #fallback>
+        <UILoadingButton />
+      </template>
+    </ClientOnly>
   </main>
 </template>
 <script setup>

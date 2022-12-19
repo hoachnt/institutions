@@ -4,12 +4,17 @@
       <div class="text-sm breadcrumbs mb-4">
         <ul>
           <li>
-            <a @click="$router.push(`/locations/${useRoute().query.location}`)"
-              >Location</a
-            >
+            <v-chip rounded="pill" size="large">
+              <a
+                @click="$router.push(`/locations/${useRoute().query.location}`)"
+                >Location</a
+              >
+            </v-chip>
           </li>
           <li>
-            <a>Schedules</a>
+            <v-chip rounded="pill" size="large">
+              <a>Schedules</a>
+            </v-chip>
           </li>
         </ul>
       </div>
@@ -114,7 +119,7 @@ const addNewTitle = async () => {
         query: {
           location: useRoute().query.location,
           scheduleTitleId: response.data.id,
-          message: "create_schedule"
+          message: "create_schedule",
         },
       });
     });

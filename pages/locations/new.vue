@@ -3,8 +3,16 @@
     <div class="container m-auto px-4">
       <div class="text-sm breadcrumbs mb-4">
         <ul>
-          <li><a @click="$router.push('/')">Home</a></li>
-          <li><a>New</a></li>
+          <li>
+            <v-chip rounded="pill" size="large">
+              <a @click="$router.push('/')">Home</a>
+            </v-chip>
+          </li>
+          <li>
+            <v-chip rounded="pill" size="large">
+              <a>New</a>
+            </v-chip>
+          </li>
         </ul>
       </div>
       <ClientOnly>

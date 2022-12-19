@@ -2,9 +2,15 @@
   <main class="container w-2/4 min-w-full sm:min-w-0 m-0 sm:m-auto px-3">
     <div class="text-sm breadcrumbs mb-4">
       <ul>
-        <li><a @click="$router.push('/')">Home</a></li>
         <li>
-          <a>{{ location.name }}</a>
+          <v-chip rounded="pill" size="large">
+            <a @click="$router.push('/')">Home</a>
+          </v-chip>
+        </li>
+        <li>
+          <v-chip rounded="pill" size="large">
+            <a>{{ location.name }}</a>
+          </v-chip>
         </li>
       </ul>
     </div>

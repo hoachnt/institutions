@@ -4,17 +4,23 @@
       <div class="text-sm breadcrumbs mb-4">
         <ul>
           <li>
-            <a
-              @click="
-                $router.push({
-                  name: 'events',
-                  query: { location: useRoute().query.location },
-                })
-              "
-              >Schedules</a
-            >
+            <v-chip rounded="pill" size="large">
+              <a
+                @click="
+                  $router.push({
+                    name: 'events',
+                    query: { location: useRoute().query.location },
+                  })
+                "
+                >Schedules</a
+              >
+            </v-chip>
           </li>
-          <li><a>New</a></li>
+          <li>
+            <v-chip rounded="pill" size="large">
+              <a>New</a>
+            </v-chip>
+          </li>
         </ul>
       </div>
       <form @submit.prevent v-if="token">
