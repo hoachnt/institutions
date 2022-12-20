@@ -23,18 +23,16 @@
               <select
                 id="countries"
                 class="
-                  border border-gray-300
-                  text-sm
                   rounded-md
-                  focus:ring-primary focus:border-primary
                   block
                   w-full
                   p-2.5
                   bg-base-100
                   my-1
-                  dark:border-gray-600 dark:placeholder-base-100
-                  text-white
-                  dark:focus:ring-primary dark:focus:border-primary
+                  border border-primary
+                  placeholder-base-100
+                  text-primary
+                  focus:ring-primary focus:border-primary
                 "
                 v-model="location.type"
                 required
@@ -61,7 +59,7 @@
                   block
                   w-full
                   py-1
-                  text-sm text-slate-500
+                  text-sm text-white
                   file:mr-4
                   file:py-2
                   file:px-4
@@ -69,15 +67,15 @@
                   file:border-0
                   file:text-sm
                   file:font-semibold
-                  file:bg-violet-50
-                  file:text-secondary
-                  hover:file:bg-secondary hover:file:text-white
+                  file:bg-black
+                  file:text-white
+                  hover:file:bg-white hover:file:text-secondary
                   cursor-pointer
                 "
               />
               <label
                 for="message"
-                class="block mb-1 mt-3 text-lg font-medium text-white"
+                class="block mb-1 mt-3 text-2xl font-medium text-primary"
                 >{{ $t("description") }}</label
               >
               <v-textarea
@@ -88,9 +86,8 @@
                 rows="8"
               ></v-textarea>
               <UIButton
-                block
                 @click="createDatzan"
-                class="min-w-full text-white"
+                class="min-w-full"
                 :disabled="isDisabled"
                 v-if="!isDisabled"
               >

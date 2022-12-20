@@ -71,15 +71,15 @@
         </ul>
       </div>
     </div>
-    <div class="mb-2 text-2xl font-bold tracking-tight text-white">
+    <div class="mb-2 text-2xl font-bold tracking-tight text-content">
       {{ schedule.name }}
     </div>
-    <div class="mb-2 text-2xl font-bold tracking-tight text-white">
+    <div class="mb-2 text-2xl font-bold tracking-tight text-content">
       {{ new Date(schedule.datetime).getDate() }}/{{
         new Date(schedule.datetime).getMonth() + 1
       }}/{{ new Date(schedule.datetime).getFullYear() }}
     </div>
-    <div class="mb-2 text-2xl font-bold tracking-tight text-white">
+    <div class="mb-2 text-2xl font-bold tracking-tight text-content">
       {{ schedule.time }}
     </div>
     <div class="font-normal text-gray-400">{{ schedule.description }}</div>

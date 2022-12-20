@@ -44,8 +44,7 @@
                   text-2xl
                   font-bold
                   tracking-tight
-                  text-gray-900
-                  dark:text-white
+                  text-content
                 "
               >
                 {{ location.name }}
@@ -64,22 +63,6 @@
                     name: 'events',
                     query: { location: location.id },
                   })
-                "
-                class="
-                  inline-flex
-                  items-center
-                  px-3
-                  py-2
-                  text-sm
-                  font-medium
-                  text-center text-white
-                  bg-primary
-                  rounded-lg
-                  hover:bg-secondary
-                  focus:ring-4 focus:outline-none
-                  ease-linear
-                  transition-all
-                  duration-150
                 "
               >
                 {{ $t("schedules") }}

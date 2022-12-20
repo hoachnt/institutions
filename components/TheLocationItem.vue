@@ -39,7 +39,7 @@
                 query: { location: location.id },
               })
             "
-            class="block px-4 py-2 text-md hover:bg-base-100 cursor-pointer ease-linear transition-all duration-150 select-none"
+            class="block px-4 py-2 text-md hover:bg-base-100 rounded-lg cursor-pointer ease-linear transition-all duration-150 select-none"
           >
             <a>
               {{ $t("edit") }}
@@ -48,7 +48,7 @@
           <li>
             <label
               for="my-modal"
-              class="block px-4 py-2 text-md text-red-600 hover:bg-base-100 cursor-pointer ease-linear transition-all duration-150 select-none"
+              class="block px-4 py-2 text-md text-red-600 rounded-lg hover:bg-base-100 cursor-pointer ease-linear transition-all duration-150 select-none"
               >{{ $t("delete") }}</label
             >
             <teleport to="body">
@@ -60,7 +60,7 @@
                     class="btn btn-sm btn-circle absolute right-2 top-2"
                     >✕</label
                   >
-                  <h3 class="font-bold text-lg text-white mb-2">
+                  <h3 class="font-bold text-lg text-content mb-2">
                     {{ $t("questionBeforeDeletion") }}
                   </h3>
                   <div class="form-control min-w-full">
@@ -70,11 +70,11 @@
                     <UIInput
                       type="email"
                       placeholder="example@gmail.com"
-                      class="input input-bordered min-w-full text-white"
+                      class="input input-bordered min-w-full text-content"
                       v-model:value="store.email"
                     />
                   </div>
-                  <p class="py-4 text-white">
+                  <p class="py-4 text-content">
                     {{ $t("actionCannotBeUndone") }}
                   </p>
                   <div class="modal-action">
@@ -116,7 +116,7 @@
     </ClientOnly>
     <div class="p-5">
       <div>
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-primary">
           {{ location.name }}
         </h5>
       </div>
@@ -128,19 +128,17 @@
       </p>
       <v-btn
         @click="$router.push(`/locations/${location.id}`)"
-        color="white"
-        class="inline-flex items-center px-4 w-auto h-auto py-3 text-sm font-medium text-center text-black bg-white rounded-xl hover:bg-secondary ease-linear transition-all duration-150 select-none"
+        class="inline-flex items-center px-4 w-auto h-auto py-3 text-sm font-medium text-center text-white bg-black rounded-xl hover:bg-secondary ease-linear transition-all duration-150 select-none"
       >
         {{ $t("readMore") }}
       </v-btn>
 
       <v-btn
         variant="outlined"
-        color="white"
         @click="
           $router.push({ name: `events`, query: { location: location.id } })
         "
-        class="inline-flex items-center px-4 w-auto h-auto py-3 bg-none text-sm font-medium text-center text-white rounded-xl hover:bg-primary ease-linear transition-all duration-150 mx-2 select-none"
+        class="inline-flex items-center px-4 w-auto h-auto py-3 bg-none text-sm font-medium text-center text-black rounded-xl hover:bg-white ease-linear transition-all duration-150 mx-2 select-none"
       >
         {{ $t("schedules") }}
         <svg

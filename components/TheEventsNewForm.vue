@@ -28,7 +28,7 @@
         <div>
           <label
             for="name"
-            class="block mb-1 mt-3 text-lg font-medium text-white"
+            class="block mb-1 mt-3 text-lg font-medium text-content"
           >
             {{ $t("name") }}
           </label>
@@ -43,7 +43,7 @@
         <div>
           <label
             for="date"
-            class="block mb-1 mt-3 text-lg font-medium text-white"
+            class="block mb-1 mt-3 text-lg font-medium text-content"
           >
             {{ $t("date") }}
           </label>
@@ -57,7 +57,7 @@
         <div>
           <label
             for="time"
-            class="block mb-1 mt-3 text-lg font-medium dark:text-white"
+            class="block mb-1 mt-3 text-lg font-medium text-content"
           >
             {{ $t("time") }}
           </label>
@@ -105,7 +105,6 @@ let newEvent = reactive({
   description: "",
   name: "",
   location_id: useRoute().query.location,
-  ScheduleTitleId: useRoute().query.scheduleTitleId,
 });
 const isDisabled = ref(false);
 

@@ -4,7 +4,6 @@
       <template #default>
         <transition name="fade">
           <div class="m-auto px-4 max-w-3xl">
-            <h1 class="my-1 text-4xl">{{ $t("institutions") }}</h1>
             <transition name="fade">
               <TheLocationList
                 v-if="store.locations != ''"

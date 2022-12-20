@@ -2,6 +2,7 @@
   <button
     type="submit"
     class="
+      btn
       text-content
       border border-primary
       hover:bg-primary hover:text-white
@@ -12,8 +13,7 @@
       px-6
       py-3
       rounded-xl
-      outline-none
-      focus:outline-none
+      btn-outline
       mt-1
       mb-1
       ease-linear

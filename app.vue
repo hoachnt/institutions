@@ -61,7 +61,7 @@ onMounted(() => {
 }
 body {
   background: #000;
-  color: #fff;
+  color: #000;
 }
 
 /* Указываем box sizing */

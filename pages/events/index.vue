@@ -18,37 +18,39 @@
           </li>
         </ul>
       </div>
-      <UIInput
-        type="text"
-        placeholder="New Schedule..."
-        v-if="addTitle == true"
-        v-model:value="scheduleTitle.title"
-        required
-        minlength="1"
-      />
       <UIButton
-        @click="addTitle = true"
-        v-if="addTitle == false && token"
+        v-if="token"
+        @click="
+          $router.push({
+            name: 'events-new',
+            query: {
+              location: useRoute().query.location,
+              scheduleTitleId: scheduleTitle.id,
+            },
+          })
+        "
         class="min-w-full"
       >
         {{ $t("createANewSchedule") }}
       </UIButton>
-      <UIButton
-        @click="addNewTitle"
-        v-else-if="addTitle == true"
-        class="min-w-full"
-        >{{ $t("addSchedule") }}</UIButton
-      >
       <transition name="fade">
-        <TheScheduleTitles
-          :scheduleTitles="scheduleTitles"
-          v-if="scheduleTitles != ''"
-          @removeSchedule="removeSchedule"
+        <TheScheduleList
+          :schedules="schedules"
+          v-if="schedules != ''"
+          @removeEvent="removeEvent"
         />
         <div
           v-else-if="schedules == '' && token"
           class="text-xl text-gray-400 btn min-w-full my-3"
-          @click="addTitle = true"
+          @click="
+            $router.push({
+              name: 'events-new',
+              query: {
+                location: useRoute().query.location,
+                scheduleTitleId: scheduleTitle.id,
+              },
+            })
+          "
         >
           {{ $t("dontHaveSchedules") }}
         </div>
@@ -58,11 +60,20 @@
 </template>
 <script setup>
 import { usePiniaStore } from "@/stores/PiniaStore";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
+import "assets/fonts/PTSans-normal.js";
 
 useHead({
   title: "Schedules",
 });
 
+const user = useDirectusUser();
+const emit = defineEmits(["removeSchedule"]);
+const showInputTitle = ref(false);
+const visible = false;
+const title = ref("");
+const dialog = ref(false);
 const token = useDirectusToken();
 const store = usePiniaStore();
 const config = useRuntimeConfig();
@@ -77,57 +88,36 @@ const scheduleTitleId = useRoute().params.id;
 const scheduleTitles = ref("");
 const { messageFunction } = messageLogin();
 
-const fetchScheduleTitles = async () => {
+const fetchSchedule = async () => {
   try {
     let response = await $fetch(
-      `${url}/items/schedule_title?filter={ "location_id":"${
-        useRoute().query.location
-      }" }`
+      `${url}/items/events?filter={"location_id":"${useRoute().query.location}"}`
     );
 
-    scheduleTitles.value = response.data;
+    schedules.value = await response.data;
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 };
-const removeSchedule = async (id) => {
+const removeEvent = async (id) => {
   try {
-    await $fetch(`${url}/items/schedule_title/${id}`, {
+    let response = await $fetch(`${url}/items/events/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token.value}`,
       },
     });
-    await fetchScheduleTitles();
+
+    dialog.value = false;
+
+    await fetchSchedule();
   } catch (error) {
     console.log(error);
   }
 };
-const addNewTitle = async () => {
-  if (scheduleTitle.title != "") {
-    const response = await $fetch(`${url}/items/schedule_title`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token.value}`,
-      },
-      body: scheduleTitle,
-    }).then((response) => {
-      fetchScheduleTitles();
-
-      useRouter().push({
-        name: "events-new",
-        query: {
-          location: useRoute().query.location,
-          scheduleTitleId: response.data.id,
-          message: "create_schedule",
-        },
-      });
-    });
-  }
-};
 onMounted(() => {
-  fetchScheduleTitles();
   messageFunction();
+  fetchSchedule();
 });
 </script>
 <style>

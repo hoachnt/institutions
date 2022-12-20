@@ -18,7 +18,7 @@
               required
             />
             <UIButton class="min-w-full">{{ $t("login") }}</UIButton>
-            <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+            <div class="text-sm font-medium text-gray-500">
               Not registered?
               <a
                 @click="$router.push('/register')"

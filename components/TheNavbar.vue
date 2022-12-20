@@ -7,7 +7,7 @@
         class="
           w-full
           navbar
-          bg-base-100/80
+          bg-neutral/80
           flex
           justify-between
           sticky
@@ -38,7 +38,7 @@
           <a class="text-2xl uppercase select-none"> Institutions </a>
         </div>
         <div v-if="token" @click="$router.push('/locations/new')" class="block">
-          <v-btn class="btn rounded-xl px-6 mx-2 bg-white" color="white">
+          <v-btn class="btn rounded-xl px-6 mx-2 bg-black">
             <div class="sm:mr-2">
               <font-awesome-icon icon="fa-solid fa-plus" v-if="store.loading" />
             </div>
@@ -59,13 +59,9 @@
       <label for="my-drawer-3" class="drawer-overlay"></label>
       <ul class="sidebar menu w-80 backdrop-blur-lg">
         <!-- Sidebar content here -->
-        <!-- <UIUserInfo /> -->
-        <!-- <li v-if="token" @click="$router.push('/locations/new')">
-          <a class="add-btn btn rounded-lg lg:hidden">
-            <div class="mr-1">
-              <font-awesome-icon icon="fa-solid fa-plus" v-if="store.loading" />
-            </div>
-            <p>{{ $t("add") }}</p>
+        <!-- <li v-if="token">
+          <a class="rounded-lg px-0">
+            <UIUserInfo :user="user" />
           </a>
         </li> -->
         <li @click="$router.push('/')" v-if="token">
@@ -148,7 +144,7 @@ const localeStorageLang = localStorage.getItem("localeStorageLang");
 const logOut = async () => {
   await logout();
 
-  await router.push({name: "login", query: {message: "logout"}});
+  await router.push({ name: "login", query: { message: "logout" } });
 };
 function onScroll(e) {
   offsetTop.value = e.target.scrollTop;
@@ -165,9 +161,10 @@ function onScroll(e) {
 }
 
 onUpdated(() => {
-  const chosenLang = useCookie("chosenLang");
-
-  chosenLang.value = locale.value;
+  localStorage.setItem("localeStorageLang", locale.value);
+});
+onMounted(() => {
+  locale.value = localeStorageLang;
 });
 </script>
 <style>
@@ -176,7 +173,7 @@ a {
 }
 .sidebar {
   padding: 65px 15px !important;
-  background: rgba(14, 14, 14, 0.8);
+  background: rgba(228, 216, 180, 0.8);
 }
 .add-btn {
   margin: 10px 0 !important;
@@ -191,7 +188,7 @@ select {
   flex: 0 0 auto;
 }
 .navbar {
-  transition: .2s cubic-bezier(.71,.29,.4,.8);
+  transition: 0.2s cubic-bezier(0.71, 0.29, 0.4, 0.8);
 }
 .navbar.scroll {
   transform: translateY(-100%);
