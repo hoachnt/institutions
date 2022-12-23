@@ -30,7 +30,7 @@ export const ru: object = {
   update: "Обновить",
   updateTitle: "Обновить заголовок",
   downloadPdf: "Скачать PDF",
-  name: "Название",
+  title: "Название",
   createANewSchedule: "Создать новое расписание",
   maxLocations: "Вы можете создать только 10 учреждений",
   editHeader: "Редактировать учреждение",

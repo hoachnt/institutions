@@ -80,7 +80,6 @@
               >
               <v-textarea
                 label="Write your description here"
-                variant="outlined"
                 v-model="location.description"
                 placeholder="Type..."
                 rows="8"

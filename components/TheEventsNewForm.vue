@@ -27,15 +27,15 @@
         <h1 class="text-4xl mb-2">{{ $t("createANewEvent") }}</h1>
         <div>
           <label
-            for="name"
+            for="title"
             class="block mb-1 mt-3 text-lg font-medium text-content"
           >
-            {{ $t("name") }}
+            {{ $t("title") }}
           </label>
           <UIInput
-            :placeholder="$t('name')"
+            :placeholder="$t('title')"
             type="text"
-            v-model:value="newEvent.name"
+            v-model:value="newEvent.title"
             id="name"
             required
           />
@@ -45,27 +45,26 @@
             for="date"
             class="block mb-1 mt-3 text-lg font-medium text-content"
           >
-            {{ $t("date") }}
+            start
           </label>
           <UIInput
-            type="date"
-            v-model:value="newEvent.datetime"
+            type="datetime-local"
+            v-model:value="newEvent.start"
             id="date"
             required
           />
         </div>
         <div>
           <label
-            for="time"
+            for="date"
             class="block mb-1 mt-3 text-lg font-medium text-content"
           >
-            {{ $t("time") }}
+            end
           </label>
           <UIInput
-            placeholder="Time"
-            type="time"
-            v-model:value="newEvent.time"
-            id="time"
+            type="datetime-local"
+            v-model:value="newEvent.end"
+            id="date"
             required
           />
         </div>
@@ -76,7 +75,7 @@
         />
         <UIButton
           @click="createEvent"
-          class="min-w-full text-white"
+          class="min-w-full"
           :disabled="isDisabled"
           v-if="!isDisabled"
           >{{ $t("create") }}</UIButton
@@ -100,10 +99,10 @@ const url = config.public.url;
 const showInputTitle = ref(false);
 const dazanId = ref("");
 let newEvent = reactive({
-  datetime: "",
-  time: "",
   description: "",
-  name: "",
+  title: "",
+  start: "",
+  end: "",
   location_id: useRoute().query.location,
 });
 const isDisabled = ref(false);

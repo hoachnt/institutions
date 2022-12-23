@@ -30,7 +30,7 @@ export const vn: object = {
   update: "Cập nhật",
   updateTitle: "Cập nhật tiêu đề",
   downloadPdf: "Tải PDF",
-  name: "Tiêu đề",
+  title: "Tiêu đề",
   createANewSchedule: "Tạo lịch trình mới",
   maxLocations: "Bạn chỉ có thể tạo 10 tổ chức",
   editHeader: "Chỉnh sửa Tổ chức",

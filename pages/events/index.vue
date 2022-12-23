@@ -29,10 +29,11 @@
             },
           })
         "
-        class="min-w-full"
+        class="min-w-full mb-10"
       >
-        {{ $t("createANewSchedule") }}
+        {{ $t("createANewEvent") }}
       </UIButton>
+      <TheCalendar />
       <transition name="fade">
         <TheScheduleList
           :schedules="schedules"
@@ -91,10 +92,13 @@ const { messageFunction } = messageLogin();
 const fetchSchedule = async () => {
   try {
     let response = await $fetch(
-      `${url}/items/events?filter={"location_id":"${useRoute().query.location}"}`
+      `${url}/items/events?filter={"location_id":"${
+        useRoute().query.location
+      }"}`
     );
 
     schedules.value = await response.data;
+    store.schedules = schedules.value;
   } catch (error) {
     alert(error);
   }

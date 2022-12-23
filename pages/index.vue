@@ -3,7 +3,7 @@
     <ClientOnly>
       <template #default>
         <transition name="fade">
-          <div class="m-auto px-4 max-w-3xl">
+          <div class="m-auto max-w-3xl">
             <transition name="fade">
               <TheLocationList
                 v-if="store.locations != ''"

@@ -31,7 +31,7 @@ export const en: object = {
   update: "Update",
   updateTitle: "Update title",
   downloadPdf: "Download PDF",
-  name: "Name",
+  title: "Title",
   maxLocations: "You can create only 10 institutions",
   editHeader: "Edit institution",
   edit: "Edit",

@@ -71,16 +71,24 @@
         </ul>
       </div>
     </div>
-    <div class="mb-2 text-2xl font-bold tracking-tight text-content">
-      {{ schedule.name }}
+    <div class="mb-2 text-4xl font-bold tracking-tight text-content">
+      {{ schedule.title }}
     </div>
-    <div class="mb-2 text-2xl font-bold tracking-tight text-content">
-      {{ new Date(schedule.datetime).getDate() }}/{{
-        new Date(schedule.datetime).getMonth() + 1
-      }}/{{ new Date(schedule.datetime).getFullYear() }}
+    <div class="flex items-center mb-2 text-xl font-normal tracking-tight text-conten justify-between">
+      <span>From</span>
+      <div>
+        {{ new Date(schedule.start).getDate() }}/{{
+          new Date(schedule.start).getMonth() + 1
+        }}/{{ new Date(schedule.start).getFullYear() }} - {{ new Date(schedule.start).getHours() }}:{{ new Date(schedule.start).getMinutes() }}
+      </div>
     </div>
-    <div class="mb-2 text-2xl font-bold tracking-tight text-content">
-      {{ schedule.time }}
+    <div class="flex items-center mb-2 text-xl font-normal tracking-tight text-content justify-between">
+      <span>To</span>
+      <div>
+        {{ new Date(schedule.end).getDate() }}/{{
+          new Date(schedule.end).getMonth() + 1
+      }}/{{ new Date(schedule.end).getFullYear() }} - {{ new Date(schedule.end).getHours() }}:{{ new Date(schedule.end).getMinutes() }}
+      </div>
     </div>
     <div class="font-normal text-gray-400">{{ schedule.description }}</div>
     <form
@@ -88,9 +96,9 @@
       v-if="showUpdate"
       class="p-2 bg-base-100 rounded-md mt-10"
     >
-      <UIInput type="text" v-model:value="schedule.name" />
-      <UIInput type="date" v-model:value="schedule.datetime" />
-      <UIInput type="time" v-model:value="schedule.time" />
+      <UIInput type="text" v-model:value="schedule.title" :placeholder="$t('title')"/>
+      <UIInput type="datetime-local" v-model:value="schedule.start" />
+      <UIInput type="datetime-local" v-model:value="schedule.end" />
       <UIInput type="text" v-model:value="schedule.description" />
       <UIButton @click="updateEvent">
         {{ $t("edit") }}

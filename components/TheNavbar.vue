@@ -164,7 +164,7 @@ onUpdated(() => {
   localStorage.setItem("localeStorageLang", locale.value);
 });
 onMounted(() => {
-  locale.value = localeStorageLang;
+  locale.value = localeStorageLang || 'en';
 });
 </script>
 <style>

@@ -3,9 +3,9 @@
     type="submit"
     class="
       btn
-      text-content
-      border border-primary
-      hover:bg-primary hover:text-white
+      btn-primary
+      text-white
+      hover:bg-primary hover:text-content
       active:bg-secondary
       font-bold
       uppercase
@@ -13,7 +13,6 @@
       px-6
       py-3
       rounded-xl
-      btn-outline
       mt-1
       mb-1
       ease-linear
