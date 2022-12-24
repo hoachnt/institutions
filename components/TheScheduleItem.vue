@@ -79,7 +79,7 @@
       <div>
         {{ new Date(schedule.start).getDate() }}/{{
           new Date(schedule.start).getMonth() + 1
-        }}/{{ new Date(schedule.start).getFullYear() }} - {{ new Date(schedule.start).getHours() }}:{{ new Date(schedule.start).getMinutes() }}
+        }}/{{ new Date(schedule.start).getFullYear() }} - {{ new Date(schedule.start).toLocaleTimeString('en-US') }}
       </div>
     </div>
     <div class="flex items-center mb-2 text-xl font-normal tracking-tight text-content justify-between">
@@ -87,7 +87,7 @@
       <div>
         {{ new Date(schedule.end).getDate() }}/{{
           new Date(schedule.end).getMonth() + 1
-      }}/{{ new Date(schedule.end).getFullYear() }} - {{ new Date(schedule.end).getHours() }}:{{ new Date(schedule.end).getMinutes() }}
+      }}/{{ new Date(schedule.end).getFullYear() }} - {{ new Date(schedule.end).toLocaleTimeString('en-US') }}
       </div>
     </div>
     <div class="font-normal text-gray-400">{{ schedule.description }}</div>
