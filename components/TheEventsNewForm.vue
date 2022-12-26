@@ -24,11 +24,11 @@
         </ul>
       </div>
       <form @submit.prevent v-if="token">
-        <h1 class="text-4xl mb-2">{{ $t("createANewEvent") }}</h1>
+        <h1 class="text-5xl font-normal mb-6">{{ $t("createANewEvent") }}</h1>
         <div>
           <label
             for="title"
-            class="block mb-1 mt-3 text-lg font-medium text-content"
+            class="block mb-1 mt-3 text-xl font-medium text-content"
           >
             {{ $t("title") }}
           </label>
@@ -43,7 +43,7 @@
         <div>
           <label
             for="date"
-            class="block mb-1 mt-3 text-lg font-medium text-content"
+            class="block mb-1 mt-3 text-xl font-medium text-content"
           >
             {{ $t('start') }}
           </label>
@@ -57,7 +57,7 @@
         <div>
           <label
             for="date"
-            class="block mb-1 mt-3 text-lg font-medium text-content"
+            class="block mb-1 mt-3 text-xl font-medium text-content"
           >
             {{ $t('end') }}
           </label>

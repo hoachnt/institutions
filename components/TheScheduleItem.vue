@@ -37,16 +37,24 @@
           <li>
             <a
               @click="toggleUpdate"
-              class="block px-4 py-2 text-md hover:bg-neutral cursor-pointer ease-linear transition-all duration-150 select-none"
-              >{{ $t("edit") }}</a
+              class="px-4 py-2 text-md hover:bg-neutral cursor-pointer ease-linear transition-all duration-150 select-none flex items-center"
             >
+              <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+              <p class="ml-2">
+                {{ $t("edit") }}
+              </p>
+            </a>
           </li>
           <li>
             <label
               for="my-modal"
-              class="block px-4 py-2 text-md text-red-600 hover:bg-neutral cursor-pointer ease-linear transition-all duration-150 select-none"
-              >{{ $t("delete") }}</label
+              class="px-4 py-2 text-md text-red-600 hover:bg-neutral cursor-pointer ease-linear transition-all duration-150 select-none flex items-center"
             >
+              <font-awesome-icon icon="fa-solid fa-trash" />
+              <p class="ml-2">
+                {{ $t("delete") }}
+              </p>
+            </label>
             <teleport to="body">
               <input type="checkbox" id="my-modal" class="modal-toggle" />
               <div
@@ -66,7 +74,7 @@
                     class="modal-action"
                     @click="$emit('removeEvent', schedule.id)"
                   >
-                    <label for="my-modal" class="btn border-error text-red-600"
+                    <label for="my-modal" class="btn border-error text-red-600 hover:bg-error hover:text-white"
                       >{{ $t("delete") }}!</label
                     >
                   </div>
@@ -123,7 +131,7 @@
       <UIInput type="datetime-local" v-model:value="schedule.start" />
       <UIInput type="datetime-local" v-model:value="schedule.end" />
       <UIInput type="text" v-model:value="schedule.description" />
-      <UIButton @click="updateEvent">
+      <UIButton @click="updateEvent" class="min-w-full">
         {{ $t("edit") }}
       </UIButton>
     </form>

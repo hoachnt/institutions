@@ -8,6 +8,8 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
   const schedules = ref([]);
   const config = useRuntimeConfig();
   const url = config.public.url;
+  const dialog = ref(false);
+  const loadingEvent = ref(false);
 
   const nuxtApp = useNuxtApp();
   nuxtApp.hook("page:finish", () => {
@@ -54,7 +56,56 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
     const totalIamges = ref();
     const LAST_PAGE = ref();
     const LIMIT_IMAGES = 100;
+    const { getItemById } = useDirectusItems();
+    const event = ref([]);
 
+    const fetchEvent = async (eventId) => {
+      try {
+        event.value = await getItemById({
+          collection: "events",
+          id: eventId,
+        });
+      } catch (e) {
+        alert(e.name);
+      }
+    };
+    const removeEvent = async (eventId) => {
+      try {
+        let response = await $fetch(`${url}/items/events/${eventId}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+          },
+        });
+
+        loadingEvent.value = true;
+
+        await fetchSchedule();
+
+        loadingEvent.value = false;
+      } catch (error) {
+        alert(error.message);
+      } finally {
+        dialog.value = false;
+      }
+    };
+    const updateEvent = async (eventId) => {
+      try {
+        let response = await $fetch(`${url}/items/events/${eventId}`, {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+          },
+          body: event.value,
+        });
+
+        await fetchSchedule();
+      } catch (error) {
+        alert(error.name);
+      } finally {
+        dialog.value = false;
+      }
+    };
     const logOut = async () => {
       await logout();
 
@@ -127,6 +178,13 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
       message: skipHydrate(message),
       toastVisible: skipHydrate(toastVisible),
       fetchSchedule,
+      fetchEvent,
+      event,
+      removeEvent,
+      dialog,
+      updateEvent,
+      loading,
+      loadingEvent,
     };
   }
   return {
@@ -136,6 +194,8 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
     toastVisible: skipHydrate(toastVisible),
     fetchSchedule,
     schedules,
+    dialog,
+    loadingEvent,
   };
 });
 if (import.meta.hot) {

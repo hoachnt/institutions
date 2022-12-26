@@ -19,7 +19,9 @@
         <template #default>
           <transition name="fade">
             <form @submit.prevent>
-              <h1 class="text-4xl mb-2">{{ $t("createANewInstitution") }}</h1>
+              <h1 class="text-5xl font-normal mb-6">
+                {{ $t("createANewInstitution") }}
+              </h1>
               <select
                 id="countries"
                 class="
@@ -73,17 +75,20 @@
                   cursor-pointer
                 "
               />
-              <label
-                for="message"
-                class="block mb-1 mt-3 text-2xl font-medium text-primary"
-                >{{ $t("description") }}</label
-              >
-              <v-textarea
-                label="Write your description here"
-                v-model="location.description"
-                placeholder="Type..."
-                rows="8"
-              ></v-textarea>
+              <div class="mt-4">
+                <label
+                  for="message"
+                  class="text-3xl font-normal tracking-tight text-content"
+                  >{{ $t("description") }}</label
+                >
+                <v-textarea
+                  label="Write your description here"
+                  v-model="location.description"
+                  placeholder="Type..."
+                  rows="8"
+                  class="mt-2"
+                ></v-textarea>
+              </div>
               <UIButton
                 @click="createDatzan"
                 class="min-w-full"

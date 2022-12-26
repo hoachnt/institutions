@@ -14,7 +14,7 @@ module.exports = {
 
           "secondary-btn": "#BD0046",
 
-          accent: "#f3f4f6",
+          accent: "#D8E9B8",
 
           neutral: "#F2F4F2",
 

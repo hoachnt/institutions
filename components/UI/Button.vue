@@ -7,7 +7,7 @@
       active:bg-secondary
       hover:bg-primary
       normal-case
-      text-md
+      text-base
       font-medium
       px-6
       py-3

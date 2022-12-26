@@ -1,8 +1,13 @@
 <template>
   <ClientOnly placeholder="loading...">
     <transition name="fade">
-      <FullCalendar v-bind:options="options" class="min-w-full bg-primary" :key="componentKey"/>
+      <FullCalendar
+        v-bind:options="options"
+        class="min-w-full bg-primary"
+        :key="componentKey"
+      />
     </transition>
+    <TheItemDialog />
   </ClientOnly>
 </template>
 <script setup lang="ts">
@@ -30,10 +35,10 @@ const newEvent: IEvent = reactive({
   end: new Date(),
   allDay: false,
 });
-const componentKey = ref(0)
+const componentKey = ref(0);
 
 function forceRerender() {
-  componentKey.value += 1
+  componentKey.value += 1;
 }
 const createEvent = async (event: object) => {
   newEvent.location_id = event.id;
@@ -52,21 +57,10 @@ const createEvent = async (event: object) => {
     });
 
     await store.fetchSchedule();
-    await forceRerender()
+    await forceRerender();
   } catch (error) {
     console.log(error);
   }
-};
-const removeEvent = async (event: string) => {
-  try {
-    await $fetch(`${store.url}/items/events/${event}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token.value}`,
-      },
-    });
-    await store.fetchSchedule();
-  } catch (error) {}
 };
 const updateEvent = async (event: object, id: string) => {
   newEvent.location_id = event.id;
@@ -114,7 +108,9 @@ const options: object = reactive({
   },
   eventClick: (arg: any) => {
     if (arg.event) {
-      arg.event.remove();
+      store.dialog = true;
+      
+      store.fetchEvent(arg.event.id);
     }
   },
   events: [],
@@ -139,17 +135,14 @@ const options: object = reactive({
       arg.event.id
     );
   },
-  eventRemove: (arg: any) => {
-    removeEvent(arg.event.id);
-  },
 });
 options.events = computed(() => {
   return store.schedules;
 });
 
 onMounted(() => {
-  forceRerender()
-})
+  forceRerender();
+});
 </script>
 <style>
 table {

@@ -4,7 +4,26 @@
       <button
         id="dropdownButton"
         data-dropdown-toggle="dropdown"
-        class="shadow-xl p-2 m-1 ease-linear transition-all duration-150 text-gray-500 dark:text-gray-400 bg-neutral focus:ring-4 focus:outline-none dark:focus:ring-neutral rounded-xl text-sm w-10 h-10 flex items-center justify-center"
+        class="
+          shadow-xl
+          p-2
+          m-1
+          ease-linear
+          transition-all
+          duration-150
+          text-gray-500
+          dark:text-gray-400
+          bg-neutral
+          focus:ring-4 focus:outline-none
+          dark:focus:ring-neutral
+          rounded-xl
+          text-sm
+          w-10
+          h-10
+          flex
+          items-center
+          justify-center
+        "
         type="button"
         @click="toggleNavbar"
       >
@@ -26,7 +45,21 @@
       <!-- Dropdown menu -->
       <div
         id="dropdown"
-        class="z-10 text-base list-non divide-y divide-gray-100 rounded-lg shadow w-44 bg-neutral absolute right-0 top-12 bg-base-100/80 backdrop-blur-lg"
+        class="
+          z-10
+          text-base
+          list-non
+          divide-y divide-gray-100
+          rounded-lg
+          shadow
+          w-44
+          bg-neutral
+          absolute
+          right-0
+          top-12
+          bg-base-100/80
+          backdrop-blur-lg
+        "
         v-if="showMenu"
       >
         <ul class="py-1" aria-labelledby="dropdownButton">
@@ -37,22 +70,57 @@
                 query: { location: location.id },
               })
             "
-            class="block px-4 py-2 text-md hover:bg-base-100 rounded-lg cursor-pointer ease-linear transition-all duration-150 select-none"
+            class="
+              px-4
+              py-2
+              text-md
+              hover:bg-base-100
+              rounded-lg
+              cursor-pointer
+              ease-linear
+              transition-all
+              duration-150
+              select-none
+              flex
+              items-center
+            "
           >
-            <a>
+            <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+            <p class="ml-2">
               {{ $t("edit") }}
-            </a>
+            </p>
           </li>
           <li>
             <label
               for="my-modal"
-              class="block px-4 py-2 text-md text-red-600 rounded-lg hover:bg-base-100 cursor-pointer ease-linear transition-all duration-150 select-none"
-              >{{ $t("delete") }}</label
+              class="
+                px-4
+                py-2
+                text-md text-red-600
+                hover:bg-neutral
+                cursor-pointer
+                ease-linear
+                transition-all
+                duration-150
+                select-none
+                flex
+                items-center
+              "
             >
+              <font-awesome-icon icon="fa-solid fa-trash" />
+              <p class="ml-2">
+                {{ $t("delete") }}
+              </p>
+            </label>
             <teleport to="body">
               <input type="checkbox" id="my-modal" class="modal-toggle" />
               <div
-                class="modal modal-bottom sm:modal-middle bg-base-100/80 backdrop-blur-lg"
+                class="
+                  modal modal-bottom
+                  sm:modal-middle
+                  bg-base-100/80
+                  backdrop-blur-lg
+                "
               >
                 <div class="modal-box">
                   <label
@@ -135,7 +203,32 @@
         @click="
           $router.push({ name: `events`, query: { location: location.id } })
         "
-        class="inline-flex items-center uppercase px-6 hover:shadow-xl w-auto border bg-white h-auto py-3 bg-none text-sm font-medium text-center mt-1 mb-1 text-black rounded-3xl hover:rounded-lg hover:bg-white ease-linear transition-all duration-150 mx-2 select-none"
+        class="
+          inline-flex
+          items-center
+          uppercase
+          px-6
+          hover:shadow-xl
+          w-auto
+          border
+          bg-white
+          h-auto
+          py-3
+          bg-none
+          text-sm
+          font-medium
+          text-center
+          mt-1
+          mb-1
+          text-black
+          rounded-3xl
+          hover:rounded-lg hover:bg-white
+          ease-linear
+          transition-all
+          duration-150
+          mx-2
+          select-none
+        "
       >
         {{ $t("schedules") }}
         <svg
