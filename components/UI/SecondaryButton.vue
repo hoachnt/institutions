@@ -2,17 +2,15 @@
   <button
     type="submit"
     class="
-      btn btn-primary
-      text-content
-      active:bg-secondary
-      hover:bg-primary
-      normal-case
-      text-md
-      font-medium
+      btn
+      text-white
+      hover:shadow-xl
+      hover:rounded-lg
+      uppercase
+      text-sm
       px-6
       py-3
       rounded-3xl
-      hover:rounded-lg
       mt-1
       mb-1
       ease-linear
@@ -27,8 +25,12 @@
 <script>
 export default {};
 </script>
-<style>
+<style scoped>
 button {
   cursor: pointer;
+  background: #855300;
+}
+button:hover {
+  background: #855300;
 }
 </style>

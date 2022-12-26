@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div class="container m-auto px-4">
+    <div class="m-auto">
       <div class="text-sm breadcrumbs mb-4">
         <ul>
           <li>
@@ -50,7 +50,7 @@
                   block
                   w-full
                   py-1
-                  text-sm text-white
+                  text-sm text-content
                   file:mr-4
                   file:py-2
                   file:px-4

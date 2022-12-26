@@ -5,6 +5,9 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
   const loading = ref(false);
   const toastVisible = ref(false);
   const message = ref("");
+  const schedules = ref([]);
+  const config = useRuntimeConfig();
+  const url = config.public.url;
 
   const nuxtApp = useNuxtApp();
   nuxtApp.hook("page:finish", () => {
@@ -24,15 +27,25 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
       toastVisible.value = false;
     }, 4000);
   }
+  const fetchSchedule = async () => {
+    try {
+      let response = await $fetch(
+        `${url}/items/events?filter={"location_id":"${
+          useRoute().query.location
+        }"}`
+      );
+
+      schedules.value = await response.data;
+    } catch (error) {
+      alert(error);
+    }
+  };
 
   if (user.value) {
     const authenticated = ref(false);
-    const config = useRuntimeConfig();
-    const url = config.public.url;
     const locations = ref([]);
     const userCreated = ref(user.value.id);
     const token = useDirectusToken();
-    const schedules = ref([]);
     const email = ref("");
     const userEmail = ref(user.value.email);
     const removeMessage = ref("This action cannot be undone");
@@ -113,6 +126,7 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
       showToast,
       message: skipHydrate(message),
       toastVisible: skipHydrate(toastVisible),
+      fetchSchedule,
     };
   }
   return {
@@ -120,6 +134,8 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
     message: skipHydrate(message),
     showToast,
     toastVisible: skipHydrate(toastVisible),
+    fetchSchedule,
+    schedules,
   };
 });
 if (import.meta.hot) {

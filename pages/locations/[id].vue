@@ -1,5 +1,5 @@
 <template>
-  <main class="container w-2/4 min-w-full sm:min-w-0 m-0 sm:m-auto px-3">
+  <main class="container w-2/4 min-w-full sm:min-w-0 m-0 sm:m-auto">
     <div class="text-sm breadcrumbs mb-4">
       <ul>
         <li>
@@ -21,7 +21,6 @@
             datsan
             mx-1
             rounded-xl
-            shadow-md
             bg-neutral
             my-2
             min-w-screen
@@ -38,15 +37,7 @@
           </div>
           <div class="p-5">
             <div>
-              <h5
-                class="
-                  mb-2
-                  text-2xl
-                  font-bold
-                  tracking-tight
-                  text-content
-                "
-              >
+              <h5 class="text-3xl font-normal tracking-tight text-content">
                 {{ location.name }}
               </h5>
             </div>
@@ -57,7 +48,7 @@
               {{ location.address }}
             </p>
             <div class="flex justify-between items-center">
-              <UIButton
+              <UISecondaryButton
                 @click="
                   $router.push({
                     name: 'events',
@@ -79,14 +70,14 @@
                     clip-rule="evenodd"
                   ></path>
                 </svg>
-              </UIButton>
-              <UIButton @click="showQrCode" rounded="lg">
+              </UISecondaryButton>
+              <UISecondaryButton @click="showQrCode" rounded="lg">
                 <font-awesome-icon
                   :icon="['fa', 'fa-qrcode']"
                   class="text-xl text-content"
                   v-if="store.loading"
                 />
-              </UIButton>
+              </UISecondaryButton>
               <div
                 class="
                   qr-code-wrapper

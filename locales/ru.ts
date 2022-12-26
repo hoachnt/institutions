@@ -38,4 +38,7 @@ export const ru: object = {
   address: "Адрес",
   email: "Элекстронная почта",
   dontHaveInstitutions: "У вас нет учреждений",
+  name: "Название",
+  start: "Начало",
+  end: "Конец"
 }

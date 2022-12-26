@@ -1,7 +1,11 @@
 <template lang="">
-  <div class="block min-w-full p-6 pb-10 rounded-xl shadow-md bg-neutral my-3">
-    <div class="flex justify-end relative" v-if="token">
+  <div class="block min-w-full p-6 rounded-xl bg-neutral my-3">
+    <div class="flex justify-between items-center relative mb-5">
+      <div class="text-3xl font-normal tracking-tight text-content">
+        {{ schedule.title }}
+      </div>
       <button
+        v-if="token"
         id="dropdownButton"
         data-dropdown-toggle="dropdown"
         class="ease-linear transition-all duration-150 text-base-100 bg-base-100 dark:text-gray-400 hover:bg-neutral focus:ring-4 focus:outline-none focus:ring-base-100 rounded-xl text-sm p-1.5 w-10 h-10 flex items-center justify-center"
@@ -45,7 +49,9 @@
             >
             <teleport to="body">
               <input type="checkbox" id="my-modal" class="modal-toggle" />
-              <div class="modal modal-bottom sm:modal-middle bg-base-100/50 backdrop-blur-lg">
+              <div
+                class="modal modal-bottom sm:modal-middle bg-base-100/50 backdrop-blur-lg"
+              >
                 <div class="modal-box relative">
                   <label
                     for="my-modal"
@@ -71,23 +77,36 @@
         </ul>
       </div>
     </div>
-    <div class="mb-2 text-4xl font-bold tracking-tight text-content">
-      {{ schedule.title }}
-    </div>
-    <div class="flex items-center mb-2 text-xl font-normal tracking-tight text-conten justify-between">
+    <div
+      class="flex items-center mb-2 font-normal tracking-tight text-content justify-between"
+    >
       <span>From</span>
       <div>
-        {{ new Date(schedule.start).getDate() }}/{{
-          new Date(schedule.start).getMonth() + 1
-        }}/{{ new Date(schedule.start).getFullYear() }} - {{ new Date(schedule.start).toLocaleTimeString('en-US') }}
+        {{ new Date(schedule.start).toLocaleString("en-US", dateOptions) }}
+      </div>
+      <div>
+        {{
+          new Date(schedule.start).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          })
+        }}
       </div>
     </div>
-    <div class="flex items-center mb-2 text-xl font-normal tracking-tight text-content justify-between">
+    <div
+      class="flex items-center mb-2 font-normal tracking-tight text-content justify-between"
+    >
       <span>To</span>
       <div>
-        {{ new Date(schedule.end).getDate() }}/{{
-          new Date(schedule.end).getMonth() + 1
-      }}/{{ new Date(schedule.end).getFullYear() }} - {{ new Date(schedule.end).toLocaleTimeString('en-US') }}
+        {{ new Date(schedule.end).toLocaleString("en-US", dateOptions) }}
+      </div>
+      <div>
+        {{
+          new Date(schedule.end).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          })
+        }}
       </div>
     </div>
     <div class="font-normal text-gray-400">{{ schedule.description }}</div>
@@ -96,7 +115,11 @@
       v-if="showUpdate"
       class="p-2 bg-base-100 rounded-md mt-10"
     >
-      <UIInput type="text" v-model:value="schedule.title" :placeholder="$t('title')"/>
+      <UIInput
+        type="text"
+        v-model:value="schedule.title"
+        :placeholder="$t('title')"
+      />
       <UIInput type="datetime-local" v-model:value="schedule.start" />
       <UIInput type="datetime-local" v-model:value="schedule.end" />
       <UIInput type="text" v-model:value="schedule.description" />
@@ -115,6 +138,11 @@ const token = useDirectusToken();
 const props = defineProps({
   schedule: Object,
 });
+const dateOptions = {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+};
 const showMenu = ref(false);
 const showUpdate = ref(false);
 

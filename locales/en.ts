@@ -38,4 +38,7 @@ export const en: object = {
   address: "Address",
   email: "E-mail",
   dontHaveInstitutions: "You don't have institutions",
+  name: "Name",
+  start: "Start",
+  end: "End"
 };

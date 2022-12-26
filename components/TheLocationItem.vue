@@ -1,7 +1,5 @@
-<template lang="">
-  <div
-    class="datsan rounded-xl shadow-md bg-neutral my-2 min-w-full relative"
-  >
+<template>
+  <div class="datsan rounded-xl bg-neutral my-2 min-w-full relative">
     <div class="flex justify-end absolute right-0 top-0">
       <button
         id="dropdownButton"
@@ -53,7 +51,9 @@
             >
             <teleport to="body">
               <input type="checkbox" id="my-modal" class="modal-toggle" />
-              <div class="modal modal-bottom sm:modal-middle bg-base-100/80 backdrop-blur-lg">
+              <div
+                class="modal modal-bottom sm:modal-middle bg-base-100/80 backdrop-blur-lg"
+              >
                 <div class="modal-box">
                   <label
                     for="my-modal"
@@ -116,7 +116,7 @@
     </ClientOnly>
     <div class="p-5">
       <div>
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-primary">
+        <h5 class="text-3xl font-normal tracking-tight text-content">
           {{ location.name }}
         </h5>
       </div>
@@ -126,19 +126,16 @@
       <p class="mb-3 font-normal text-gray-400">
         {{ location.address }}
       </p>
-      <v-btn
-        @click="$router.push(`/locations/${location.id}`)"
-        class="inline-flex items-center px-4 w-auto h-auto py-3 text-sm font-medium text-center text-white bg-black rounded-xl hover:bg-secondary ease-linear transition-all duration-150 select-none"
-      >
+      <UISecondaryButton @click="$router.push(`/locations/${location.id}`)">
         {{ $t("readMore") }}
-      </v-btn>
+      </UISecondaryButton>
 
-      <v-btn
+      <button
         variant="outlined"
         @click="
           $router.push({ name: `events`, query: { location: location.id } })
         "
-        class="inline-flex items-center px-4 w-auto h-auto py-3 bg-none text-sm font-medium text-center text-black rounded-xl hover:bg-white ease-linear transition-all duration-150 mx-2 select-none"
+        class="inline-flex items-center uppercase px-6 hover:shadow-xl w-auto border bg-white h-auto py-3 bg-none text-sm font-medium text-center mt-1 mb-1 text-black rounded-3xl hover:rounded-lg hover:bg-white ease-linear transition-all duration-150 mx-2 select-none"
       >
         {{ $t("schedules") }}
         <svg
@@ -154,7 +151,7 @@
             clip-rule="evenodd"
           ></path>
         </svg>
-      </v-btn>
+      </button>
       <div class="card-actions justify-end mt-4">
         <div class="badge badge-outline select-none">{{ location.type }}</div>
       </div>

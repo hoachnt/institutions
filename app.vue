@@ -20,7 +20,7 @@
               flex
               items-center
               justify-center
-              bg-black
+              bg-base-100
               min-h-screen
             "
           >

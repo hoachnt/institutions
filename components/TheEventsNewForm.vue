@@ -1,6 +1,6 @@
 <template lang="">
   <main>
-    <div class="container px-4 m-auto">
+    <div class="m-auto">
       <div class="text-sm breadcrumbs mb-4">
         <ul>
           <li>
@@ -45,7 +45,7 @@
             for="date"
             class="block mb-1 mt-3 text-lg font-medium text-content"
           >
-            start
+            {{ $t('start') }}
           </label>
           <UIInput
             type="datetime-local"
@@ -59,7 +59,7 @@
             for="date"
             class="block mb-1 mt-3 text-lg font-medium text-content"
           >
-            end
+            {{ $t('end') }}
           </label>
           <UIInput
             type="datetime-local"
@@ -109,7 +109,7 @@ const isDisabled = ref(false);
 
 const createEvent = async () => {
   try {
-    if (newEvent.datetime != "" && newEvent.time != "") {
+    if (newEvent.start != "" && newEvent.end != "") {
       isDisabled.value = true;
 
       await $fetch(`${url}/items/events`, {

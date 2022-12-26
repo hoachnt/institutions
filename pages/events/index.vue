@@ -1,6 +1,6 @@
 <template lang="">
   <main>
-    <div class="container px-4 m-auto">
+    <div class="m-auto">
       <div class="text-sm breadcrumbs mb-4">
         <ul>
           <li>
@@ -36,7 +36,7 @@
       <TheCalendar />
       <transition name="fade">
         <TheScheduleList
-          :schedules="schedules"
+          :schedules="store.schedules"
           v-if="schedules != ''"
           @removeEvent="removeEvent"
         />
@@ -80,7 +80,6 @@ const store = usePiniaStore();
 const config = useRuntimeConfig();
 const url = config.public.url;
 const addTitle = ref(false);
-const schedules = ref([]);
 const scheduleTitle = reactive({
   title: "",
   location_id: useRoute().query.location,
@@ -89,20 +88,6 @@ const scheduleTitleId = useRoute().params.id;
 const scheduleTitles = ref("");
 const { messageFunction } = messageLogin();
 
-const fetchSchedule = async () => {
-  try {
-    let response = await $fetch(
-      `${url}/items/events?filter={"location_id":"${
-        useRoute().query.location
-      }"}`
-    );
-
-    schedules.value = await response.data;
-    store.schedules = schedules.value;
-  } catch (error) {
-    alert(error);
-  }
-};
 const removeEvent = async (id) => {
   try {
     let response = await $fetch(`${url}/items/events/${id}`, {
@@ -114,14 +99,14 @@ const removeEvent = async (id) => {
 
     dialog.value = false;
 
-    await fetchSchedule();
+    await store.fetchSchedule();
   } catch (error) {
     console.log(error);
   }
 };
 onMounted(() => {
   messageFunction();
-  fetchSchedule();
+  store.fetchSchedule();
 });
 </script>
 <style>

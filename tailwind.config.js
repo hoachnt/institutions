@@ -4,19 +4,23 @@ module.exports = {
     themes: [
       {
         mytheme: {
-          content: "#000000",
+          content: "#001F25",
 
-          primary: "#2A2828",
+          primary: "#FCDDBD",
 
-          secondary: "#1c1917",
+          "button-text": "#ffffff",
+
+          secondary: "#a68c6f",
+
+          "secondary-btn": "#BD0046",
 
           accent: "#f3f4f6",
 
-          neutral: "#E4D8B4",
+          neutral: "#F2F4F2",
 
-          "sidebar": "#E4D8B4",
+          sidebar: "#F2F4F2",
 
-          "base-100": "#D2C59D",
+          "base-100": "#F8FDFF",
 
           info: "#3ABFF8",
 

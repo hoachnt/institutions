@@ -38,4 +38,7 @@ export const vn: object = {
   address: "Địa chỉ",
   email: "E-mail",
   dontHaveInstitutions: "Bạn chưa có tổ chức",
+  name: "Tên",
+  start: "Bắt đầu",
+  end: "Kết thúc"
 }

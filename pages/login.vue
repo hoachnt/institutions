@@ -3,7 +3,7 @@
     <div class="container m-auto max-w-lg">
       <Suspense>
         <template #default>
-          <form @submit.prevent="submit" class="px-4">
+          <form @submit.prevent="submit">
             <h1 class="text-2xl mb-1">{{ $t("login") }}</h1>
             <UIInput
               type="email"

@@ -1,13 +1,18 @@
 <template>
   <div class="drawer drawer-mobile">
     <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content flex flex-col" id="scroll-target">
+    <div class="drawer-content flex flex-col px-4 py-2" id="scroll-target">
       <!-- Navbar -->
       <div
         class="
-          w-full
+          min-w-full
+          m-auto
           navbar
-          bg-neutral/80
+          mb-0
+          bg-base-100/80
+          border-2
+          mt-0
+          rounded-2xl
           flex
           justify-between
           sticky
@@ -38,7 +43,7 @@
           <a class="text-2xl uppercase select-none"> Institutions </a>
         </div>
         <div v-if="token" @click="$router.push('/locations/new')" class="block">
-          <v-btn class="btn rounded-xl px-6 mx-2 bg-black">
+          <UIButton>
             <div class="sm:mr-2">
               <font-awesome-icon icon="fa-solid fa-plus" v-if="store.loading" />
             </div>
@@ -46,7 +51,7 @@
             <v-tooltip activator="parent" location="bottom"
               >Add Institution</v-tooltip
             >
-          </v-btn>
+          </UIButton>
         </div>
       </div>
       <!-- Page content here -->
@@ -57,7 +62,19 @@
     </div>
     <div class="drawer-side">
       <label for="my-drawer-3" class="drawer-overlay"></label>
-      <ul class="sidebar menu w-80 backdrop-blur-lg">
+      <ul
+        class="
+          sidebar
+          menu
+          w-80
+          backdrop-blur-lg
+          border-2
+          rounded-2xl
+          mt-2
+          mb-2
+          ml-2
+        "
+      >
         <!-- Sidebar content here -->
         <!-- <li v-if="token">
           <a class="rounded-lg px-0">
@@ -114,7 +131,7 @@
             ></v-select>
           </a>
         </li>
-        <li>
+        <li class="absolute bottom-0 left-0">
           <TheFooter />
         </li>
       </ul>
@@ -164,7 +181,7 @@ onUpdated(() => {
   localStorage.setItem("localeStorageLang", locale.value);
 });
 onMounted(() => {
-  locale.value = localeStorageLang || 'en';
+  locale.value = localeStorageLang || "en";
 });
 </script>
 <style>
@@ -173,7 +190,7 @@ a {
 }
 .sidebar {
   padding: 65px 15px !important;
-  background: rgba(228, 216, 180, 0.8);
+  background: rgba(248, 253, 255, 0.8);
 }
 .add-btn {
   margin: 10px 0 !important;

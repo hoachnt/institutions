@@ -1,7 +1,7 @@
 <template>
   <main>
     <div class="container m-auto max-w-lg">
-      <form @submit.prevent="submit" class="px-4">
+      <form @submit.prevent="submit">
         <h1 class="text-2xl mb-1">{{ $t("register") }}</h1>
         <UIInput
           type="text"

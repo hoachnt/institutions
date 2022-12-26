@@ -1,7 +1,7 @@
 <template>
   <ClientOnly placeholder="loading...">
     <transition name="fade">
-      <FullCalendar v-bind:options="options" class="min-w-full bg-primary" />
+      <FullCalendar v-bind:options="options" class="min-w-full bg-primary" :key="componentKey"/>
     </transition>
   </ClientOnly>
 </template>
@@ -13,17 +13,46 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import interactionPlugin from "@fullcalendar/interaction";
 
+interface IEvent {
+  location_id: string;
+  title: string;
+  start: Date;
+  end: Date;
+  allDay: boolean;
+}
+
 const token = useDirectusToken();
+const store = usePiniaStore();
+const newEvent: IEvent = reactive({
+  location_id: "",
+  title: "",
+  start: new Date(),
+  end: new Date(),
+  allDay: false,
+});
+const componentKey = ref(0)
+
+function forceRerender() {
+  componentKey.value += 1
+}
 const createEvent = async (event: object) => {
+  newEvent.location_id = event.id;
+  newEvent.title = event.title;
+  newEvent.start = event.start.setDate(event.start.getDate() + 1);
+  newEvent.end = event.end.setDate(event.end.getDate() + 1);
+  newEvent.allDay = event.allDay;
+
   try {
     await $fetch(`${store.url}/items/events`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token.value}`,
       },
-      body: event,
+      body: newEvent,
     });
-    console.log("success");
+
+    await store.fetchSchedule();
+    await forceRerender()
   } catch (error) {
     console.log(error);
   }
@@ -36,9 +65,16 @@ const removeEvent = async (event: string) => {
         Authorization: `Bearer ${token.value}`,
       },
     });
+    await store.fetchSchedule();
   } catch (error) {}
 };
 const updateEvent = async (event: object, id: string) => {
+  newEvent.location_id = event.id;
+  newEvent.title = event.title;
+  newEvent.start = event.start.setDate(event.start.getDate() + 1);
+  newEvent.end = event.end.setDate(event.end.getDate() + 1);
+  newEvent.allDay = event.allDay;
+
   try {
     await $fetch(`${store.url}/items/events/${id}`, {
       method: "PATCH",
@@ -47,14 +83,13 @@ const updateEvent = async (event: object, id: string) => {
       },
       body: event,
     });
+    await store.fetchSchedule();
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 
-const id = ref(0);
 const { createItems } = useDirectusItems();
-const store = usePiniaStore();
 const options: object = reactive({
   plugins: [dayGridPlugin, listPlugin, interactionPlugin, timeGridPlugin],
   initialView: "dayGridMonth",
@@ -67,15 +102,14 @@ const options: object = reactive({
   selectable: true,
   weekends: true,
   select: (arg: any) => {
-    id.value = id.value + 1;
-
     const cal = arg.view.calendar;
     cal.unselect();
     cal.addEvent({
+      id: useRoute().query.location,
       title: "New event",
       start: arg.start,
       end: arg.end,
-      allDay: true,
+      allDay: false,
     });
   },
   eventClick: (arg: any) => {
@@ -86,18 +120,21 @@ const options: object = reactive({
   events: [],
   eventAdd: (arg: object) => {
     createEvent({
+      id: arg.event.id,
       title: arg.event.title,
       start: arg.event.start,
       end: arg.event.end,
-      location_id: useRoute().query.location,
+      allDay: arg.event.allDay,
     });
   },
   eventChange: (arg: object) => {
     updateEvent(
       {
+        id: arg.event.id,
         title: arg.event.title,
         start: arg.event.start,
         end: arg.event.end,
+        allDay: arg.event.allDay,
       },
       arg.event.id
     );
@@ -106,10 +143,13 @@ const options: object = reactive({
     removeEvent(arg.event.id);
   },
 });
-
 options.events = computed(() => {
   return store.schedules;
 });
+
+onMounted(() => {
+  forceRerender()
+})
 </script>
 <style>
 table {

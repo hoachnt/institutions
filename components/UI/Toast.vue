@@ -1,6 +1,6 @@
 <template>
   <div class="toast toast-start z-10">
-    <div class="alert bg-white">
+    <div class="alert bg-black">
       <div>
         <slot></slot>
       </div>

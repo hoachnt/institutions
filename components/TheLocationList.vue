@@ -1,6 +1,6 @@
 <template lang="">
 <div class="flex justify-around flex-wrap">
-  <div v-for="location in locations" :key="location.id" class="min-w-full">
+  <div v-for="location in locations" :key="location.id" class="min-w-full px-2">
     <TheLocationItem :location="location" />
   </div>
 </div>
