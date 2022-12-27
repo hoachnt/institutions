@@ -33,6 +33,5 @@
 </template>
 <script setup lang="ts">
 const store = usePiniaStore();
-console.log(store.loading)
 </script>
 <style lang=""></style>

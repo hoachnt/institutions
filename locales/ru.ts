@@ -40,5 +40,7 @@ export const ru: object = {
   dontHaveInstitutions: "У вас нет учреждений",
   name: "Название",
   start: "Начало",
-  end: "Конец"
+  end: "Конец",
+  from: "С",
+  to: "До",
 }

@@ -40,5 +40,7 @@ export const vn: object = {
   dontHaveInstitutions: "Bạn chưa có tổ chức",
   name: "Tên",
   start: "Bắt đầu",
-  end: "Kết thúc"
+  end: "Kết thúc",
+  from: "Từ",
+  to: "Đến",
 }

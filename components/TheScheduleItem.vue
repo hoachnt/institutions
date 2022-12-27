@@ -74,7 +74,9 @@
                     class="modal-action"
                     @click="$emit('removeEvent', schedule.id)"
                   >
-                    <label for="my-modal" class="btn border-error text-red-600 hover:bg-error hover:text-white"
+                    <label
+                      for="my-modal"
+                      class="btn border-error text-red-600 hover:bg-error hover:text-white"
                       >{{ $t("delete") }}!</label
                     >
                   </div>
@@ -88,13 +90,13 @@
     <div
       class="flex items-center mb-2 font-normal tracking-tight text-content justify-between"
     >
-      <span>From</span>
+      <span>{{ $t("start") }}</span>
       <div>
-        {{ new Date(schedule.start).toLocaleString("en-US", dateOptions) }}
+        {{ new Date(schedule.start).toLocaleString(locale, dateOptions) }}
       </div>
       <div>
         {{
-          new Date(schedule.start).toLocaleTimeString([], {
+          new Date(schedule.start).toLocaleTimeString(locale, {
             hour: "2-digit",
             minute: "2-digit",
           })
@@ -104,13 +106,13 @@
     <div
       class="flex items-center mb-2 font-normal tracking-tight text-content justify-between"
     >
-      <span>To</span>
+      <span>{{ $t("end") }}</span>
       <div>
-        {{ new Date(schedule.end).toLocaleString("en-US", dateOptions) }}
+        {{ new Date(schedule.end).toLocaleString(locale, dateOptions) }}
       </div>
       <div>
         {{
-          new Date(schedule.end).toLocaleTimeString([], {
+          new Date(schedule.end).toLocaleTimeString(locale, {
             hour: "2-digit",
             minute: "2-digit",
           })
@@ -142,7 +144,7 @@ import { usePiniaStore } from "@/stores/PiniaStore";
 
 const store = usePiniaStore();
 const token = useDirectusToken();
-
+const { locale } = useI18n();
 const props = defineProps({
   schedule: Object,
 });

@@ -181,7 +181,7 @@ const response = async () => {
       })
       .then((response) => {
         useRouter().push({
-          name: "events",
+          name: "events-new",
           query: { location: response.data.id, message: "create_institution" },
         });
       });

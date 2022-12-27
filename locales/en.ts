@@ -40,5 +40,7 @@ export const en: object = {
   dontHaveInstitutions: "You don't have institutions",
   name: "Name",
   start: "Start",
-  end: "End"
+  end: "End",
+  from: "From",
+  to: "To",
 };
