@@ -43,4 +43,5 @@ export const vn: object = {
   end: "Kết thúc",
   from: "Từ",
   to: "Đến",
+  yes: "Đúng",
 }

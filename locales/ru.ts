@@ -43,4 +43,5 @@ export const ru: object = {
   end: "Конец",
   from: "С",
   to: "До",
+  yes: "Да",
 }

@@ -17,9 +17,17 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import interactionPlugin from "@fullcalendar/interaction";
+import { Interface } from "readline";
 
-interface IEvent {
+interface INewEvent {
   location_id: string;
+  title: string;
+  start: Date;
+  end: Date;
+  allDay: boolean;
+}
+interface IEvent {
+  id: string;
   title: string;
   start: Date;
   end: Date;
@@ -28,7 +36,7 @@ interface IEvent {
 
 const token = useDirectusToken();
 const store = usePiniaStore();
-const newEvent: IEvent = reactive({
+const newEvent: INewEvent = reactive({
   location_id: "",
   title: "",
   start: new Date(),
@@ -40,7 +48,7 @@ const componentKey = ref(0);
 function forceRerender() {
   componentKey.value += 1;
 }
-const createEvent = async (event: object) => {
+const createEvent = async (event: IEvent) => {
   newEvent.location_id = event.id;
   newEvent.title = event.title;
   newEvent.start = event.start.setDate(event.start.getDate() + 1);
@@ -55,14 +63,13 @@ const createEvent = async (event: object) => {
       },
       body: newEvent,
     });
-
     await store.fetchSchedule();
     await forceRerender();
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 };
-const updateEvent = async (event: object, id: string) => {
+const updateEvent = async (event: IEvent, id: string) => {
   newEvent.location_id = event.id;
   newEvent.title = event.title;
   newEvent.start = event.start.setDate(event.start.getDate() + 1);
@@ -78,12 +85,12 @@ const updateEvent = async (event: object, id: string) => {
       body: event,
     });
     await store.fetchSchedule();
+    await forceRerender();
   } catch (error) {
     console.log(error);
   }
 };
 
-const { createItems } = useDirectusItems();
 const options: object = reactive({
   plugins: [dayGridPlugin, listPlugin, interactionPlugin, timeGridPlugin],
   initialView: "dayGridMonth",
@@ -107,11 +114,11 @@ const options: object = reactive({
     });
   },
   eventClick: (arg: any) => {
-    if (arg.event) {
-      store.dialog = true;
-      
-      store.fetchEvent(arg.event.id);
-    }
+    if (!arg.event) return;
+    if (!token) return;
+
+    store.dialog = true;
+    store.fetchEvent(arg.event.id);
   },
   events: [],
   eventAdd: (arg: object) => {

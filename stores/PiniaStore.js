@@ -58,6 +58,7 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
     const LIMIT_IMAGES = 100;
     const { getItemById } = useDirectusItems();
     const event = ref([]);
+    const showDeleteButton = ref(false);
 
     const fetchEvent = async (eventId) => {
       try {
@@ -83,6 +84,7 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
         await fetchSchedule();
 
         loadingEvent.value = false;
+        showDeleteButton.value = false
       } catch (error) {
         alert(error.message);
       } finally {
@@ -185,6 +187,7 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
       updateEvent,
       loading,
       loadingEvent,
+      showDeleteButton,
     };
   }
   return {

@@ -16,17 +16,42 @@
         placeholder="End"
         v-model:value="store.event.end"
       />
+      <h1
+        v-if="store.loadingEvent == false && store.showDeleteButton == true"
+        class="pt-3 pb-1"
+      >
+        {{ $t("questionBeforeDeletion") }}
+      </h1>
       <div class="flex">
-        <UIButton class="flex-1 mr-1" @click="store.updateEvent(store.event.id)">{{
-          $t("edit")
-        }}</UIButton>
-        <UIRemoveButton
-          v-if="store.loadingEvent == false"
-          class="flex-1 ml-1 "
-          @click="store.removeEvent(store.event.id)"
-          >{{ $t("delete") }}</UIRemoveButton
+        <UIButton
+          class="flex-1 mr-1 bg-neutral flex items-center justify-center"
+          @click="store.updateEvent(store.event.id)"
         >
-        <UILoadingButton v-else/>
+          <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+          <p class="ml-2">{{ $t("edit") }}</p>
+        </UIButton>
+        <UIRemoveButton
+          v-if="store.loadingEvent == false && !store.showDeleteButton"
+          @click="
+            store.showDeleteButton = true;
+            store.loading = true;
+          "
+          class="flex-1 ml-1 flex items-center justify-center"
+        >
+          <font-awesome-icon icon="fa-solid fa-trash" />
+          <p class="ml-2">{{ $t("delete") }}</p>
+        </UIRemoveButton>
+        <UIRemoveButton
+          @click="store.removeEvent(store.event.id)"
+          v-if="store.loadingEvent == false && store.showDeleteButton == true"
+        >
+          {{ $t("yes") }}, {{ $t("delete") }}
+        </UIRemoveButton>
+        <UILoadingButton
+          v-else-if="
+            store.loadingEvent == true && store.showDeleteButton == true
+          "
+        />
       </div>
     </UIDialog>
   </div>

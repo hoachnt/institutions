@@ -43,4 +43,5 @@ export const en: object = {
   end: "End",
   from: "From",
   to: "To",
+  yes: "Yes",
 };
