@@ -37,6 +37,7 @@
 </template>
 <script setup lang="ts">
 const { login } = useDirectusAuth();
+const store = usePiniaStore();
 
 definePageMeta({
   middleware: ["authenticated"],
@@ -63,7 +64,7 @@ const submit = async () => {
     }
 
     await router.push({ name: "index", query: { message: "login" } });
-    await document.location.reload(booleanTrue);
+    store.rerender += 1
   } catch (e: any) {
     if (e.status == 401) {
       alert("Wrong email or password");

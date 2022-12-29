@@ -1,6 +1,6 @@
 <template>
   <ClientOnly placeholder="loading...">
-    <transition name="fade">
+    <transition name="page">
       <FullCalendar
         v-bind:options="options"
         class="min-w-full bg-primary"

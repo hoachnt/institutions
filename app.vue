@@ -3,7 +3,7 @@
     <ClientOnly>
       <template #default>
         <transition name="blur">
-          <TheNavbar />
+          <TheNavbar :key="store.rerender"/>
         </transition>
         <transition name="fade">
           <UIToast v-if="store.toastVisible == true"
@@ -43,16 +43,25 @@ onMounted(() => {
 <style>
 .page-enter-active,
 .page-leave-active {
-  transition: all 0.4s;
+  transition: all .4s ease-in-out;
 }
 .page-enter-from,
 .page-leave-to {
   opacity: 0;
   transform: translateY(100px);
 }
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .4s ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 .blur-enter-active,
 .blur-leave-active {
-  transition: all 0.4s;
+  transition: all 0.4s ease-in-out;
 }
 .blur-enter-from,
 .blur-leave-to {

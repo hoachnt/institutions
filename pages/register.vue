@@ -52,7 +52,7 @@ interface IUserRegister {
 
 const { createUser } = useDirectusAuth();
 const { login } = useDirectusAuth();
-
+const store = usePiniaStore();
 const router = useRouter();
 const data: IUserRegister = reactive({
   firstName: "",
@@ -79,7 +79,7 @@ const submit = async (): Promise<void> => {
 
       await router.push({ name: "locations-new", query: { message: "register" } });
 
-      await document.location.reload(true);
+      srore.rerender += 1
     }
   } catch (error) {
     console.log(error);

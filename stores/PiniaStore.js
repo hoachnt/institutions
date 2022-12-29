@@ -10,6 +10,7 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
   const url = config.public.url;
   const dialog = ref(false);
   const loadingEvent = ref(false);
+  const rerender = ref(0)
 
   const nuxtApp = useNuxtApp();
   nuxtApp.hook("page:finish", () => {
@@ -199,6 +200,7 @@ export const usePiniaStore = defineStore("PiniaStore", () => {
     schedules,
     dialog,
     loadingEvent,
+    rerender,
   };
 });
 if (import.meta.hot) {
