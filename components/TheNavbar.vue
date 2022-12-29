@@ -74,6 +74,7 @@
           mb-2
           ml-2
         "
+        id="sidebar"
       >
         <!-- Sidebar content here -->
         <!-- <li v-if="token">
@@ -82,7 +83,7 @@
           </a>
         </li> -->
         <li @click="$router.push('/')" v-if="token">
-          <a class="rounded-lg">
+          <a class="sidebar-element rounded-lg" id="/">
             <div class="mr-1">
               <font-awesome-icon
                 icon="fa-solid fa-house"
@@ -93,12 +94,12 @@
           </a>
         </li>
         <li @click="$router.push('/register')" v-if="!token">
-          <a class="rounded-lg">
+          <a class="sidebar-element rounded-lg" id="/register">
             <p>{{ $t("register") }}</p>
           </a>
         </li>
         <li @click="$router.push('/login')" v-if="!token">
-          <a class="rounded-lg">
+          <a class="sidebar-element rounded-lg" id="/login">
             <div class="mr-1">
               <font-awesome-icon
                 icon="fa-solid fa-right-to-bracket"
@@ -157,10 +158,8 @@ const languages = [
 ];
 const offsetTop = ref(0);
 const localeStorageLang = localStorage.getItem("localeStorageLang");
-
 const logOut = async () => {
   await logout();
-
   await router.push({ name: "login", query: { message: "logout" } });
 };
 function onScroll(e) {
@@ -176,12 +175,22 @@ function onScroll(e) {
     isActive.value = false;
   }
 }
+function selectedSidebarElement() {
+  const sidebarElements = document.querySelectorAll(".sidebar-element");
+
+  sidebarElements.forEach((element) => {
+    if (element.id === '/') {
+      element.classList.add("active");
+    }
+  });
+}
 
 onUpdated(() => {
   localStorage.setItem("localeStorageLang", locale.value);
 });
 onMounted(() => {
   locale.value = localeStorageLang || "en";
+  selectedSidebarElement()
 });
 </script>
 <style>
@@ -203,6 +212,9 @@ select {
 }
 .footer {
   flex: 0 0 auto;
+}
+.sidebar-element.active {
+  background: #e3e8eb;
 }
 .navbar {
   transition: 0.2s cubic-bezier(0.71, 0.29, 0.4, 0.8);
