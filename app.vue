@@ -59,11 +59,13 @@ onMounted(() => {
   opacity: 0;
   filter: blur(1rem);
 }
+html {
+  overflow-y: hidden;
+}
 body {
   background: #000;
   color: #000;
 }
-
 /* Указываем box sizing */
 *,
 *::before,
