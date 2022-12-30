@@ -64,7 +64,8 @@ const submit = async () => {
     }
 
     await router.push({ name: "index", query: { message: "login" } });
-    store.rerender += 1
+    await document.location.reload(true)
+
   } catch (e: any) {
     if (e.status == 401) {
       alert("Wrong email or password");

@@ -79,7 +79,7 @@ const submit = async (): Promise<void> => {
 
       await router.push({ name: "locations-new", query: { message: "register" } });
 
-      srore.rerender += 1
+      await document.location.reload(true)
     }
   } catch (error) {
     console.log(error);

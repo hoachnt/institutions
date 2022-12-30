@@ -3,7 +3,7 @@
     <ClientOnly>
       <template #default>
         <transition name="blur">
-          <TheNavbar :key="store.rerender"/>
+          <TheNavbar />
         </transition>
         <transition name="fade">
           <UIToast v-if="store.toastVisible == true"
@@ -14,15 +14,7 @@
       <template fallback-tag="button" #fallback>
         <transition name="blur">
           <div
-            class="
-              loader
-              min-w-full
-              flex
-              items-center
-              justify-center
-              bg-base-100
-              min-h-screen
-            "
+            class="loader min-w-full flex items-center justify-center bg-base-100 min-h-screen"
           >
             <button class="btn btn-square loading btn-primary btn-lg"></button>
           </div>
@@ -43,7 +35,7 @@ onMounted(() => {
 <style>
 .page-enter-active,
 .page-leave-active {
-  transition: all .4s ease-in-out;
+  transition: all 0.4s ease-in-out;
 }
 .page-enter-from,
 .page-leave-to {
@@ -52,7 +44,7 @@ onMounted(() => {
 }
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity .4s ease-in-out;
+  transition: opacity 0.4s ease-in-out;
 }
 
 .fade-enter-from,
